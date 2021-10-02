@@ -1,35 +1,4 @@
 % !TeX encoding = UTF-8
 % !TeX root = MAIN.tex
 
-\chapter{Introduction}
-\label{ch:introduction}
-
-The software company Dynatrace\footnote{\url{https://www.dynatrace.com/}} is offers two products called OneAgent and ActiveGate.
-Both products are also available in a containerized format.
-Using this containerized format, it is possible to run them in computer clusters managed by software such as Kubernetes\footnote{\url{https://kubernetes.io/}}.
-
-However, in order to run correctly, applying some cluster specific configuration is necessary.
-These configurations are mostly provided using files in the YAML format\cite{UnderstandingKubernetesObjects}.
-Before applying these configurations, they have to be created and edited by a customer to fit their environment.
-
-In order to remove the necessity of complicated configurations and possibility of human error, Dynatrace maintains the Dynatrace Operator (DTO).
-The DTO is an open-source project, which can be deployed on a computer cluster.
-After deployment, it allows applying a special configuration file, which contains all needed configuration options a customer must or can apply to either a OneAgent or ActiveGate deployment.
-It then automatically manages the deployment of these products and their lifecycle.
-
-This operator\cite{OperatorPattern} is released, in the form of deployment files to a variety of platforms.
-These platforms, at the time of writing, are
-its GitHub\footnote{\url{https://github.com/}} repository\footnote{\url{https://github.com/Dynatrace/dynatrace-operator}},
-the RedHat Container Catalog\footnote{\url{https://catalog.redhat.com/}},
-the Community Operators repository\footnote{\url{https://github.com/operator-framework/community-operators}},
-the ArtifactHub\footnote{\url{https://artifacthub.io/}} of Helm\footnote{\url{https://helm.sh/}},
-the Rancher\footnote{\url{https://rancher.com/}} repository\footnote{\url{https://github.com/rancher/helm3-charts}} for Helm charts and
-the Google Kubernetes Engine\footnote{\url{https://cloud.google.com/kubernetes-engine}} (GKE) Marketplace\footnote{\url{https://cloud.google.com/marketplace}}.
-
-The releases to all of these platforms are currently done manually.
-Since every platform has its own special handling of a release, every DTO release takes a lot of time.
-The work time needed for a single release is between four workdays and one and a half workweeks.
-These times can be seen in figure X.
-
-% TODO: Insert figure of tickets here.
-
+\input{chapters/introduction}

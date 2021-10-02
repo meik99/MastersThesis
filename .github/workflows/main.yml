@@ -28,5 +28,5 @@ jobs:
       uses: julianahrens/latex-biber-action@v2
       with:
         # Filename of .tex file
-        filename: MAIN
+        filename: MAIN.tex
         output-directory: 'out'
