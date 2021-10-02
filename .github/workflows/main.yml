@@ -35,5 +35,9 @@ jobs:
         uses: julianahrens/latex-biber-action@v2
         with:
           # Filename of .tex file
-          filename: MAIN.tex
+          filename: MAIN
           output-directory: 'out'
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: ls -lah
