@@ -1,6 +1,13 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
+In this chapter the two goals of this thesis are discussed.
+The fist goal is to automate a release.
+The second goal is to integrate different test configurations of a software system into a set of test environments.
+
+\section{Release automation}
+\label{sec:introduction:release-automation}
+
 The software company Dynatrace\footnote{\url{https://www.dynatrace.com/}} is offers two products called OneAgent and ActiveGate.
 Both products are also available in a containerized format.
 Using this containerized format, it is possible to run them in computer clusters managed by software such as Kubernetes\footnote{\url{https://kubernetes.io/}}.
@@ -25,8 +32,44 @@ the Google Kubernetes Engine\footnote{\url{https://cloud.google.com/kubernetes-e
 
 The releases to all of these platforms are currently done manually.
 Since every platform has its own special handling of a release, every DTO release takes a lot of time.
-The work time needed for a single release is between four workdays and one and a half workweeks.
-These times can be seen in figure X.
+The work time needed for a single release is between four workdays and one and a half workweeks, as seen in figure\ \ref{fig:introduction:time-spent}.
 
-% TODO: Insert figure of tickets here.
+\begin{figure}
+    \label{fig:introduction:time-spent}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{img/introduction/lower_end}
+        \caption{Lower end of the time needed to publish a release}
+        \label{fig:introduction:lower-end}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{img/introduction/upper_end}
+        \caption{Upper end of the time needed to publish a release}
+        \label{fig:introduction:upper-end}
+    \end{minipage}
+\end{figure}
+
+Therefore, the first of two goals of this thesis is to automate as much of the release process as possible.
+In order to automate this process, a system is needed, which executes all, or at least most of, the actions that are currently done by a human.
+Such a system may take the form of a so-called continuous integration (CI) / continuous deliver (CD)  pipeline.
+
+A CI/CD pipeline is a defined series of actions, which are automatically executed\cite{WhatIsACiCdPipeline}.
+The goal of such a pipeline is to do a combination, or all, of building, testing, packaging and releasing a software product\cite{WhatIsACiCdPipeline}.
+In this case, Concourse\footnote{\url{https://concourse-ci.org/}} is used as a base of the system of this paper.
+A pipeline will be created, with the purpose of automatically preparing a release of the DTO, leaving, at best, a single push of a button to do for a human.
+
+\section{Test configuration integration}
+\label{sec:introduction:test-configuration-integration}
+
+In order to deliver the DTO to customers in a reliable state, it undergoes a series of End-to-End (E2E) tests.
+Until now, these tests have been manually created and ran with previously defined configurations.
+A configuration here describes a set of input variables for the DTO, defined in the YAML format.
+
+While the amount of tests is currently not a problem, the amount of configurations is.
+The number of configurations has grown considerably during its development.
+So much so, that neither manually defining all configurations, nor testing all of them is practicably doable.
+Mitigating this problem is the second goal of this thesis's system.
+
 
