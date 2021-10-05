@@ -11,8 +11,14 @@ jobs:
       - name: Compile
         uses: ./.github/actions/latex/
         id: latex
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
+      - name: Release paper
+        uses: ncipollo/release-action@v1
         with:
-          name: Thesis
-          path: output/thesis.pdf
+          artifacts: "output/thesis.pdf"
+          bodyFile: "body.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Archive paper
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Thesis
+#          path: output/thesis.pdf
