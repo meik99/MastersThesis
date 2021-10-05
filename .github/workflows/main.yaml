@@ -15,7 +15,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "output/thesis.pdf"
-          bodyFile: "body.md"
           token: ${{ secrets.GITHUB_TOKEN }}
 #      - name: Archive paper
 #        uses: actions/upload-artifact@v2
