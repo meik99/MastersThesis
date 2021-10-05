@@ -11,6 +11,11 @@ jobs:
       - name: Compile
         uses: ./.github/actions/latex/
         id: latex
+      - name: Tag branch
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CUSTOM_TAG: ${{ github.sha }}
       - name: Release paper
         uses: ncipollo/release-action@v1
         with:
