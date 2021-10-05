@@ -11,3 +11,8 @@ jobs:
       - name: Compile
         uses: ./.github/actions/latex/
         id: latex
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Thesis
+          path: output/thesis.pdf
