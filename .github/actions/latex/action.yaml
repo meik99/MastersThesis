@@ -1,0 +1,9 @@
+name: Latex Build
+description: Runs latex build commands to compile this project
+inputs: {}
+outputs:
+  pdf:
+    description: The compiled pdf file
+runs:
+  using: docker
+  image: Dockerfile

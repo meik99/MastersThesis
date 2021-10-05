@@ -1,0 +1,30 @@
+on:
+  - push
+
+jobs:
+  latex_build:
+    runs-on: ubuntu-latest
+    name: Compiles the project to a pdf
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Compile
+        uses: ./.github/actions/latex/
+      - name: Tag branch
+        id: tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          WITH_V: true
+      - name: Release paper
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "output/thesis.pdf"
+          token: ${{ secrets.RELEASE_TOKEN }}
+          tag: ${{ steps.tag.outputs.new_tag }}
+#      - name: Archive paper
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Thesis
+#          path: output/thesis.pdf
