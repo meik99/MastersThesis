@@ -84,8 +84,18 @@ For example, to test such a system on the level of system testing, a cluster is 
 Which in turn means setting up servers, connecting them to a cluster and installing management software, even before the first test can run.
 After a test ran, this environment then needs to be destroyed and recreated, so that the next test can be run uninfluenced by the one that came before.
 
-And with great complexity comes a great learning curve.
+With great complexity comes a great learning curve.
 Not all developers in a team might have the domain knowledge to create and maintain a pipeline configuration for such a setup.
 Therefore, the first research question for this paper is the following.
 
-How can the setup and maintenance of the environment for higher level tests be abstracted and made accessible?
+Q1: How can the setup and maintenance of an environment for higher level tests be abstracted and made accessible?
+
+The second problem after testing such highly complex systems is the delivery and distribution.
+Usually, programs are delivered in the form of binaries, distributed often by a website or package management system.
+As is shown later, distribution of cluster systems is highly diverse with many so-called ''marketplaces'' from which that software can be deployed from.
+Targeting many of these systems multiplies the problem touched before, needing more changelogs, setting versions correctly and, additionally, adhering to proprietary configurations for specific marketplaces.
+Henceforth, the second research question to be answered si as follows.
+
+Q2: How can multiple distribution systems be integrated into an automatic pipeline using a common base of data and metadata.
+
+%% TODO: Structure
