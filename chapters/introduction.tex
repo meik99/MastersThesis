@@ -100,18 +100,35 @@ Q2: How can multiple distribution systems be integrated into an automatic pipeli
 
 \section{Structure}\label{sec:structure}
 
-First it is discused, how those questions are going to be answered.
+First it is discussed, how those questions are going to be answered.
 In other words, what methods are used and how they are evaluated.
 Naturally, the specific technologies to implement these methods are also listed and described.
 
 Next, scientific research that has already been done is discussed.
-As is shown later, some of the implemented techniques are either theoretically discussed in other papers or were already used in a different context.
+As is shown later, some implemented techniques are either theoretically discussed in other papers or were already used in a different context.
 The context of this paper is explained afterwards.
 
 The largest part then is 
 the implementation.
-What is theoretically disucssed in the beginning is later implemented practically as part of this thesis.
+What is theoretically discussed in the beginning is later implemented practically as part of this thesis.
 Details of this implementation are shown and explained.
+Finally, the result of this thesis is evaluated and a conclusion is then drawn from this evaluation.
 
-Finally, the result of this thesis is evaluated.
-A conclusion is then drawn from this evaluation.
+\chapter{Background}\label{ch:background}
+
+In order to answer \italic{Q1}, a system is developed to help abstract the complexity of maintaining higher level tests.
+This system's purpose is to use a template of a configuration file and then generate a concrete configuration for a pipeline.
+Since the pipeline configuration is stored in code, as discussed before, the template must contain a common basis of this code.
+
+This method has a few advantages to manually maintaining configurations.
+First, if a pipeline configuration contains a fault, a fix in the template fixes all concrete configurations derived from it.
+Secondly, only one configuration must be maintained, avoiding a problem analogous to one known as ''shotgun-surgery''\footnote{\url{https://refactoring.guru/smells/shotgun-surgery}} in software engineering, were one small changes must be made in many different files.
+Thirdly, once the template is written, the domain knowledge is sufficiently abstracted for other team members.
+Using the system to generate a concrete configuration does not necessitate knowledge about the domain of pipeline configurations.
+
+As previously discussed, on of the main difficulties of testing highly scaled and complex systems, is the need of setting up complex environments.
+Later it is shown, that for certain technologies, the setup for a single test may take multiple hours.
+For large test suits, it is therefore unpractical to run all tests everytime, as the time-cost is too high.
+In order to mitigate this problem a technique called similarity-based variability testing is used.
+
+%% TODO: discuss the two papers about similarity based variability testing
