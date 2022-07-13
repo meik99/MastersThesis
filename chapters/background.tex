@@ -1,0 +1,43 @@
+
+\chapter{Background}\label{ch:background}
+
+In order to answer \textit{Q1}, a system is developed to help abstract the complexity of maintaining higher level tests.
+This system's purpose is to use a template of a configuration file and then generate a concrete configuration for a pipeline.
+Since the pipeline configuration is stored in code, as discussed before, the template must contain a common basis of this code.
+
+This method has a few advantages to manually maintaining configurations.
+First, if a pipeline configuration contains a fault, a fix in the template fixes all concrete configurations derived from it.
+Secondly, only one configuration must be maintained, avoiding a problem analogous to one known as ''shotgun-surgery''\footnote{\url{https://refactoring.guru/smells/shotgun-surgery}} in software engineering, were one small changes must be made in many different files.
+Thirdly, once the template is written, the domain knowledge is sufficiently abstracted for other team members.
+Using the system to generate a concrete configuration does not necessitate knowledge about the domain of pipeline configurations.
+
+As previously discussed, on of the main difficulties of testing highly scaled and complex systems, is the need of setting up complex environments.
+Later it is shown, that for certain technologies, the setup for a single test may take multiple hours.
+For large test suits, it is therefore unpractical to run all tests everytime, as the time-cost is too high.
+In order to mitigate this issue a technique called similarity-based variability testing is used.
+
+Al-Hajjaji et. al., describe this technique in the context of product line testing\cite{SimilarityBasedPrioritizationInSoftwareProductLineTesting}.
+A software product line is described as a base software system, which is extended with features that make use of the base system.
+Due to the high variability, not all combinations and features can be practically tested.
+Therefore, an algorithm is proposed, that selects tests based on similarity.
+
+This algorithm uses a set of possible configurations, \textit{C} and a predefined definition of their similarity \textit{S} to each other\footnote{The used variable names C and S do not correspond to the variable names in the original algorithm.}.
+For example, given mobile phones, two phones that both integrate a GPS transceiver are more similar to each other, than one phone that does and one that does not.
+It then takes the first configuration from the input set and adds it to the result.
+Then, from the selected configuration, the next, least similar, configuration is selected.
+This selection is added to the result and the next, least similar, configuration to this second one is chosen.
+The algorithm then continues until all configurations are sorted in the result or a limit is reached.
+
+This algorithm, while used in a different context, is also valuable when testing complex system.
+As previous discussed, for sufficiently complex environments and large test suits, not all tests can realistically be run at all times.
+Analogous to configurations, metadata can also be added to define the similarity of tests to each other.
+A similar algorithm as described above can then be used to sort and select tests which are possible to run in a limited timeframe.
+In a later section it is shown that this algorithm helps in implementing a solution for \textit{Q1}. %%TODO: replace "later section" with actual section
+
+In order to answer \textit{Q2}, another pipeline is created for a specific system.
+This pipeline contains steps to gather information, build necessary files and then deploy those files to different platforms.
+The platforms to be deployed are specific marketplaces for this system and will be discussed in a later section. %%TODO: replace "later section" with actual section
+
+The goal is to find and use data, that is common to each platform and prepare it as much as possible before distributing it.
+Each platform may have special steps that need to be taken into account.
+Combining these steps in small scripts may increase the maintainability of the whole pipeline.
