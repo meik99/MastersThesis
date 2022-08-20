@@ -1,0 +1,52 @@
+\section{Release pipeline}\label{sec:release-pipeline}
+
+In this section, the implementation of the release pipeline is explained.
+For each task of the pipeline, the following questions are answered.
+
+\begin{itemize}
+    \item What does the task do and how does it do it?
+    \item Why does it do it?
+    \item What are the configuration options?
+    \item What are common error cases and how can they be resolved or mitigated?
+\end{itemize}
+
+\subsection{Finding the latest release branch}\label{subsec:finding-the-latest-release-branch}
+
+This task finds the latest release branch using the branches from the GitHub repository of the DTO.
+First, the repository is cloned.
+Then, the command \\
+\verb%git branch -a | grep "${RELEASE_BRANCH_PREFIX}" > ../branches% \\
+is used to query all branches, filter the ones with the appropriate prefix and write their names into a file.
+The prefix which is used for filtering the names can be configured with the \verb|release_branch_prefix| parameter.
+Afterwards a python script, which takes the following parameters, is called.
+
+\begin{table}
+    \centering
+    \caption{Parameters for the python script finding a release branch}
+    \label{tab:py-finding-the-release-branch}
+    \begin{tabular}{l|l}
+        Parameter & Expected value \\
+        \hline
+        \verb|--branch-list| & The path to the file containing the filtered branch names \\
+        \verb|--release-prefix| & The prefix used to mark release branches. \\
+         & It can be configured using the \verb|release_branch_prefix| parameter. \\
+        \verb|--csv-prefix| & A prefix for a branch on which the CSV files are generated. \\
+        & It can be configured using the \verb|csv_branch_prefix| parameter. \\
+        \verb|--helm-prefix| & A prefix for a branch on which the Helm charts are generated. \\
+        & It can be configured using the \verb|helm_branch_prefix| parameter. \\
+        \verb|--output| & The path to which the results are written. \\
+    \end{tabular}
+\end{table}
+
+% TODO: format to use verbatim
+This python script, using the parameters shown in table \ref{tab:py-finding-the-release-branch}, reads through the list of branches, tries to find a version for each one and then compares the versions found.
+It does so, by first removing the strings `{release-prefix}-v` and `{release-prefix}-` from the name.
+The resulting name is then split by a dot, i.e., `.`, because it assumes the usage of a semantic versioning scheme.
+Since the branches usually contain two version numbers, the major and minor version, the resulting array is extended with `.0` until is length is two.
+These steps are necessary to obtain a normalized array for further processing.
+
+The normalized arrays of two branches are then compared to each other.
+If an array has a length greater than two, it is not in the expected form for release branches and is discarded.
+If an element of the array cannot be parsed to an integer value, it is not in the semver format and is discarded.
+If the elements of both arrays can be parsed, they are compared to each other.
+If one element is larger then the element with the same index in the other array, it is considered as the later version.
