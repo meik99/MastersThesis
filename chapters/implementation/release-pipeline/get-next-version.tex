@@ -1,52 +1,55 @@
 \subsection{Get next version}\label{subsec:get-next-version}
 
-This task uses the version found in the previous task to infer the next patch version.
+This task uses the version found in the previous task from section \ref{subsec:finding-the-latest-release-branch} to infer the next patch version.
 It does so by first querying all GitHub releases.
-Then, they are filtered by the version found in the previous task, [find-latest-release-branch](../release%20tasks/find-latest-release-branch.md).
+Then, they are filtered by the version found in the previous task.
 For example, if releases exist on GitHub for the version 0.2.0, 0.2.1, 0.3.0, 0.3.1, and 0.4.0, and the release branch has a 0.4 postfix, only the 0.4.0 release is considered.
 After the releases have been filtered, their titles, consisting of the version, are compared, similar to the comparison done between branches in the previous task.
 From the latest release, the patch version is increase by one, and then saved in the JSON result as the new version.
 
 The querying, filtering and comparison of releases is done again using a python script.
-It can be found in [/scripts/release/version.py](../../scripts/release/version.py).
 For the script to work, a GitHub token and the target repository have to be supplied as well as the branch version.
 Therefore, the script takes the following arguments.
-
 
 \begin{table}
     \centering
     \caption{Parameters for the python script finding the next version}
     \label{tab:py-finding-the-next-version}
-    \begin{tabular}{l|l|l}
-        Parameter & Expected value & Default value \\
+    \begin{tabular}{p{0.3\linewidth}|p{0.7\linewidth}}
+        Parameter & Expected value \\
         \hline
-        \verb|--version| & Expects the version found by parsing the release branches form the previous task. &  \\
-        \verb|--token| &  A personal access token for GitHub. & \\
-        & It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|. & \\
-        & The same token can be used by multiple tasks if these scopes are set. & \\
-        \verb|--operator-repository| & The target repository from which the releases are queried. & \verb|Dynatrace/dynatrace-operator| \\
-        \verb|--output| & The path to which the calculated version is written. & \verb|./version| \\
+        \verb|--version| & Expects the version found by parsing the release branches from the previous task.  \\
+        \verb|--token| &  A personal access token for GitHub. It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|. The same token can be used by multiple tasks if these scopes are set. \\
+        \verb|--operator-repository| & The target repository from which the releases are queried. \\
+        \verb|--output| & The path to which the calculated version is written. \\
     \end{tabular}
 \end{table}
 
-After parsing the arguments, the script creates an instance of `GitHubApi`.
-A class found in [/scripts/release/github/github_api.py](../../scripts/release/github/github_api.py).
+After parsing the arguments, the script creates an instance of \verb|GitHubApi|.
 This class implements the Representational State Transfer (REST) requests provided by the GitHub API.
-From this instance, the `find_releases` function is called.
-The URL used for the request is built by a static prefix `https://api.github.com/repos/`, followed by the target repository name.
-A `/releases` prefix is then added as well to specifically target releases.
-E.g., if the repository's name is `Dynatrace/dynatrace-operator` the resulting URL is `https://api.github.com/repos/Dynatrace/dynatrace-operator/releases`.
+From this instance, the \verb|find_releases| function is called.
+The URL used for the request is built by a static prefix \verb|https://api.github.com/repos/|, followed by the target repository name.
+A \verb|/releases| prefix is then added as well to specifically target releases.
+E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \verb|https://api.github.com/repos/Dynatrace/dynatrace-operator/releases|.
 
 The header for this request contains the following fields.
-| Header field name | Value                            |
-| ----------------- | -------------------------------- |
-| Accept            | `application/vnd.github.v3+json` |
-| Authorization     | `token <GitHub Token>`           |
-| Content-Type      | `application/json`               |
+
+\begin{table}
+    \centering
+    \caption{HTTP Header}
+    \label{tab:http-header}
+    \begin{tabular}{p{0.3\linewidth}|p{0.7\linewidth}}
+        Header field name & Value \\
+        \hline
+        Accept & \verb|application/vnd.github.v3+json| \\
+        Authorization & \verb|token <GitHub Token>| \\
+        Content-Type & \verb|application/json| \\
+    \end{tabular}
+\end{table}
 
 If the request does not succeed, an error is returned.
 Otherwise, the body of the request contains all releases for the target repository as a JSON-array.
-The body is then converted into an array of instance of type `GitHubRelease`, which is defined in [/scripts/release/github/github_release.py](../../scripts/release/github/github_release.py).
+The body is then converted into an array of instance of type \verb|GitHubRelease|.
 This class does not implement specific functions, but is only used to hold the data from the request.
 
 All found releases are then filtered.
@@ -58,41 +61,13 @@ Releases are discarded if:
 Every release that was not discarded is then compared against the other not discarded releases.
 The latest one is then taken.
 From this release, the version is parsed from the tag and the patch version is increased by one.
-If there exists no release for the current major-minor version combination, the resulting version defaults to `major.minor.0`.
+If there exists no release for the current major-minor version combination, the resulting version defaults to \verb|major.minor.0|.
 The result is then written to the output path.
 Finally, the tasks finishes after updating the resulting JSON-data with the next version.
 
-## Purpose
+\subsection{Purpose}\label{subsec:Purpose}
 
 The purpose of this task is to find the next version number.
 Since the release branch names do not contain a patch number, it has to be inferred.
-If releases exist for a `major.minor` combination, the patch version of the latest release can just be bumped.
-Otherwise, the patch version is `0`.
-
-## Configuration
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter             | Effect                                            | Production default             | Development default                     |
-| --------------------- | ------------------------------------------------- | ------------------------------ | --------------------------------------- |
-| `operator_repository` | Defines which repository is queried for releases. | `Dynatrace/dynatrace-operator` | `dt-team-kubernetes/dynatrace-operator` |
-
-## Common error cases
-
-### The request to the GitHub API returns an error
-
-Check that a valid GitHub personal access token exists.
-The token is read from the vault as described in [/README.md](../../README.md).
-Make sure the token is not expired and has the following scopes:
-* `admin:org`
-* `repo`
-* `delete_repo`
-* `workflow`
-
-
-### The resulting version is not correct
-
-Make sure the last release is tagged correctly and that it is not a draft.
-The tag must contain the major and minor version numbers of the release branch.
-Furthermore, it must contain a dash, i.e., "-".
+If releases exist for a \verb|major.minor| combination, the patch version of the latest release can just be bumped.
+Otherwise, the patch version is \verb|0|.
