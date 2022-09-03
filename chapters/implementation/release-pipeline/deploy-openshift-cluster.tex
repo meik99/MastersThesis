@@ -1,0 +1,63 @@
+# deploy-openshift-cluster
+
+This task deploys an Openshift cluster on AWS infrastructure.
+First, it checks if a state file exists in the S3 bucket created in the previous task.
+The file is then unzipped.
+If a install configuration already exists in this file, the installation was already done and the current one is skipped.
+
+Otherwise, Openshift is installed.
+First, a new install configuration file is created, based one the `{install_config}` parameter.
+In it, the AWS region and the cluster name, which are configured with the `{aws_region}` and `{cluster_name}` respectively, are set.
+
+Downloading the Openshift installer is done in one of two ways.
+First, by setting a installer URL.
+If this URL is set, the Openshift installer is downloaded from the URL and the script assumes it is a binary.
+This way of downloading the Openshift installer is not tested, therefore there is no parameter provided to set the installer URL.
+
+The second way of downloading Openshift, which is supported by the pipeline, is by defining the target version, URL to the Openshift installer directory and whether unstable versions should also be considered or not.
+Configuring these values is done with the `{ocp_version}`, `{ocp_installer_directory_url}`, and `{ocp_installer_unstable}` parameters respectively.
+The task then downloads the latest patch version of the installer and extracts the downloaded archive containing the installer.
+After the installer has been downloaded, it is executed to create the cluster.
+
+When the installer has finished, the deployments VPCs are queried, along with their security groups and NAT gateways.
+These VPCs and gateways are then whitelisted AWS's infrastructure.
+The installer state, which was written by the installer, is then zipped and uploaded to the S3 bucket.
+Finally, the resulting `kubeconfig` is saved as a Vault secret under the name of `openshift`.
+
+## Purpose
+
+This tasks purpose is to create an Openshift cluster.
+This cluster is later needed to test the deployment of the DTO via OLM.
+
+## Configuration options
+
+The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
+The following parameters can be used to configure this task.
+
+| Parameter | Effect | Production default | Development default |                                                                                                      | Production default             | Development default                     |
+| - | - | - | - |
+| aws_region | Defines in which AWS region the S3 bucket is created to store the installer state. | `us-east-1` | `us-east-1` |
+| install_config | Defines the configuration of the cluster that is set up. | Too large for this list | Too large for this list |
+| cluster_name | Defines the name with which the cluster is created. | `operator-release` | `operator-release` |
+| ocp_version | Defines which version of Openshift is installed | `4.9` | `4.9` |
+| ocp_installer_directory_url | A URL pointing to the list of Openshift installers | `https://mirror.openshift.com/pub/openshift-v4/clients/ocp/` | `https://mirror.openshift.com/pub/openshift-v4/clients/ocp/` |
+| ocp_installer_unstable | Sets if unstable Openshift installers should also be considered. | `false` | `false` |
+
+## Common error cases
+
+### The cluster cannot be deployed due "to an inconsistency with the provider"
+
+This error is caused by the Openshift installer.
+
+1. Run the cleanup tasks
+   1. destroy-openshift-cluster
+   2. cleanup-openshift-infrastructure
+2. Redeploy the cluster
+   1. prepare-openshift-infrastructure
+   2. deploy-openshift-cluster
+
+### The cluster does cannot be deployed with the following error message "Tried to create resource record set [name='api.operator-release.nimbus.dev.dynatracelabs.com.', type='A'] but it already exists"
+
+This error is caused by the Openshift uninstaller, when the cluster was destroyed previously.
+In this case, ask the Asperitas team, to delete this record manually.
+At the time of asking in the Slack channel `#team-asperitas` is the appropriate procedure for such a request.

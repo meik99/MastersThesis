@@ -1,0 +1,44 @@
+# configure-openshift-pipeline
+
+This tasks executes the steps necessary to deploy RedHat's CI pipeline infrastructure.
+These steps are documented in RedHat's [certification-releases](https://github.com/redhat-openshift-ecosystem/certification-releases/blob/main/4.9/ga/ci-pipeline.md#step1) repository.
+
+First, the `kubeconfig` from the Vault secret `openshift` is read and written to `~/kube/config`.
+With this config written, a connection to the Openshift cluster can be made.
+
+Then, a function `setup-project` is defined.
+This function is executed twice at the bottom of the script.
+Once with the argument `release-certified-operators` and another time with `release-redhat-marketplace`.
+
+This function the first defines the given argument as `project_name`.
+It then recreates the namespace or project with that name.
+The project is first deleted if it exists and then created again.
+Since it may take a few seconds for a project to be deleted, the create command is executed until it succeeds.
+Then, the new project is set as the currently active one.
+The kubeconfig is then applied as a secret to the project.
+
+Afterwards, the RedHat image catalogs `certified-operator-index` and `redhat-marketplace-index` are imported.
+Importing those catalogs may take some time, therefore the commands have a timeout of 600 seconds or ten minutes.
+It usually does not take ten minutes to import these catalogs, but they are necessary for the steps following, therefor it is set quite high.
+The standard output is also redirected to not be included in the task's logs.
+This is due to the fact that these commands produce absurd amounts of logs.
+If the import needs to be debugged, the lines `    --request-timeout 600 1> /dev/null` can be changed to read `    --request-timeout 600` to include these logs.
+
+Next, the Vault secret `dockerconfig` is created as a pull secret in the project, to allows pulling necessary images.
+Then, the GitHub SSH keys are added as a secret to the cluster, to allow cloning the repositories containing CSV files.
+I.e., the forked `certified-operators` and `redhat-marketplace-operators` repositories.
+Finally, a subscription to the RedHat Certification Pipelines Operator is applied, which can be found at [/scripts/openshift/subscription.yaml](../../scripts/openshift/subscription.yaml).
+
+## Purpose
+
+This tasks purpose is to create the infrastructure necessary to run RedHat's CI pipeline.
+This pipeline can then be used to debug and verify the previously generated CSV bundles.
+
+## Configuration options
+
+There are no parameters in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files which influence this task significantly.
+
+## Common error cases
+
+If this tasks fails, it is likely that the Openshift cluster is not deployed.
+If the Openshift cluster is deployed and this task still fails, the cluster might have to be destroyed and re-deployed.

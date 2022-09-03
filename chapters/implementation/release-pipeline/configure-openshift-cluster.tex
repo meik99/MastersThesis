@@ -1,0 +1,33 @@
+# configure-openshift-cluster
+
+This task, like `prepare-openshift-infrastructure` and `deploy-openshift-cluster`, was taken from the repository [pipeline-cpn-kubernetes](https://bitbucket.lab.dynatrace.org/projects/CPN/repos/pipeline-cpn-kubernetes/browse) repository.
+It labels nodes and can update the openshift version, if the `{ocp_channel}` has changed.
+
+## Purpose
+
+Minor setup of nodes and updating Openshift.
+
+## Configuration options
+
+The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
+The following parameters can be used to configure this task.
+
+| Parameter   | Effect                                                                         | Production default | Development default |  | Production default | Development default |
+| ----------- | ------------------------------------------------------------------------------ | ------------------ | ------------------- |
+| ocp_channel | Defines which release channel of Openshift should be used to check for update. | `stable`           | `stable`            |
+
+## Common error cases
+
+This task usually only fails if the S3 bucket does not exist. 
+I.e., if the previous tasks were not run in the correct order or if `cleanup-openshift-infrastructure` ran in the mean time.
+The correct order of tasks is as follows.
+
+1. prepare-openshift-infrastructure
+2. deploy-openshift-cluster
+3. configure-openshift-cluster
+4. configure-openshift-pipeline
+5. Optional:
+   * test-certified-operators
+   * test-redhat-marketplace-operators
+6. destroy-openshift-cluster
+7. cleanup-openshift-infrastructure
