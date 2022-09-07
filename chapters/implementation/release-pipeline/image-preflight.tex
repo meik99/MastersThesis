@@ -25,7 +25,7 @@ Since the digest can be found in the response, it is parsed from there using `gr
 Then, using shell expansion, the "Digest: " prefix is removed with `${digest#"Digest: "}`.
 This functionality is used twice and therefore put into a function called `parse_digest` which takes the response from the pull command as its parameter.
 
-## Purpose
+\subsubsection{Purpose}\label{subsubsec:image-preflightPurpose}
 
 The purpose of this task is to automatically check if necessary images are available on all registries.
 Furthermore, it finds the digests of the DockerHub and RHCC images, so the images in the CSVs can be digest-pinned.

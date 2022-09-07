@@ -3,7 +3,7 @@
 This job consists of multiple tasks.
 Their goal is to build and push the deployer image for GCM, prepare a GKE cluster, install the deployer image on it and check if a basic Operator deployment succeeds.
 
-## build-and-publish-deployer-image
+\subsubsection{build-and-publish-deployer-image}\label{subsubsec:build-and-publish-deployer-image}
 
 This task builds the Dockerfile at `<repository>/config/helm/` and pushes the result as the deployer image.
 
@@ -11,7 +11,7 @@ This task builds the Dockerfile at `<repository>/config/helm/` and pushes the re
 
 The purpose of this task is to build a deployer image and publish it to GCR.
 
-## prepare-cluster
+\subsubsection{prepare-cluster}\label{subsubsec:prepare-cluster}
 
 This task prepares a GKE cluster to be able to deploy the previously built deployer image.
 First, the kube-config is read from the vault secret, which is set by [/tasks/20_fetch-kubeconfig/](../../tasks/20_fetch-kubeconfig/task.sh).
@@ -28,21 +28,7 @@ Afterwards, the namespace is created and the DynaKube CRD is applied again.
 The purpose of this task is to prepare a GKE cluster for the deployment of deployer image.
 This includes cleaning any leftover resources created by a previous DTO deployment and applying the GKE Application CRD.
 
-### Configuration options
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter             | Effect                                                    | Production default             | Development default                     |
-| --------------------- | --------------------------------------------------------- | ------------------------------ | --------------------------------------- |
-| `operator_repository` | Defines in which repository the Dockerfile is looked for. | `Dynatrace/dynatrace-operator` | `dt-team-kubernetes/dynatrace-operator` |
-
-### Common error cases
-
-During development, no common error cases were found.
-However, if this task fails, check if the kube-config secret exists and the content points to a running GKE cluster.
-
-## install-deployer-image
+\subsubsection{install-deployer-image}\label{subsubsec:install-deployer-image}
 
 This task uses Google's `mpdev` tool to deploy the deployer image onto the cluster mentioned above.
 Since it also uses a Docker in Docker image, it first install `jq` to read the image name from the release data.
@@ -69,7 +55,7 @@ After executing the command `./mpdev install --deployer="${image}" --parameters=
 This tasks purpose is to deploy the deployer image on a prepared GKE cluster.
 The deployment is then monitored by the next task.
 
-## sanity-check-deployer
+\subsubsection{sanity-check-deployer}\label{subsubsec:sanity-check-deployer}
 
 This task checks the deployment job the `mpdev` tool creates for its success.
 To do so, it again sets up the kube-config.

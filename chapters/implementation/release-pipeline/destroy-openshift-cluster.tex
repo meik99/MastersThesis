@@ -1,4 +1,4 @@
-# destroy-openshift-cluster
+\subsection{destroy-openshift-cluster}\label{subsec:destroy-openshift-cluster}
 
 This task destroys and deletes an Openshift cluster from AWS infrastructure.
 First, it unzips the state file in the S3 bucket created in a previous task.
@@ -19,27 +19,6 @@ If it does not exist, it is assumed that there is no cluster to destroy.
 If it does exist, the installer is called with the `destroy` option, destroying the cluster.
 Finally, the installer state, which was written by the installer, is then zipped and uploaded to the S3 bucket.
 
-## Purpose
+\subsubsection{Purpose}\label{subsubsec:destroy-oc-Purpose}
 
 This tasks purpose is to destroy an Openshift cluster.
-
-## Configuration options
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter                   | Effect                                                           | Production default                                           | Development default                                          |  | Production default | Development default |
-| --------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ocp_version                 | Defines which version of the Openshift installer is downloaded   | `4.9`                                                        | `4.9`                                                        |
-| ocp_installer_directory_url | A URL pointing to the list of Openshift installers               | `https://mirror.openshift.com/pub/openshift-v4/clients/ocp/` | `https://mirror.openshift.com/pub/openshift-v4/clients/ocp/` |
-| ocp_installer_unstable      | Sets if unstable Openshift installers should also be considered. | `false`                                                      | `false`                                                      |
-
-## Common error cases
-
-### Task fails with `Error: no version found`
-
-Either the `ocp_version` parameters is set to a version that does not exist or the layout of the directory website has changed.
-Concerning the latter, a script scrapes the website at `ocp_installer_directory_url` for Openshift versions.
-If the website changed, the script may not work correctly anymore.
-Check if the original script in the [pipelines-cpn-kubernetes](https://bitbucket.lab.dynatrace.org/projects/CPN/repos/pipeline-cpn-kubernetes/browse) repository has been updated.
-Otherwise, ask in the Slack channel `#team-asperitas` for help or debug the script.

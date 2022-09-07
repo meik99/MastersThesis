@@ -1,4 +1,4 @@
-# prepare-openshift-infrastructure
+\subsection{prepare-openshift-infrastructure}\label{subsec:prepare-openshift-infrastructure}
 
 This task creates an S3 bucket to place openshift installer state into.
 It uses a python script, located at [/scripts/openshift/s3_setup.py](../../scripts/openshift/s3_setup.py), to do so.
@@ -15,21 +15,6 @@ The `boto3` python library is then used to connect to AWS S3 service.
 If the given bucket name does not exist, it is created and an empty file is uploaded as a state file.
 If the given bucket name does exist, but a state file is missing, an empty file is created and uploaded.
 
-## Purpose
+\subsubsection{Purpose}\label{subsubsec:prepare-openshift-infrastructure-Purpose}
 
 The purpose of this task it to prepare an S3 bucket for the Openshift installer to place a state file in.
-
-## Configuration options
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter                       | Effect                                                                | Production default                      | Development default                     |
-| ------------------------------- | --------------------------------------------------------------------- | --------------------------------------- | --------------------------------------- |
-| `cluster_name`                  | Influences the key under which the state file is saved in the bucket. | `operator-release`                      | `operator-release`                      |
-| `installer_state_bucket`        | Defines the name under which the bucket is created.                   | `dynatrace-operator-ocp-release-states` | `dynatrace-operator-ocp-release-states` |
-| `installer_state_bucket_region` | Defines in which AWS region the bucket is created.                    | `us-east-1`                             | `us-east-1`                             |
-
-## Common error cases
-
-During development, no common error cases were found.

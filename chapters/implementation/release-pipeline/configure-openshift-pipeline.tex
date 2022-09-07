@@ -1,4 +1,4 @@
-# configure-openshift-pipeline
+\subsection{configure-openshift-pipeline}\label{subsec:configure-openshift-pipeline}
 
 This tasks executes the steps necessary to deploy RedHat's CI pipeline infrastructure.
 These steps are documented in RedHat's [certification-releases](https://github.com/redhat-openshift-ecosystem/certification-releases/blob/main/4.9/ga/ci-pipeline.md#step1) repository.
@@ -29,16 +29,7 @@ Then, the GitHub SSH keys are added as a secret to the cluster, to allow cloning
 I.e., the forked `certified-operators` and `redhat-marketplace-operators` repositories.
 Finally, a subscription to the RedHat Certification Pipelines Operator is applied, which can be found at [/scripts/openshift/subscription.yaml](../../scripts/openshift/subscription.yaml).
 
-## Purpose
+\subsubsection{Purpose}\label{subsubsec:cop-Purpose}
 
 This tasks purpose is to create the infrastructure necessary to run RedHat's CI pipeline.
 This pipeline can then be used to debug and verify the previously generated CSV bundles.
-
-## Configuration options
-
-There are no parameters in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files which influence this task significantly.
-
-## Common error cases
-
-If this tasks fails, it is likely that the Openshift cluster is not deployed.
-If the Openshift cluster is deployed and this task still fails, the cluster might have to be destroyed and re-deployed.

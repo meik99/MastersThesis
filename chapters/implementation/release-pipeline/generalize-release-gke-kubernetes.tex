@@ -1,10 +1,10 @@
-# generalize-release-gke-kubernetes
+\subsection{generalize-release-gke-kubernetes}\label{subsec:generalize-release-gke-kubernetes}
 
 This job consists of two tasks that run in parallel.
 One task creates a kube-config and writes it to the Vault secret.
 The second prepares the cluster itself for usage.
 
-## fetch-kubeconfig
+\subsubsection{fetch-kubeconfig}\label{subsubsec:fetch-kubeconfig}
 
 This task creates a kube-config for the previously deployed GKE cluster and writes it to the `kubeconfig` Vault secret.
 First, it queries all necessary parameters using terraform.
@@ -16,42 +16,12 @@ First, it queries all necessary parameters using terraform.
 
 The kubeconfig is then generated using those parameters and written to the Vault secret.
 
-### Purpose
-
 The purpose of this task is to write a kube-config to the Vault secret to allow other tasks to connect to the cluster.
 
-### Configuration options
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter          | Effect                                                               | Production default | Development default |
-| ------------------ | -------------------------------------------------------------------- | ------------------ | ------------------- |
-| `environment_name` | Defines what name the cluster has. Usually set to the pipeline name. | `operator-release` | `operator-release`  |
-
-### Common error cases
-
-During development, no common error cases were found.
-
-## prepare-kubernetes
+\subsubsection{prepare-kubernetes}\label{subsubsec:prepare-kubernetes}
 
 This task configures the GKE cluster previously deployed.
 If there is no `ClusterRoleBinding` for the `cluster-admin` user, it is applied to the cluster.
 Furthermore, if the `{istio_enabled}` parameter is set to `True`, it deploys Istio.
 
-### Purpose
-
 The purpose of this task is to configure the GKE cluster for further usage.
-
-### Configuration options
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter       | Effect                                      | Production default | Development default |
-| --------------- | ------------------------------------------- | ------------------ | ------------------- |
-| `istio_enabled` | Defines if Istio should be deployed on the cluster. | `False`            | `False`             |
-
-### Common error cases
-
-During development, no common error cases were found.

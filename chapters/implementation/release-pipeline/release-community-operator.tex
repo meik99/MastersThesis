@@ -1,4 +1,4 @@
-# release-community-operators
+\subsection{release-community-operators}\label{subsec:release-community-operators}
 
 This task releases the CSV bundle for Kubernetes to the community operators repository.
 Releasing the CSV files to this repository makes the DTO available on OperatorHub.
@@ -39,32 +39,8 @@ The Dockerfile located at `{repository}/config/olm/kubernetes/bundle-${version}.
 The previously mentioned folders, are then populated with the CSV bundles from `{repository}/config/olm/kubernetes/${version}/manifests` and `{repository}/config/olm/kubernetes/${version}/metadata` respectively.
 Finally, the changes are added, committed and pushed to the forked repository.
 
-## Purpose
+\subsubsection{Purpose}\label{subsubsec:release-community-operators-Purpose}
 
 The purpose of this task is to execute all steps necessary to release the CSV bundle to OperatorHub.
 This includes forking the repository and following the OperatorHub guidelines.
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
-
-## Configuration options
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter                                 | Effect                                                                                               | Production default                       | Development default                      |
-| ----------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------- |
-| `k8s_community_operators_repository`      | Defines the repository that should be forked. I.e., defines the value of `{original-repository}`     | `k8s-operatorhub/community-operators`    | `k8s-operatorhub/community-operators`    |
-| `k8s_community_operators_repository_fork` | Defines the name the forked repository should have. I.e., defines the value of `{forked-repository}` | `dt-team-kubernetes/community-operators` | `dt-team-kubernetes/community-operators` |
-
-## Common error cases
-
-### The fork is not created properly
-
-1. Check if the GitHub token is set correctly. It must not be expired and have the necessary scopes.
-2. Check if the correct `k8s_community_operators_repository` is targeted.
-3. Check if the correct fork, i.e. `k8s_community_operators_repository_fork`, is targeted
-
-### The forked repository could not be found
-
-1. Check that the name of the fork, i.e. `k8s_community_operators_repository_fork`, is set correctly.
-2. Sometimes, when a fork is created by the GitHub API, the original name is suffixed by a counter, if the fork already existed on the target account.
-   The python script that forks the repository should take care of renaming it, but if it fails to do so, the task may not continue successfully.

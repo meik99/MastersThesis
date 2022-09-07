@@ -1,4 +1,4 @@
-# create-release-gke-infrastructure
+\subsection{create-release-gke-infrastructure}\label{subsec:create-release-gke-infrastructure}
 
 This task uses `terraform` to deploy a GKE cluster and create the necessary infrastructure for the GCM release.
 First, the `terraform` configuration is read from the `{terraform_config}` parameter and written to `terraform.tfvars`.
@@ -6,28 +6,6 @@ Then, a GKE service account is read from the corresponding Vault secret and writ
 This service account is needed to authenticate with GKE.
 Finally, `terraform` is executed with the given configuration to create the cluster.
 
-## Purpose
+\subsubsection{Purpose}\label{subsubsec:crgi-Purpose}
 
 This task is needed to create the infrastructure needed to sanity check the deployer image of the [release-gke](../release%20tasks/release-gke.md) job.
-
-## Configuration options
-
-The parameters can be changed in the [params-dev](../../params-dev.yaml) or [params-prod](../../params-prod.yaml) files.
-The following parameters can be used to configure this task.
-
-| Parameter                    | Effect                                                                                                                                                                                             | Production default      | Development default     |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ----------------------- |
-| `machine_type`               | Sets the type the created nodes get. See [https://cloud.google.com/compute/docs/general-purpose-machines](https://cloud.google.com/compute/docs/general-purpose-machines) for more information.    | `n1-standard-4`         | `n1-standard-4`         |  |  |  |
-| `environment_name`           | Defines what name the cluster has. Usually set to the pipeline name.                                                                                                                               | `operator-release`      | `operator-release`      |
-| `kubernetes_version`         | Defines which Kubernetes version is used by the GKE cluster.                                                                                                                                       | `latest`                | `latest`                |
-| `docker_apponly_nodes`       | Defines how many nodes for an DTO app-only deployment, with a Docker runtime, are created. Which kind of deployment the nodes are created for has no significance for this specific pipeline.      | 1                       | 1                       |
-| `docker_fullstack_nodes`     | Defines how many nodes for an DTO fullstack deployment, with a Docker runtime, are created. Which kind of deployment the nodes are created for has no significance for this specific pipeline.     | 1                       | 1                       |
-| `containerd_apponly_nodes`   | Defines how many nodes for an DTO app-only deployment, with a containerd runtime, are created. Which kind of deployment the nodes are created for has no significance for this specific pipeline.  | 1                       | 1                       |
-| `containerd_fullstack_nodes` | Defines how many nodes for an DTO fullstack deployment, with a containerd runtime, are created. Which kind of deployment the nodes are created for has no significance for this specific pipeline. | 1                       | 1                       |
-| `gcp_project`                | Defines in what GCP project the cluster is created.                                                                                                                                                | `cloud-platform-207208` | `cloud-platform-207208` |
-| `gcp_zone`                   | Defines in which regional zone the cluster is deployed.                                                                                                                                            | `us-central1-a`         | `us-central1-a`         |
-| `istio_enabled`              | Defines if Istio should be enabled on the cluster.                                                                                                                                                        | `False`                 | `False`                 |
-
-### Common error cases
-
-During development, no common error cases were found.
