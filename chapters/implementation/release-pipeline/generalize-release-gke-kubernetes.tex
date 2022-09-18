@@ -1,27 +1,27 @@
-\subsection{generalize-release-gke-kubernetes}\label{subsec:generalize-release-gke-kubernetes}
+\subsection{Generalize release GKE Kubernetes}\label{subsec:generalize-release-gke-kubernetes}
 
 This job consists of two tasks that run in parallel.
 One task creates a kube-config and writes it to the Vault secret.
 The second prepares the cluster itself for usage.
 
-\subsubsection{fetch-kubeconfig}\label{subsubsec:fetch-kubeconfig}
+\subsubsection{Fetch kubeconfig}\label{subsubsec:fetch-kubeconfig}
 
-This task creates a kube-config for the previously deployed GKE cluster and writes it to the `kubeconfig` Vault secret.
+This task creates a kube-config for the previously deployed GKE cluster and writes it to the \verb| kubeconfig | Vault secret.
 First, it queries all necessary parameters using terraform.
 
-* `k8s_cluster_client_cert`, representing the certificate which is be used to connect.
-* `k8s_cluster_client_key`, the private key for the certificate above.
-*  `k8s_cluster_ca_cert`, the certificate of the authority that issued the client certificate.
-*  `k8s_endpoint`, the URL under which the cluster can be reached.
+* \verb| k8s_cluster_client_cert |, representing the certificate which is be used to connect.
+* \verb| k8s_cluster_client_key |, the private key for the certificate above.
+*  \verb| k8s_cluster_ca_cert |, the certificate of the authority that issued the client certificate.
+*  \verb| k8s_endpoint |, the URL under which the cluster can be reached.
 
 The kubeconfig is then generated using those parameters and written to the Vault secret.
 
 The purpose of this task is to write a kube-config to the Vault secret to allow other tasks to connect to the cluster.
 
-\subsubsection{prepare-kubernetes}\label{subsubsec:prepare-kubernetes}
+\subsubsection{Prepare kubernetes}\label{subsubsec:prepare-kubernetes}
 
 This task configures the GKE cluster previously deployed.
-If there is no `ClusterRoleBinding` for the `cluster-admin` user, it is applied to the cluster.
-Furthermore, if the `{istio_enabled}` parameter is set to `True`, it deploys Istio.
+If there is no \verb| ClusterRoleBinding | for the \verb| cluster-admin | user, it is applied to the cluster.
+Furthermore, if the \verb| {istio_enabled} | parameter is set to \verb| True |, it deploys Istio.
 
 The purpose of this task is to configure the GKE cluster for further usage.

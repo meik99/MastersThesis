@@ -1,18 +1,21 @@
-\subsection{cleanup-openshift-infrastructure}\label{subsec:cleanup-openshift-infrastructure}
+\subsection{Cleanup Openshift infrastructure}\label{subsec:cleanup-openshift-infrastructure}
 
-This task deletes the S3 bucket with the openshift installer state .
-It uses a python script, located at [/scripts/openshift/s3_setup.py](../../scripts/openshift/s3_setup.py), to do so.
+This task deletes the S3 bucket with the openshift installer state.
+It uses a python script to do so.
 This script takes the following parameters.
+The \verb|boto3| python library is then used to connect to AWS S3 service and delete the bucket.
 
-| Parameter         | Expected value                                                                                                      | Default |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------- | ------- |
-| `--cluster-name`  | The name of the cluster which will be deleted. It is usually the same name as the pipeline.                         |         |
-| `--bucket-name`   | The name the deleted bucket should has.                                                                            |         |
-| `--bucket-region` | The AWS region the bucket were the bucket is found. Like everything and your doorbell, it is usually set to `us-east-1` |         |
-| `--remove`        | A flag to remove an existing bucket again                                                                           | N.A.    |
+\begin{table}
+    \centering
+    \caption{Parameters to remove an S3 bucket}
+    \label{tab:params-remove-s3-bucket}
+    \begin{tabular}{| p | p | p |}
+        Parameter & Expected value & Default \\
+        \hline
+        \verb| --cluster-name | & The name of the cluster which will be deleted. It is usually the same name as the pipeline. &  \\
+        \verb| --bucket-name | & The name the deleted bucket should has. &  \\
+        \verb| --bucket-region | & The AWS region the bucket were the bucket is found. &  \\
+        \verb| --remove | & A flag to remove an existing bucket again. &  N.A. \\
+    \end{tabular}
+\end{table}
 
-The `boto3` python library is then used to connect to AWS S3 service and delete the bucket.
-
-\subsubsection{Purpose}\label{subsubsec:coi-Purpose}
-
-The purpose of this task it to delete an S3 bucket with the Openshift installer state file.

@@ -1,11 +1,7 @@
-\subsection{destroy-release-gke-infrastructure}\label{subsec:destroy-release-gke-infrastructure}
+\subsection{Destroy release GKE infrastructure}\label{subsec:destroy-release-gke-infrastructure}
 
-This task uses `terraform` to destroy the GKE cluster.
-First, a GKE service account is read from the corresponding Vault secret and written to `account.json`.
+This task uses \verb| terraform | to destroy the GKE cluster.
+First, a GKE service account is read from the corresponding Vault secret and written to \verb| account.json |.
 This service account is needed to authenticate with GKE.
-Then, `terraform` is executed to destroy the cluster.
-Finally, the kube-config Vault secret is deleted again.
-
-\subsubsection{Purpose}\label{subsubsec:drgi-Purpose}
-
-This task is needed to destroy the infrastructure previously needed to sanity check the deployer image of the [release-gke](../release%20tasks/release-gke.md) job.
+Then, \verb| terraform | is executed to destroy the cluster.
+Finally, the \verb| kube-config | Vault secret is deleted again.

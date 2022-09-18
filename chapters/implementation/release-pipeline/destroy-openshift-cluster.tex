@@ -1,4 +1,4 @@
-\subsection{destroy-openshift-cluster}\label{subsec:destroy-openshift-cluster}
+\subsection{Destroy OpenShift cluster}\label{subsec:destroy-openshift-cluster}
 
 This task destroys and deletes an Openshift cluster from AWS infrastructure.
 First, it unzips the state file in the S3 bucket created in a previous task.
@@ -10,15 +10,11 @@ If this URL is set, the Openshift installer is downloaded from the URL and the s
 This way of downloading the Openshift installer is not tested, therefore there is no parameter provided to set the installer URL.
 
 The second way of downloading Openshift, which is supported by the pipeline, is by defining the target version, URL to the Openshift installer directory and whether unstable versions should also be considered or not.
-Configuring these values is done with the `{ocp_version}`, `{ocp_installer_directory_url}`, and `{ocp_installer_unstable}` parameters respectively.
+Configuring these values is done with the \verb| {ocp_version} |, \verb| {ocp_installer_directory_url} |, and \verb| {ocp_installer_unstable} | parameters respectively.
 The task then downloads the latest patch version of the installer and extracts the downloaded archive containing the installer.
 After the installer has been downloaded, it is executed to create the cluster.
 
-When the installer has finished, it is checked whether a `metadata.json` file exists in the state file.
+When the installer has finished, it is checked whether a \verb| metadata.json | file exists in the state file.
 If it does not exist, it is assumed that there is no cluster to destroy.
-If it does exist, the installer is called with the `destroy` option, destroying the cluster.
+If it does exist, the installer is called with the \verb| destroy | option, destroying the cluster.
 Finally, the installer state, which was written by the installer, is then zipped and uploaded to the S3 bucket.
-
-\subsubsection{Purpose}\label{subsubsec:destroy-oc-Purpose}
-
-This tasks purpose is to destroy an Openshift cluster.

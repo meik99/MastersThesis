@@ -1,20 +1,24 @@
-\subsection{prepare-openshift-infrastructure}\label{subsec:prepare-openshift-infrastructure}
-
-This task creates an S3 bucket to place openshift installer state into.
-It uses a python script, located at [/scripts/openshift/s3_setup.py](../../scripts/openshift/s3_setup.py), to do so.
-This script takes the following parameters.
-
-| Parameter         | Expected value                                                                                                      | Default |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------- | ------- |
-| `--cluster-name`  | The name of the cluster which will be created. It is usually the same name as the pipeline.                         |         |
-| `--bucket-name`   | The name the created bucket should have.                                                                            |         |
-| `--bucket-region` | The AWS region the bucket should be created in. Like everything and your doorbell, it is usually set to `us-east-1` |         |
-| `--remove`        | A flag to remove an existing bucket again                                                                           | N.A.    |
-
-The `boto3` python library is then used to connect to AWS S3 service.
-If the given bucket name does not exist, it is created and an empty file is uploaded as a state file.
-If the given bucket name does exist, but a state file is missing, an empty file is created and uploaded.
-
-\subsubsection{Purpose}\label{subsubsec:prepare-openshift-infrastructure-Purpose}
+\subsection{Prepare OpenShift infrastructure}\label{subsec:prepare-openshift-infrastructure}
 
 The purpose of this task it to prepare an S3 bucket for the Openshift installer to place a state file in.
+This task creates an S3 bucket to place openshift installer state into.
+It uses a python script to do so.
+This script takes the following parameters.
+
+\begin{table}
+    \centering
+    \caption{Parameters to create an S3 bucket}
+    \label{tab:parameters-to-create-an-s3-bucket}
+    \begin{tabular}{| p | p | p |}
+        Parameter &
+        \hline
+        \verb| --cluster-name | & The name of the cluster which will be created. It is usually the same name as the pipeline. & \\
+        \verb| --bucket-name | & The name the created bucket should have. & \\
+        \verb| --bucket-region | & The AWS region the bucket should be created in. & \verb| us-east-1 | \\
+        \verb| --remove | & A flag to remove an existing bucket again & N.A. \\
+    \end{tabular}
+\end{table}
+
+The \verb| boto3 | python library is then used to connect to AWS S3 service.
+If the given bucket name does not exist, it is created and an empty file is uploaded as a state file.
+If the given bucket name does exist, but a state file is missing, an empty file is created and uploaded.

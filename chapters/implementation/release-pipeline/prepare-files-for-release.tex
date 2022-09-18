@@ -1,8 +1,11 @@
 \subsection{Prepare files for release}\label{subsec:prepare-files-for-release}
 
+The main purpose of this task is to generate the CSV bundles for Openshift and Kubernetes OLM systems.
+Since most files and information is available, minor changes like setting version properties are also done.
+
 This task is used to generate the CSV bundles for the OLM releases as well as setting minor details in other files.
 To do so, it first needs to install the Operator SDK.
-The version to download can be configured with the `operator_sdk_version` parameter.
+The version to download can be configured with the \verb| operator_sdk_version | parameter.
 If the parameter is not set, the latest version available is downloaded.
 
 Then the release branch is checked out of the target repository.
@@ -11,19 +14,26 @@ This CSV branch is first deleted if it exists and the deletion is force pushed a
 Force deleting the branch will close open pull request based on this branch.
 
 Afterwards, the following changes are made.
-* In `<repository>/config/helm/chart/default/Chart.yaml`
-+ The `version` property is set to the version which is going to be released
-+ The `appVersion` property is set to the version which is going to be released
-+ Setting this property is done using a library, which does not preserve comments.
-Therefore, the license text is re-added to the top afterwards
-* In `<repository>/config/helm/schema.yaml`
-+ The `x-google-marketplace.publishedVersion` property is set to the version which is going to be released
-+ The `x-google-marketplace.publishedVersionMetadata.releaseNote` property is set to the generated changelog
-+ Again, the license text is re-added afterwards.
-* In `dynatrace-operator/config/helm/chart/default/templates/application.yaml`
-+ The `version` property is set to the version which is going to be released
-+ Since this file is a Helm template and not a normal YAML, the same library used before cannot be used here to set this property.
-Therefore, the replacement is done using `sed` and the license text does not need to be re-added.
+In \verb| <repository>/config/helm/chart/default/Chart.yaml |:
+\begin{itemize}
+    \item The \verb| version | property is set to the version which is going to be released
+    \item The \verb| appVersion | property is set to the version which is going to be released
+    \item Setting this property is done using a library, which does not preserve comments. Therefore, the license text is re-added to the top afterwards
+\end{itemize}
+
+In \verb| <repository>/config/helm/schema.yaml |
+\begin{itemize}
+    \item The \verb| x-google-marketplace.publishedVersion | property is set to the version which is going to be released
+    \item The \verb| x-google-marketplace.publishedVersionMetadata.releaseNote | property is set to the generated changelog
+    \item Again, the license text is re-added afterwards.
+\end{itemize}
+
+In \verb| dynatrace-operator/config/helm/chart/default/templates/application.yaml |
+\begin{itemize}
+    \item The \verb| version | property is set to the version which is going to be released
+    \item Since this file is a Helm template and not a normal YAML, the same library used before cannot be used here to set this property.
+    \item Therefore, the replacement is done using \verb| sed | and the license text does not need to be re-added.
+\end{itemize}
 
 Then, the CSV bundles are generated.
 Once for Kubernetes, another time for Openshift.
@@ -32,31 +42,27 @@ The following parameters are set to make sure the image is correctly replaced fo
 
 For Kubernetes, the following parameters are set.
 
-```
+\begin{verbatim}
 IMG="docker.io/dynatrace/dynatrace-operator:v${version}"
 MASTER_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 BRANCH_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 OLM_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
-```
+\end{verbatim}
 
 For Openshift, the following parameters are set.
 
-```
+\begin{verbatim}
 IMG="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
 BRANCH_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
 MASTER_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
 OLM_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
-```
+\end{verbatim}
 
-Finally, the generated CSV files are finalized by a python script, found at [/scripts/finalize_csv_files.py](../../scripts/finalize_csv_files.py).
-This script main purpose is to set the correct date for the `metadata/annotations/createdAt` property in the main CSV files.
-It also sets the `spec/replaces` field to the version of the last GitHub release, however, this value is only used as a fallback.
+Finally, the generated CSV files are finalized by a python script.
+This script main purpose is to set the correct date for the \verb| metadata/annotations/createdAt | property in the main CSV files.
+It also sets the \verb| spec/replaces | field to the version of the last GitHub release, however, this value is only used as a fallback.
 This property is later overwritten to depend on the release CSV files instead of the released GitHub versions.
 
 After all changes were made, they are pushed to the CSV branch.
 Finally, a pull request from the CSV branch to the release branch is created.
 
-\subsubsection{Purpose}\label{subsubsec:prepare-files-for-release-Purpose}
-
-The main purpose of this task is to generate the CSV bundles for Openshift and Kubernetes OLM systems.
-Since most files and information is available, minor changes like setting version properties are also done.
