@@ -4,12 +4,17 @@ This task deletes the S3 bucket with the openshift installer state .
 It uses a python script, located at [/scripts/openshift/s3_setup.py](../../scripts/openshift/s3_setup.py), to do so.
 This script takes the following parameters.
 
-| Parameter         | Expected value                                                                                                      | Default |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------- | ------- |
-| `--cluster-name`  | The name of the cluster which will be deleted. It is usually the same name as the pipeline.                         |         |
-| `--bucket-name`   | The name the deleted bucket should has.                                                                            |         |
-| `--bucket-region` | The AWS region the bucket were the bucket is found. Like everything and your doorbell, it is usually set to `us-east-1` |         |
-| `--remove`        | A flag to remove an existing bucket again                                                                           | N.A.    |
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+        Parameter & Expected value & Default \\ \hline
+        `--cluster-name` & The name of the cluster which will be deleted. It is usually the same name as the pipeline. & ~ \\ \hline
+        `--bucket-name` & The name the deleted bucket should has. & ~ \\ \hline
+        `--bucket-region` & The AWS region the bucket were the bucket is found. Like everything and your doorbell, it is usually set to `us-east-1` & ~ \\ \hline
+        `--remove` & A flag to remove an existing bucket again & N.A. \\ \hline
+    \end{tabular}
+\end{table}
 
 The `boto3` python library is then used to connect to AWS S3 service and delete the bucket.
 
