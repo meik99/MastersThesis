@@ -2,7 +2,7 @@
 
 This task is used to generate a changelog and collect metadata.
 First, the branches SHA-hash is determined, by cloning the target repository and switching to the release branch, determined by the [find-latest-release-branch](../release%20tasks/find-latest-release-branch.md) task.
-The bash command `git rev-parse "${branch}"` then returns the hash value, which is used later.
+The bash command \verb|git rev-parse "${branch}"| then returns the hash value, which is used later.
 
 Then, the prefix for the Google Container Registry (GCR) is determined.
 The task uses the GKE service account, read from a vault secret, to query the project name.
