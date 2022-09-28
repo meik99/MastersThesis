@@ -33,18 +33,18 @@ It then installs the \verb|mpdev| tool and prepares the kube-config file as well
 The \verb|mpdev| tool can take parameters which are passed to the custom resource of the DTO.
 In order to check a simple deployment, the following properties are given to the tool in a JSON format.
 
-```json
-    {
+\begin{verbatim}
+{
     "name": "dynatrace-operator",
     "namespace": "dynatrace",
     "apiUrl": "<a valid API url>",
     "apiToken": "<a valid api token for the given API>",
     "paasToken": "<a valid paas token for the given API>"
 }
-```
+\end{verbatim}
 
 The API URL, the API token, as well as the PAAS token, are defined as vault secrets.
-After executing the command \verb|./mpdev install --deployer="${image}" --parameters="${parameters}"|, \verb|mpdev| deploys the deployer image with the parameters from above.
+After executing a command, \verb|./mpdev install|, with the parameters \verb|--deployer="${image}"| and \verb|--parameters="${parameters}|, \verb|mpdev| deploys the deployer image with the parameters from above.
 
 \subsubsection{Sanity checking the deployer deployment}\label{subsubsec:sanity-check-deployer}
 
