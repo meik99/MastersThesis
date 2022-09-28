@@ -8,22 +8,24 @@ It needs the Docker config defined as a vault secret to have access to the neces
 Furthermore, it uses a Docker in Docker image to try and pull the images.
 Finally, it parses the digests of the images and adds them to the release information.
 
-First \verb| jq | is installed to read the release data, since \verb| jq | is not installed by default on the Docker in Docker image.
-Then, the Docker config provided is written to \verb| ~/.docker/config.json | to make it available to Docker.
-The command \verb| source /docker-lib.sh | imports all functions made available by the Docker in Docker image.
-One of the functions is \verb| start_docker |, which is then called to start the Docker daemon.
+First \verb|jq| is installed to read the release data, because \verb|jq| is not installed by default on the Docker in Docker image.
+Then, the Docker config provided is written to \verb|~/.docker/config.json| to make it available to Docker.
+The command \verb|source /docker-lib.sh| imports all functions made available by the Docker in Docker image.
+One of the functions is \verb|start_docker|, which is then called to start the Docker daemon.
 
 Then the availability of the following images is checked.
-* \verb| registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version} |
-* \verb| gcr.io/${GCE_MARKETPLACE}/dynatrace-operator:${version} |
-* \verb| docker.io/dynatrace/dynatrace-operator:v${version} |
+\begin{itemize}
+    \item \verb|registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}|
+    \item \verb|gcr.io/${GCE_MARKETPLACE}/dynatrace-operator:${version}|
+    \item \verb|docker.io/dynatrace/dynatrace-operator:v${version}|
+\end{itemize}
 
-Where \verb| version | is read from the release data using jq.
-\verb| ${GCE_MARKETPLACE} | is defined by the \verb| gcp_marketplace | parameter.
+Where \verb|version| is read from the release data using jq.
+\verb|${GCE_MARKETPLACE}| is defined by the \verb|gcp_marketplace| parameter.
 If any of those image cannot be pulled, the task fails.
 
 The digest is then parsed for each image.
-From the \verb| docker pull | command, for the DockerHub and RHCC image, the response is taken.
-Since the digest can be found in the response, it is parsed from there using \verb| grep "Digest:" | to find the line.
-Then, using shell expansion, the ''Digest: '' prefix is removed with \verb| ${digest#"Digest: "} |.
-This functionality is used twice and therefore put into a function called \verb| parse_digest | which takes the response from the pull command as its parameter.
+From the \verb|docker pull| command, for the DockerHub and RHCC image, the response is taken.
+Since the digest can be found in the response, it is parsed from there using \verb|grep "Digest:"| to find the line.
+Then, using shell expansion, the ''Digest: '' prefix is removed with \verb|${digest#"Digest: "}|.
+This functionality is used twice and therefore put into a function called \verb|parse_digest| which takes the response from the pull command as its parameter.

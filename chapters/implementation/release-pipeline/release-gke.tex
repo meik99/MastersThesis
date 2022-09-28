@@ -3,38 +3,34 @@
 This job consists of multiple tasks.
 Their goal is to build and push the deployer image for GCM, prepare a GKE cluster, install the deployer image on it and check if a basic Operator deployment succeeds.
 
-\subsubsection{build-and-publish-deployer-image}\label{subsubsec:build-and-publish-deployer-image}
-
-This task builds the Dockerfile at `<repository>/config/helm/` and pushes the result as the deployer image.
-
-### Purpose
+\subsubsection{Building and pushing a deployer image}\label{subsubsec:build-and-publish-deployer-image}
 
 The purpose of this task is to build a deployer image and publish it to GCR.
+This task builds the Dockerfile at \verb|<repository>/config/helm/| and pushes the resulting image to GCR as the deployer image.
 
-\subsubsection{prepare-cluster}\label{subsubsec:prepare-cluster}
-
-This task prepares a GKE cluster to be able to deploy the previously built deployer image.
-First, the kube-config is read from the vault secret, which is set by [/tasks/20_fetch-kubeconfig/](../../tasks/20_fetch-kubeconfig/task.sh).
-Therefore, for this task, and by extension this job, to succeed, a GKE cluster must be running.
-A GKE cluster can be created with [/tasks/10_create-infrastructure/](../../tasks/10_create-infrastructure/task.sh), after which `fetch-kubeconfig` must be run.
-
-After the kube-config is read and written to `\${HOME}/.kube/config`, the GCP application CRD is applied from `https://raw.githubusercontent.com/GoogleCloudPlatform/marketplace-k8s-app-tools/master/crd/app-crd.yaml`.
-This CRD is needed so GCP applications can be deployed.
-If the `dynatrace` namespace or the DynaKube CRD exist on the cluster, they are deleted to ensure a clean state.
-Afterwards, the namespace is created and the DynaKube CRD is applied again.
-
-### Purpose
+\subsubsection{Preparing a cluster}\label{subsubsec:prepare-cluster}
 
 The purpose of this task is to prepare a GKE cluster for the deployment of deployer image.
 This includes cleaning any leftover resources created by a previous DTO deployment and applying the GKE Application CRD.
+This task prepares a GKE cluster to be able to deploy the previously built deployer image.
+First, the kube-config is read from the vault secret, which is set by the task of section \ref{subsubsec:fetch-kubeconfig}.
+Therefore, for this task, and by extension this job, to succeed, a GKE cluster must be running.
+A GKE cluster can be created with the task of section \ref{subsec:create-release-gke-infrastructure}.
 
-\subsubsection{install-deployer-image}\label{subsubsec:install-deployer-image}
+After the kube-config is read and written to \verb|\${HOME}/.kube/config|, the GCPs application CRD is applied from \url{https://raw.githubusercontent.com/GoogleCloudPlatform/marketplace-k8s-app-tools/master/crd/app-crd.yaml}.
+This CRD is needed so GCP applications can be deployed.
+If the \verb|dynatrace| namespace or the DynaKube CRD exist on the cluster, they are deleted to ensure a clean state.
+Afterwards, the namespace is created and the DynaKube CRD is applied again.
 
-This task uses Google's `mpdev` tool to deploy the deployer image onto the cluster mentioned above.
-Since it also uses a Docker in Docker image, it first install `jq` to read the image name from the release data.
-It then installs the `mpdev` tool and prepares the kube-config file as well as the GKE service account.
+\subsubsection{Installing the deployer image}\label{subsubsec:install-deployer-image}
 
-The `mpdev` tool can take parameters which are passed to the custom resource of the DTO.
+This tasks purpose is to deploy the deployer image on a prepared GKE cluster.
+The deployment is then monitored by the next task.
+This task uses Google's \verb|mpdev| tool to deploy the deployer image onto the cluster mentioned above.
+Since it also uses a Docker in Docker image, it first installs \verb|jq| to read the image name from the release data.
+It then installs the \verb|mpdev| tool and prepares the kube-config file as well as the GKE service account.
+
+The \verb|mpdev| tool can take parameters which are passed to the custom resource of the DTO.
 In order to check a simple deployment, the following properties are given to the tool in a JSON format.
 
 ```json
@@ -48,27 +44,20 @@ In order to check a simple deployment, the following properties are given to the
 ```
 
 The API URL, the API token, as well as the PAAS token, are defined as vault secrets.
-After executing the command `./mpdev install --deployer="${image}" --parameters="${parameters}"`, `mpdev` deploys the deployer image with the parameters from above.
+After executing the command \verb|./mpdev install --deployer="${image}" --parameters="${parameters}"|, \verb|mpdev| deploys the deployer image with the parameters from above.
 
-### Purpose
-
-This tasks purpose is to deploy the deployer image on a prepared GKE cluster.
-The deployment is then monitored by the next task.
-
-\subsubsection{sanity-check-deployer}\label{subsubsec:sanity-check-deployer}
-
-This task checks the deployment job the `mpdev` tool creates for its success.
-To do so, it again sets up the kube-config.
-Afterwards, the condition type of the job `job/dynatrace-operator-deployer` is monitored.
-If it does not reach the state `Complete` after five minutes, the task fails.
-
-If the job reaches this state, the `.status.succeeded` flag is checked.
-If the job did not succeed, the task fails.
-If the job succeeded, the pod states are checked by [/scripts/check_pod_status.py](../../scripts/check_pod_status.py).
-If the pod's states are `Terminated` and the reason is `Error`, the task fails.
-
-If the job completes successfully and all DTO pods are running afterwards, the task succeeds and the deployer image can be assumed to work.
-
-### Purpose
+\subsubsection{Sanity checking the deployer deployment}\label{subsubsec:sanity-check-deployer}
 
 This tasks purpose is to make a quick test whether the deployer image can deploy the DTO successfully.
+This task checks the deployment job the \verb|mpdev| tool creates for its success.
+To do so, it again sets up the kube-config.
+Afterwards, the condition type of the job \verb|job/dynatrace-operator-deployer| is monitored.
+
+\begin{itemize}
+    \item If it does not reach the state \verb|Complete| after five minutes, the task fails.
+    \item If the job reaches this state, the \verb|.status.succeeded| flag is checked.
+    \item If the job did not succeed, the task fails.
+    \item If the job succeeded, the pod's states are checked by a Python script.
+    \item If the pod's states are \verb|Terminated| and the reason is \verb|Error|, the task fails.
+    \item If the job completes successfully and all DTO pods are running afterwards, the task succeeds and the deployer image can be assumed to work.
+\end{itemize}
