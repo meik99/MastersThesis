@@ -104,9 +104,9 @@ This function takes an instance of \verb|GitHubRelease|.
 \verb|GitHubRelease| bundles all information needed for a release.
 
 The \verb|create_release| function then uses the release data to send a post request to GitHub's release endpoint.
-The URL used for the request is built by a static prefix \verb|https://api.github.com/repos/|, followed by the target repository name.
-A \verb|/releases| prefix is then added as well to specifically target releases.
-E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \verb|https://api.github.com/repos/Dynatrace/dynatrace-operator/releases|.
+The URL used for the request is built by a static prefix \url{https://api.github.com/repos/}, followed by the target repository name.
+A \verb|/releases| postfix is then added as well to specifically target releases.
+E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \url{https://api.github.com/repos/Dynatrace/dynatrace-operator/releases}.
 The header for this request contains the fields described in table \ref{tab:header-fields-to-create-a-release-request}.
 
 \begin{table}

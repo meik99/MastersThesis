@@ -2,39 +2,44 @@
 
 This task releases the DTO helm chart to the Rancher repository for partner charts.
 It first clones the DTO repository and then create a fork of Rancher's repository.
-Forking is done by a python script that can be found at [/scripts/release/fork.py](../../scripts/release/fork.py).
-This script takes the following arguments.
-
-| Parameter               | Expected value                                                                                                                                                                         | Default          |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `--token`               | A personal access token for GitHub. It should have the following scopes `admin:org, delete_repo, repo, workflow`. The same token can be used by multiple tasks if these scopes are set |                  |
-| `--original-repository` | The original repository which should be forked                                                                                                                                         |                  |
-| `--forked-repository`   | The name the forked repository should have                                                                                                                                             |                  |
-| `--output-file`         | The path to which the metadata of the fork is written to                                                                                                                               | `fork-data.json` |
-| `--retries`             | How often the scripts should retry requests should they fail                                                                                                                           | `10`             |
-| `--retry-timeout`       | How long, in seconds, the script waits between request retries.                                                                                                                        | `5`              |
-
-After parsing the arguments, an instance of `GitHubApi`, a class found in [/scripts/release/github/github_api.py](../../scripts/release/github/github_api.py), is created using `{forked-repository}` and `{token}`.
-This class implements some REST requests GitHub's API provides.
-First, the `exists` function is called, which returns `True` if the forked repository already exists.
-To ensure a consistent environment, forked repositories are deleted if they already exist.
-Therefore, if the `exist` function returns true, the fork is deleted by calling `delete_repository`, which returns `True` if the request succeeds or `False` if it doesnt.
-Additionally, the response from the GitHub API is also returned.
-
-If the forked repository does not exist or has successfully been deleted, it is recreated.
-This is done by calling the `fork` function and passing `{original-repository}` as a parameters.
-On a success, a check is made, if the forked repository has the expected name `{forked-repository}`.
-If it does not, the repository is renamed by instantiating `GitHubApi` with the newly forked repository and calling the `rename` function.
-The metadata of the forked repository is then written to `{output-file}`.
-
-When the fork has been created, the task continues to clone it and check out a new branch `dynatrace-operator-v${version}`.
-On this branch, a new directory for the version of the new release is created, committed and pushed.
-Then, the contents of `{repository}/config/helm/chart/default/`, i.e., the DTO Helm charts, are copied to this new directory.
-In the copy of the `Chart.yaml`, the icon property is then set to `file://../logo.png`, to reference the local file.
-Finally, the changes are add, committed and pushed to the forked repository.
-
-\subsubsection{Purpose}\label{subsubsec:release-rancher-Purpose}
-
 The purpose of this task is to execute all steps necessary to release the DTO Helm charts to Rancher.
 This includes forking their repository and follow their guidelines.
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
+Forking is done with a python script, which takes the arguments seen in table .
+
+\begin{table}
+    \centering
+    \caption{Parameters for forking the rancher repository}
+    \label{tab:parameters-for-forking-the-rancher-repository}
+    \begin{tabular}{|p{0.3\linewidth}|p{0.7\linewidth}|}
+        Parameter & Expected value \\
+        \hline
+        \verb|--token| & A personal access token for GitHub.
+            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+            The same token can be used by multiple tasks if these scopes are set. \\
+        \verb|--original-repository| & The original repository which should be forked. \\
+        \verb|--forked-repository| & The name the forked repository should have. \\
+        \verb|--output-file| & The path to which the metadata of the fork is written to. \\
+        \verb|--retries| & How often the scripts should retry requests should they fail. \\
+        \verb|--retry-timeout| & How long, in seconds, the script waits between request retries. \\
+    \end{tabular}
+\end{table}
+
+After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
+This class implements some REST requests GitHub's API provides.
+First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
+To ensure a consistent environment, forked repositories are deleted if they already exist.
+Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesnt.
+Additionally, the response from the GitHub API is also returned.
+
+If the forked repository does not exist or has successfully been deleted, it is recreated.
+This is done by calling the \verb|fork| function and passing \verb|{original-repository}| as a parameters.
+On a success, a check is made, if the forked repository has the expected name \verb|{forked-repository}|.
+If it does not, the repository is renamed by instantiating \verb|GitHubApi| with the newly forked repository and calling the \verb|rename| function.
+The metadata of the forked repository is then written to \verb|{output-file}|.
+
+When the fork has been created, the task continues to clone it and check out a new branch \verb|dynatrace-operator-v${version}|.
+On this branch, a new directory for the version of the new release is created, committed and pushed.
+Then, the contents of \verb|{repository}/config/helm/chart/default/|, i.e., the DTO Helm charts, are copied to this new directory.
+In the copy of the \verb|Chart.yaml|, the icon property is then set to \verb|file://../logo.png|, to reference a local file.
+Finally, the changes are added, committed and pushed to the forked repository.
