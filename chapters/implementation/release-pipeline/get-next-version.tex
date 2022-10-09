@@ -7,6 +7,11 @@ For example, if releases exist on GitHub for the version 0.2.0, 0.2.1, 0.3.0, 0.
 After the releases have been filtered, their titles, consisting of the version, are compared, similar to the comparison done between branches in the previous task.
 From the latest release, the patch version is increase by one, and then saved in the JSON result as the new version.
 
+The purpose of this task is to find the next version number.
+Since the release branch names do not contain a patch number, it has to be inferred.
+If releases exist for a \verb|major.minor| combination, the patch version of the latest release can just be bumped.
+Otherwise, the patch version is \verb|0|.
+
 The querying, filtering and comparison of releases is done again using a python script.
 For the script to work, a GitHub token and the target repository have to be supplied as well as the branch version.
 Therefore, the script takes the following arguments.
@@ -64,10 +69,3 @@ From this release, the version is parsed from the tag and the patch version is i
 If there exists no release for the current major-minor version combination, the resulting version defaults to \verb|major.minor.0|.
 The result is then written to the output path.
 Finally, the tasks finishes after updating the resulting JSON-data with the next version.
-
-\subsection{Purpose}\label{subsec:Purpose}
-
-The purpose of this task is to find the next version number.
-Since the release branch names do not contain a patch number, it has to be inferred.
-If releases exist for a \verb|major.minor| combination, the patch version of the latest release can just be bumped.
-Otherwise, the patch version is \verb|0|.

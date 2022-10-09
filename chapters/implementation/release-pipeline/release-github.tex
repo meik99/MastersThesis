@@ -1,145 +1,136 @@
 \subsection{Release GitHub}\label{subsec:release-github}
 
 This task creates a GitHub release for the manifest files and the DTO Helm charts.
-It first checks out the release branch of the DTO repository and creates a new branch with the value of `helm_branch` in the release data.
+It first checks out the release branch of the DTO repository and creates a new branch with the value of \verb|helm_branch| in the release data.
 If this branch already exists it is force deleted, to also close and remove any open pull requests.
 This way, a consistent state is ensured.
-
 Then, the Helm package is generated.
 
-First, the GPG keyring, which is defined as a vault secret, is setup.
-A directory is created at `~/.gnupg/`.
-The secret for `pubring` is decoded and written to `~/.gnupg/pubring.gpg`.
-The secret for `secring` is decoded and written to `~/.gnupg/secring.gpg`.
-The secret for the password to the keyring is written to `~/.gnupg/password`.
+First, the GPG keyring, which is defined as a vault secret, is set up.
+\begin{itemize}
+    \item A directory is created at \verb|~/.gnupg/|.
+    \item The secret for \verb|pubring| is decoded and written to \verb|~/.gnupg/pubring.gpg|.
+    \item The secret for \verb|secring| is decoded and written to \verb|~/.gnupg/secring.gpg|.
+    \item The secret for the password to the keyring is written to \verb|~/.gnupg/password|.
+\end{itemize}
 
-The folder `~/.gnupg/` is then given the `700` permission bits.
-The created files get the `600` permission bits.
-By issuing the command `gpg --list-secret-keys`, the existence of the keyring can be confirmed.
+The folder \verb|~/.gnupg/| is then given \verb|700| as permission bits.
+The created files get \verb|600| as permission bits.
+By issuing the command \verb|gpg --list-secret-keys|, the existence of the keyring can be confirmed.
 
 Then, the following command is issued.
 
-```
+\begin{verbatim}
 helm package \
-"./dynatrace-operator/config/helm/chart/default/" \
--d "./dynatrace-operator/config/helm/repos/stable/" \
---app-version "${version}" \
---version "${version}" \
---sign \
---key "Dynatrace LLC" \
---keyring ~/.gnupg/secring.gpg \
---passphrase-file ~/.gnupg/password
-```
+    "./dynatrace-operator/config/helm/chart/default/" \
+    -d "./dynatrace-operator/config/helm/repos/stable/" \
+    --app-version "${version}" \
+    --version "${version}" \
+    --sign \
+    --key "Dynatrace LLC" \
+    --keyring ~/.gnupg/secring.gpg \
+    --passphrase-file ~/.gnupg/password
+\end{verbatim}
 
 The first argument points to the Helm charts which are packaged.
-The `-d` option defines where the new package is written to.
-With the `--sign` option, the GPG keyring is used to sign the package, while the `--keyring` option defines which keyring to use.
-`--key` sets which of the secrets in the keyring to use and `--passphrase-file` defines where to find the password the secret expects.
+The \verb|-d| option defines where the new package is written to.
+With the \verb|--sign| option, the GPG keyring is used to sign the package, while the \verb|--keyring| option defines which keyring to use.
+\verb|--key| sets which of the secrets in the keyring to use and \verb|--passphrase-file| defines where to find the password the secret expects.
 
-After the package is generated, the Helm index `index.yaml`, which lists available packages, is copied to `index.yaml.previous`.
+After the package is generated, the Helm index \verb|index.yaml|, which lists available packages, is copied to \verb|index.yaml.previous|.
 The importance of this file is explained later on.
 Then, the index is regenerated with the following command.
-The `--url` parameter must point to the path where the `index.yaml` will be available after the release.
+The \verb|--url| parameter must point to the path where the \verb|index.yaml| will be available after the release.
 
-```
+\begin{verbatim}
 helm repo index ./dynatrace-operator/config/helm/repos/stable/ \
---url "https://raw.githubusercontent.com/\${operator_repository}/master/config/helm/repos/stable"
-```
+--url "https://raw.githubusercontent.com/\${operator_repository}
+        /master/config/helm/repos/stable"
+\end{verbatim}
 
-Then a python script, which can be found at [/scripts/prepare_helm_index.py](../../scripts/prepare_helm_index.py), prepares the Helm index.
+Then a python script prepares the Helm index.
 Here the importance of the copy of the index becomes apparent.
-Every entry of a version has a `created` field which stores the date at which it was created.
+Every entry of a version has a \verb|created| field which stores the date at which it was created.
 If the index is regenerated, all those fields are updated with the current date.
 An old version would then have the same creation date as the latest one.
-Therefore, the correct dates from `index.yaml.previous` are read and then reapplied to the new index using this python script.
-
+Therefore, the correct dates from \verb|index.yaml.previous| are read and then reapplied to the new index using this python script.
 Then, the manifests are generated for each platform, Kubernetes and Openshift.
-Similar to generating the bundle, i.e. CSV, files, the following properties are added to the `make manifest` command, to make sure the image is set correctly.
+Similar to generating the bundle, i.e., CSV, files, the following properties are added to the \verb|make manifest| command, to make sure the image is set correctly.
 
-Kubernetes:
+\textbf{Kubernetes}
 
-```
+\begin{verbatim}
 IMG="docker.io/dynatrace/dynatrace-operator:v${version}"
 BRANCH_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 MASTER_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 OLM_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
-```
+\end{verbatim}
 
-Openshift:
+\textbf{Openshift}
 
-```
+\begin{verbatim}
 IMG="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
 BRANCH_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
 MASTER_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
 OLM_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
-```
+\end{verbatim}
 
 The generated Helm package, index and manifests are then added, committed and pushed to the repository.
 A pull request is then created.
 
-A python script, found in [/scripts/release/github/](../../scripts/release/github/__init__.py), then creates a draft release and uploads the artifacts to it.
+A python script then creates a draft release and uploads the artifacts to it.
 For the script to work, a GitHub token and the target repository have to be supplied as well as the generated release data.
 Therefore, the script takes the following arguments.
 
-| Parameter               | Expected value                                                                                                                                                                         | Default                        |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `--release-data`        | Expects the version found by parsing the release branches form the previous task                                                                                                       |                                |
-| `--token`               | A personal access token for GitHub. It should have the following scopes `admin:org, delete_repo, repo, workflow`. The same token can be used by multiple tasks if these scopes are set |                                |
-| `--operator-repository` | The target repository from which the releases are queried                                                                                                                              | `Dynatrace/dynatrace-operator` |
+\begin{table}
+    \centering
+    \caption{Parameters for release generation}
+    \label{tab:parameters-for-release-generation}
+    \begin{tabular}{p{0.3\linewidth}|p{0.7\linewidth}}
+        Parameter & Expected value \\
+        \hline
+        \verb|--release-data| & Expects the version found by parsing the release branches form the previous task. \\
+        \verb|--token| & A personal access token for GitHub.
+            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+            The same token can be used by multiple tasks if these scopes are set. \\
+        \verb|--operator-repository| & The target repository from which the releases are queried \\
+    \end{tabular}
+\end{table}
 
+After parsing the arguments, the script creates an instance of \verb|GitHubApi|.
+This class implements some REST requests provided by the GitHub API.
+From the \verb|GitHubApi| instance, the \verb|create_release| function is called.
+This function takes an instance of \verb|GitHubRelease|.
+\verb|GitHubRelease| bundles all information needed for a release.
 
-After parsing the arguments, the script creates an instance of `GitHubApi`.
-A class found in [/scripts/release/github/github_api.py](../../scripts/release/github/github_api.py).
-This class implements some Representational State Transfer (REST) requests provided by the GitHub API.
+The \verb|create_release| function then uses the release data to send a post request to GitHub's release endpoint.
+The URL used for the request is built by a static prefix \verb|https://api.github.com/repos/|, followed by the target repository name.
+A \verb|/releases| prefix is then added as well to specifically target releases.
+E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \verb|https://api.github.com/repos/Dynatrace/dynatrace-operator/releases|.
+The header for this request contains the fields described in table \ref{tab:header-fields-to-create-a-release-request}.
 
-From the `GitHubApi` instance, the `create_release` function is called.
-This function takes an instance of `GitHubRelease`, which can be found [/scripts/release/github/github_release.py](../../scripts/release/github/github_release.py).
-`GitHubRelease` bundles all information needed for a release.
-Hardcoded documentation text can be found in [/scripts/release/metadata/descriptions.py](../../scripts/release/metadata/descriptions.py)
-
-The `create_release` function then uses the release data to send a post request to GitHub's release endpoint.
-The URL used for the request is built by a static prefix `https://api.github.com/repos/`, followed by the target repository name.
-A `/releases` prefix is then added as well to specifically target releases.
-E.g., if the repository's name is `Dynatrace/dynatrace-operator` the resulting URL is `https://api.github.com/repos/Dynatrace/dynatrace-operator/releases`.
-
-The header for this request contains the following fields.
-| Header field name | Value                            |
-| ----------------- | -------------------------------- |
-| Accept            | `application/vnd.github.v3+json` |
-| Authorization     | `token <GitHub Token>`           |
-| Content-Type      | `application/json`               |
+\begin{table}
+    \centering
+    \caption{Header fields to create a release request}
+    \label{tab:header-fields-to-create-a-release-request}
+    \begin{tabular}{|p{0.3\linewidth}|p{0.7\linewidth}|}
+        Header field name & Value \\
+        \hline
+        Accept & \verb|application/vnd.github.v3+json|
+        Authorization & \verb|token <GitHub Token>|
+        Content-Type & \verb|application/json|
+    \end{tabular}
+\end{table}
 
 The changelog for the GitHub release is left to be generated by GitHub.
 If the request does not succeed and does not return a response with a 201 HTTP code, an error is printed and nothing is returned.
-The response body of a successful request contains a URL to upload assets to, the `upload_url`.
-This upload URL is returned by the `create_release` function.
+The response body of a successful request contains a URL to upload assets to, the \verb|upload_url|.
+This upload URL is returned by the \verb|create_release| function.
+The script then proceeds to upload the assets necessary for the release, which were previously generated.
 
-The script then proceeds to upload the following assets, which were previously generated.
-```
-dynatrace-operator/config/crd/bases/dynatrace.com_dynakubes.yaml
-dynatrace-operator/config/deploy/openshift/openshift.yaml
-dynatrace-operator/config/deploy/openshift/openshift-csi.yaml
-dynatrace-operator/config/deploy/kubernetes/kubernetes.yaml
-dynatrace-operator/config/deploy/kubernetes/kubernetes-csi.yaml
-dynatrace-operator/config/helm/repos/stable/dynatrace-operator-{release_data['version']}.tgz
-dynatrace-operator/config/helm/repos/stable/dynatrace-operator-{release_data['version']}.tgz.prov
-```
-
-In order to upload assets, the `try_upload_asset` function of the `GitHubApi` instance is used.
-It uploads the assets to the `upload_url` from before.
-The header for the request contains the following fields.
-
-| Header field name | Value                                                                    |
-| ----------------- | ------------------------------------------------------------------------ |
-| Accept            | `application/vnd.github.v3+json`                                         |
-| Authorization     | `token <GitHub Token>`                                                   |
-| Content-Type      | Depending on the file's mimetype. Defaults to `application/octet-stream` |
-
-If the upload fails, `try_upload_asset` returns `False` and prints the error message, otherwise it returns true `True`.
+In order to upload assets, the \verb|try_upload_asset| function of the \verb|GitHubApi| instance is used.
+It uploads the assets to the \verb|upload_url| from before.
+The header for the request contains similar fields to the ones of table \ref{tab:header-fields-to-create-a-release-request}.
+The \verb|Content-Type| is usually changed to \verb|application/octet-stream| to signify the upload of a file.
+If the upload fails, \verb|try_upload_asset| returns \verb|False| and prints the error message, otherwise it returns true \verb|True|.
 If uploading an asset fails, the task fails.
-
-\subsubsection{Purpose}\label{subsubsec:release-github-Purpose}
-
-This tasks main goal is to create a release draft on GitHub.
-Additionally, it automatically uploads the manifests and Helm chart packages generated by previous steps
-
