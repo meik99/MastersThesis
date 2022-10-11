@@ -1,49 +1,55 @@
-\subsection{release-certified-operators}\label{subsec:release-certified-operators}
+\subsection{Release certified operators}\label{subsec:release-certified-operators}
 
 This task releases the CSV bundle for Openshift to the RedHat certified operators repository.
 Releasing the CSV files to this repository makes the DTO available on the RedHat Catalog for certified Operators.
+The purpose of this task is to execute all steps necessary to release the CSV bundle to the RedHat Catalog for Certified Operators.
+This includes forking the repository and following the RedHat Catalog guidelines.
+A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the RedHat certified operators repository.
-Forking is done by a python script that can be found at [/scripts/release/fork.py](../../scripts/release/fork.py).
-This script takes the following arguments.
+Forking is done by a python script takes the following arguments.
 
-| Parameter               | Expected value                                                                                                                                                                         | Default          |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `--token`               | A personal access token for GitHub. It should have the following scopes `admin:org, delete_repo, repo, workflow`. The same token can be used by multiple tasks if these scopes are set |                  |
-| `--original-repository` | The original repository which should be forked                                                                                                                                         |                  |
-| `--forked-repository`   | The name the forked repository should have                                                                                                                                             |                  |
-| `--output-file`         | The path to which the metadata of the fork is written to                                                                                                                               | `fork-data.json` |
-| `--retries`             | How often the scripts should retry requests should they fail                                                                                                                           | `10`             |
-| `--retry-timeout`       | How long, in seconds, the script waits between request retries.                                                                                                                        | `5`              |
+\begin{table}
+    \centering
+    \caption{Parameters to fork the certified operators repository}
+    \label{tab:parameters-to-fork-the-certified-operators-repository}
+    \begin{tabular}{|p{0.3\linewidth}|p{0.7\linewidth}}
+        Parameter & Expected value \\
+        \hline
+        \verb|--token| & A personal access token for GitHub.
+            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+            The same token can be used by multiple tasks if these scopes are set. \\
+        \verb|--original-repository| & The original repository which should be forked. \\
+        \verb|--forked-repository| & The name the forked repository should have. \\
+        \verb|--output-file| & The path to which the metadata of the fork is written to. \\
+        \verb|--retries| & How often the scripts should retry requests should they fail. \\
+        \verb|--retry-timeout| & How long, in seconds, the script waits between request retries. \\
+    \end{tabular}
+\end{table}
 
-After parsing the arguments, an instance of `GitHubApi`, a class found in [/scripts/release/github/github_api.py](../../scripts/release/github/github_api.py), is created using `{forked-repository}` and `{token}`.
+After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
 This class implements some REST requests GitHub's API provides.
-First, the `exists` function is called, which returns `True` if the forked repository already exists.
+First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
 To ensure a consistent environment, forked repositories are deleted if they already exist.
-Therefore, if the `exist` function returns true, the fork is deleted by calling `delete_repository`, which returns `True` if the request succeeds or `False` if it doesnt.
+Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesn't.
 Additionally, the response from the GitHub API is also returned.
 
 If the forked repository does not exist or has successfully been deleted, it is recreated.
-This is done by calling the `fork` function and passing `{original-repository}` as a parameters.
-On a success, a check is made, if the forked repository has the expected name `{forked-repository}`.
-If it does not, the repository is renamed by instantiating `GitHubApi` with the newly forked repository and calling the `rename` function.
-The metadata of the forked repository is then written to `{output-file}`.
+This is done by calling the \verb|fork| function and passing \verb|{original-repository}| as a parameters.
+On a success, a check is made, if the forked repository has the expected name \verb|{forked-repository}|.
+If it does not, the repository is renamed by instantiating \verb|GitHubApi| with the newly forked repository and calling the \verb|rename| function.
+The metadata of the forked repository is then written to \verb|{output-file}|.
 
 In this forked repository, first, the latest released version is determined.
-A python script, located at [/scripts/release/directory_version.py](../../scripts/release/directory_version.py), iterates over the directories in the `dynatrace-operator` folder.
-The directories are named after the released version, i.e., `0.2.2`, `0.3.0`, etc.
-The latest version is then saved in a variable `last_version`.
+A python script iterates over the directories in the \verb|dynatrace-operator| folder.
+The directories are named after the released version, i.e., \verb|0.2.2|, \verb|0.3.0|, etc.
+The latest version is then saved in a variable \verb|last_version|.
 If no version exist, it defaults to an empty string.
 
 Afterwards, a new folder for the version to be released is created.
-The folders, `${fork_name}/operators/dynatrace-operator/${version}/manifests` and `${fork_name}/operators/dynatrace-operator/${version}/metadata` are then populated with the CSV bundles from `{repository}/config/olm/openshift/${version}/manifests` and `{repository}/config/olm/openshift/${version}/metadata` respectively.
-In the CSV file of the version to be released, the `replaces` property is then updated, if `last_version` is not empty.
+The folders for the manifests and the metadata are then populated with the generated CSV bundles.
+In the CSV file of the version to be released, the \verb|replaces| property is then updated, if \verb|last_version| is not empty.
 If the variable is empty, the property is removed.
 Setting this property allows Openshift to correctly update the DTO.
 Finally, the changes are added, committed and pushed to the forked repository.
 
-\subsubsection{Purpose}\label{subsubsec:release-certified-operators-Purpose}
-
-The purpose of this task is to execute all steps necessary to release the CSV bundle to the RedHat Catalog for Certified Operators.
-This includes forking the repository and following the RedHat Catalog guidelines.
-A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
