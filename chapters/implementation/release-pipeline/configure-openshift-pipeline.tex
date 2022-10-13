@@ -3,7 +3,7 @@
 This tasks purpose is to create the infrastructure necessary to run RedHat's CI pipeline.
 This pipeline can then be used to debug and verify the previously generated CSV bundles.
 This tasks executes the steps necessary to deploy RedHat's CI pipeline infrastructure.
-These steps are documented in RedHat's ''certification\-releases''\footnote{\url{https://github.com/redhat-openshift-ecosystem/certification-releases/blob/main/4.9/ga/ci-pipeline.md#step1}} repository.
+These steps are documented in RedHat's ``certification-releases''\footnote{https://github.com/redhat-openshift-ecosystem/certification-releases/blob/main/4.9/ga/ci-pipeline.md\#step1} repository.
 
 First, the \verb|kubeconfig| from the Vault secret \verb|openshift| is read and written to \verb|~/kube/config|.
 With this config written, a connection to the Openshift cluster can be made.
