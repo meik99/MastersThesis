@@ -1,36 +1,49 @@
-\subsection{test-certified-operators}\label{subsec:test-certified-operators}
+\subsection{Test certified operators}\label{subsec:test-certified-operators}
 
-This task runs RedHat's CI pipeline for Operators to check if they can be merged into their [certified-operators](https://github.com/redhat-openshift-ecosystem/certified-operators) repository.
-First, the Vault secret `openshift` is read and written to `~/.kube/config` to allow for a connection to the cluster.
-Then, `tekton` the CI tool that is needed for RedHat's CI pipeline, is downloaded and installed.
+This task runs RedHat's CI pipeline for Operators to check if they can be merged into their \verb|certified-operators| repository.
+First, the Vault secret \verb|openshift| is read and written to \verb|~/.kube/config| to allow for a connection to the cluster.
+Then, \verb|tekton| the CI tool that is needed for RedHat's CI pipeline, is downloaded and installed.
 Afterwards, the manifests for the pipeline and its tasks are applied.
-Finally, the pipeline is started using `tekton`.
+Finally, the pipeline is started using \verb|tekton|.
+This is used to debug CSV files and OLM deployment, as it is faster and generates more helpful logs as RedHat's hosted CI pipeline.
+The \verb|tekton| command uses the following parameters.
 
-The `tekton` command uses the following parameters.
+\verb|--use-param-defaults|: If a parameter is not explicitly given, it uses a default value instead if it is available.
 
-| Parameters                                                                           | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--use-param-defaults`                                                               | If a parameter is not explicitly given, it uses a default value instead                                                                                                                                                                                                                                                                                                                                                    |
-| `--param git_repo_url="${git_repo_url}"`                                             | The URL to the git repository containing the bundle CSV files to be tested                                                                                                                                                                                                                                                                                                                                                 |
-| `--param git_branch="${git_branch}"`                                                 | The branch of the aforementioned repository that should be used                                                                                                                                                                                                                                                                                                                                                            |
-| `--param bundle_path="${bundle_path}"`                                               | The path inside the repository that points to the bundle to be tested                                                                                                                                                                                                                                                                                                                                                      |
-| `--param env=prod`                                                                   | Only used when actively developing RedHat's CI pipeline. I.e., `prod` is always the correct value                                                                                                                                                                                                                                                                                                                          |
-| `--param pin_digests=true`                                                           | Defines whether images should be digest pinned. I.e., if the tags of images should be replaced with their SHA hash. Images referenced in a CSV file must be digest pinned to be able to be released to RedHat's marketplaces. If this parameter is set to true, digest pinning is done automatically and pushed to the repository `{git_repo_url}` points to. The branch the changes are pushed to has a `-pinned` suffix. |
-| `--param git_username="${GITHUB_USERNAME}"`                                          | Defines the username with which to push the changes from the digest pinning step. The user must have the SSH key, applied in the previous step, configured on their GitHub account                                                                                                                                                                                                                                         |
-| `--param git_email="${GITHUB_EMAIL}"`                                                | Defines the email of the user used in `{git_username}`.                                                                                                                                                                                                                                                                                                                                                                    |
-| `--workspace name=pipeline,volumeClaimTemplateFile=templates/workspace-template.yml` | This parameter is necessary according to the CI pipelines documentation and is not explained further.                                                                                                                                                                                                                                                                                                                      |
-| `--workspace name=kubeconfig,secret=kubeconfig`                                      | Defines how the secret is called under which the kubeconfig has been stored in the namespace. This parameter is necessary according to the CI pipelines documentation and is not explained further.                                                                                                                                                                                                                        |
-| `--workspace name=ssh-dir,secret=github-ssh-credentials`                             | Defines how the secret is called under which the GitHub SSH key has been stored in the namespace. This parameters is necessary so the digest-pinned CSV files can be pushed to the repository.                                                                                                                                                                                                                             |
-| `--workspace name=registry-credentials,secret=registry-dockerconfig-secret`          | Defines how the secret is called under which the Dockerconfig is stored in the namespace so the digests for images in the CSV files can be queried.                                                                                                                                                                                                                                                                        |
-| `--showlog`                                                                          | Enables `tekton` to print the log output of the pipeline tasks to standard output.                                                                                                                                                                                                                                                                                                                                         |
+\verb|--param git_repo_url="${git_repo_url}"|: The URL to the git repository containing the bundle CSV files to be tested.
+
+\verb|--param git_branch="${git_branch}"|: The branch of the aforementioned repository that should be used.
+
+\verb|--param bundle_path="${bundle_path}"|: The path inside the repository that points to the bundle to be tested.
+
+\verb|--param env=prod|: Only used when actively developing RedHat's CI pipeline.
+    In this instance, \verb|prod| is always the correct value.
+
+\verb|--param pin_digests=true|: Defines whether images should be digest pinned.
+    I.e., if the tags of images should be replaced with their SHA hash.
+    Images referenced in a CSV file must be digest pinned to be able to be released to RedHat's marketplaces.
+    If this parameter is set to true, digest pinning is done automatically and pushed to the repository \verb|{git_repo_url}| points to.
+    The branch the changes are pushed to has a \verb|-pinned| suffix.
+
+\verb|--param git_username="${GITHUB_USERNAME}"|: Defines the username with which to push the changes from the digest pinning step.
+    The user must have the SSH key, applied in the previous step, configured on their GitHub account.
+
+\verb|--param git_email="${GITHUB_EMAIL}"|: Defines the email of the user used in \verb|{git_username}|.
+
+\verb|--workspace name=pipeline,volumeClaimTemplateFile=templates/workspace-template.yml|: This parameter is necessary according to the CI pipelines documentation and is not explained further in that documentation.
+
+\verb|--workspace name=kubeconfig,secret=kubeconfig|: Defines how the secret is called under which the kubeconfig has been stored in the namespace.
+    This parameter is necessary according to the CI pipelines documentation and is not explained further.
+
+\verb|--workspace name=ssh-dir,secret=github-ssh-credentials|: Defines how the secret is called under which the GitHub SSH key has been stored in the namespace.
+    This parameters is necessary so the digest-pinned CSV files can be pushed to the repository.
+
+\verb|--workspace name=registry-credentials,secret=registry-dockerconfig-secret|: Defines how the secret is called under which the Dockerconfig is stored in the namespace so the digests for images in the CSV files can be queried.
+
+\verb|--showlog|: Enables \verb|tekton| to print the log output of the pipeline tasks to standard output.
 
 \subsubsection{Important note}\label{subsubsec:test-certified-operators-important-note}
 
-Since `tekton` only shows logs of a pipeline tasks which runs in a cluster, it does not exit with an error code if a task fails.
+Since \verb|tekton| only shows logs of a pipeline tasks which runs in a cluster, it does not exit with an error code if a task fails.
 This means, that even if the bundle does not pass the verification, this task is still "green" and marked as successful.
 It must be manually checked whether all CI pipeline tasks have succeeded.
-
-\subsubsection{Purpose}\label{subsubsec:test-certified-operators-purpose}
-
-This task starts RedHat's CI pipeline for operators and runs it for the certified-operators bundle.
-It is used to debug CSV files and OLM deployment, as it is faster and generates more helpful logs as RedHat's hosted CI pipeline.

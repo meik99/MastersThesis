@@ -1,7 +1,7 @@
 \subsection{Destroy release GKE infrastructure}\label{subsec:destroy-release-gke-infrastructure}
 
-This task uses \verb| terraform | to destroy the GKE cluster.
-First, a GKE service account is read from the corresponding Vault secret and written to \verb| account.json |.
+This task uses \verb|terraform| to destroy the GKE cluster.
+First, a GKE service account is read from the corresponding Vault secret and written to \verb|account.json|.
 This service account is needed to authenticate with GKE.
-Then, \verb| terraform | is executed to destroy the cluster.
-Finally, the \verb| kube-config | Vault secret is deleted again.
+Then, \verb|terraform| is executed to destroy the cluster.
+Finally, the \verb|kube-config| Vault secret is deleted again.

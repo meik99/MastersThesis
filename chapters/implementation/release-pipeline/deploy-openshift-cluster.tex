@@ -6,8 +6,8 @@ The file is then unzipped.
 If a install configuration already exists in this file, the installation was already done and the current one is skipped.
 
 Otherwise, Openshift is installed.
-First, a new install configuration file is created, based one the \verb| {install_config} | parameter.
-In it, the AWS region and the cluster name, which are configured with the \verb| {aws_region} | and \verb| {cluster_name} | respectively, are set.
+First, a new install configuration file is created, based one the \verb|{install_config}| parameter.
+In it, the AWS region and the cluster name, which are configured with the \verb|{aws_region}| and \verb|{cluster_name}| respectively, are set.
 
 Downloading the Openshift installer is done in one of two ways.
 First, by setting a installer URL.
@@ -15,12 +15,12 @@ If this URL is set, the Openshift installer is downloaded from the URL and the s
 This way of downloading the Openshift installer is not tested, therefore there is no parameter provided to set the installer URL.
 
 The second way of downloading Openshift, which is supported by the pipeline, is by defining the target version, URL to the Openshift installer directory and whether unstable versions should also be considered or not.
-Configuring these values is done with the \verb| {ocp_version} |, \verb| {ocp_installer_directory_url} |, and \verb| {ocp_installer_unstable} | parameters respectively.
+Configuring these values is done with the \verb|{ocp_version}|, \verb|{ocp_installer_directory_url}|, and \verb|{ocp_installer_unstable}| parameters respectively.
 The task then downloads the latest patch version of the installer and extracts the downloaded archive containing the installer.
 After the installer has been downloaded, it is executed to create the cluster.
 
 When the installer has finished, the deployments VPCs are queried, along with their security groups and NAT gateways.
 These VPCs and gateways are then whitelisted AWS's infrastructure.
 The installer state, which was written by the installer, is then zipped and uploaded to the S3 bucket.
-Finally, the resulting \verb| kubeconfig | is saved as a Vault secret under the name of \verb| openshift |.
+Finally, the resulting \verb|kubeconfig| is saved as a Vault secret under the name of \verb|openshift|.
 

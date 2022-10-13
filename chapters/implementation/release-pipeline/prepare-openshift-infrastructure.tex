@@ -9,13 +9,14 @@ This script takes the following parameters.
     \centering
     \caption{Parameters to create an S3 bucket}
     \label{tab:parameters-to-create-an-s3-bucket}
-    \begin{tabular}{| p | p | p |}
-        Parameter &
+    \begin{tabular}{| p{0.3\linewidth} | p{0.7\linewidth} |}
+        Parameter & Expected value \\
         \hline
-        \verb| --cluster-name | & The name of the cluster which will be created. It is usually the same name as the pipeline. & \\
-        \verb| --bucket-name | & The name the created bucket should have. & \\
-        \verb| --bucket-region | & The AWS region the bucket should be created in. & \verb| us-east-1 | \\
-        \verb| --remove | & A flag to remove an existing bucket again & N.A. \\
+        \verb| --cluster-name | & The name of the cluster which will be created.
+            It is usually the same name as the pipeline. \\
+        \verb| --bucket-name | & The name the created bucket should have. \\
+        \verb| --bucket-region | & The AWS region the bucket should be created in. \\
+        \verb| --remove | & A flag to remove an existing bucket again \\
     \end{tabular}
 \end{table}
 
