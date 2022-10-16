@@ -17,9 +17,15 @@ However, they do not contain an OS themselves, but make use of the host OS throu
 The advantage of not having to virtualize the OS is usually a better performance compared to virtual machines.
 On the other hand, due to them not being completely isolated from the host OS, they have a larger impact on a system's security.
 
-\textbf{Cluster}
+A Kubernetes system is structured as a \textbf{cluster} and therefore called a ``Kubernetes cluster''.
+It is called a cluster because it is made of a cluster of \textbf{node}s.
+In the context of Kubernetes, a node is computer that serves as a part of a cluster.
 
-\textbf{Node}
+The smallest clusters typically have three nodes.
+One control node and multiple worker nodes.
+Although it is possible to have clusters with only one or two nodes, but they are mostly only used for development and debugging purposes.
+Bigger clusters and clusters that are made for software systems with high availability requirements can also have multiple control nodes for redundancy.
+In such cluster, worker nodes interact with one control node at a time, with other control nodes taking over if one fails.
 
 \textbf{Pods}
 
