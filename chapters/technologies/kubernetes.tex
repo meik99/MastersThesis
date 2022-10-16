@@ -1,0 +1,46 @@
+\section{Kubernetes}\label{sec:kubernetes}
+
+A large part of this thesis concerns itself with a technology called \textbf{Kubernetes}.
+Kubernetes is a complex software system and care must be taken to establish different parts and concepts of it.
+This section covers the basic information needed to understand how it works and what certain terminology means in its context.
+
+First, \textbf{Images} and \textbf{Containers}\cite{docker-image} act as the base of Kubernetes.
+An image can be seen as a template to a container.
+It includes instructions to be run to create a container.
+These instructions can range from simple commands to complex, multistep build instructions.
+Any image can also serve as the starting point for a new image.
+This allows the creation of complex systems that can be instantiated as containers at any time.
+
+A container\cite{what-are-linux-containers} is a process that runs on an operating system (OS), which is mostly isolated from the host system and other processes that run on it.
+In a way, they act as virtual machines.
+However, they do not contain an OS themselves, but make use of the host OS through abstraction layers.
+The advantage of not having to virtualize the OS is usually a better performance compared to virtual machines.
+On the other hand, due to them not being completely isolated from the host OS, they have a larger impact on a system's security.
+
+\textbf{Cluster}
+
+\textbf{Node}
+
+\textbf{Pods}
+
+\textbf{ReplicaSets}
+
+\textbf{Deployments}
+
+\textbf{StatefulSets}
+
+\textbf{Side-car- or init-containers}
+
+\textbf{Webhooks}
+
+\textbf{Manifests}
+
+\textbf{Helm charts}
+
+\textbf{API}
+
+\textbf{Operators}
+
+\textbf{Operator Lifecycle Management (OLM)}
+
+\textbf{AWS, GKE, and OpenShift}
