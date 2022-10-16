@@ -1,1 +1,164 @@
 \section{Dynamic Testing Framework}\label{sec:dynamic-testing-framework}
+
+The Dynamic Testing Framework (DTF) is a tool created to generate a test-suite.
+Its input are test definitions and a defined similarity.
+Its output is a pipeline, that runs a subset of tests as defined by test definitions and similarities.
+As discussed in section \ref{ch:background}, it uses a similarity based algorithm, to choose a subset of tests to run.
+
+The purpose of this tool is to generate a pipeline based on a set of tests.
+Tests are defined and their similarity to each other are set.
+A subset of the tests is then selected randomly, based on the similarity, and a pipeline with a task structure is generated from them.
+As a main goal, the spread of tested features should be as wide as possible, since testing every feature with every setting in every combination is not feasible.
+
+\subsection{Test definitions}\label{subsec:test-definitions}
+
+A test definitions defines what should be run inside a test.
+For each test definition, two sets of files will be generated, one set for Kubernetes and one for Openshift.
+A set consists of two files, a script that is run by Concourse and a Concourse specific task configuration.
+
+The generated files and folder structures are specific to Concourse at the time of writing and other systems are currently not supported.
+In the same manner, the template files are embedded and cannot be changed without recompiling the tool.
+These flaws are planned to be fixed in the future\footnote{They were indeed fixed, however only at a later date and outside of the scope of this thesis}.
+A test definition may look as follows.
+
+\begin{verbatim}
+kind: TestDefinition
+name: A simple test
+setup:
+  - /path/to/setup.sh
+  - /path/to/setup-2.sh
+test:
+  - /path/to/step-1.sh
+  - /path/to/step-2.sh
+teardown:
+  - /path/to/teardown.sh
+  - /path/to/teardown-2.sh
+environment:
+  ENV_VAR: value
+resource:
+  resource-name: resource-reference
+  another-resource: another-resource
+\end{verbatim}
+
+First, the \textbf{kind} property must exist and must be set exactly to \verb|TestDefinition|.
+This kind is used to find test definitions in folders and combined YAML files.
+A source of a test definition may be a folder or a file.
+The file can either consist of one or multiple test definitions or a combination of objects.
+In order to find every test definition, if a folder is passed as the source, every file will be parsed as a YAML file.
+If it can be parsed successfully, every object is iterated over.
+If the object contains this kind property and its value is \verb|TestDefinition|, it is recognized as such.
+
+The \textbf{name} property defines how the test definition is referenced in the similarity file and how the name in the test configuration for Concourse will look like.
+This property must be case-insensitive unique.
+I.e., the name \verb|A test| is the same as \verb|a test|.
+Therefore, there must not be two tests which, in their name, differ only in case.
+This is because the name in the Concourse configuration will be in a normalized form.
+In this form, spaces are replaced with dashes and all text will be in lowercase.
+Going back to the previous example, both names will result in the string \verb|a-test| when normalized.
+
+The \textbf{setup} property allows for specifying scripts which are run before the test steps are run.
+Practically speaking, it would have the same effect as moving the scripts into the top of the \textbf{test} list.
+However, this way allows for a better folder structure in a test repository, since the files for test steps can be more cleanly seperated from utility scripts.
+Similarly, the \textbf{teardown} property allows for specifying scripts which should be run after the test steps were run.
+
+In the \textbf{test} property, the paths to test scripts can be defined.
+The scripts are executed in the same order as they are supplied.
+
+The \textbf{environment} and \textbf{resource} properties can be used to specify environment variables or Concourse resources that should be passed to the test task.
+The value will be passed to the Concourse configuration exactly as stated in the test definition.
+I.e., if \verb|((something))| is passed, \verb|((something))| will be passed to Concourse, which in turn will make a Vault lookup.
+With \verb|{{something}}| a parameter from a params-file can be referenced.
+Simply passing \verb|something| will pass the value \verb|something|.
+
+For the \textbf{resource} property, the key of the map is used to reference resources of the Concourse pipeline.
+The value is not used for now, but is planned to be used to rename the resource and pass it to tasks under different names.
+Finally, note that only the \textbf{kind}, \textbf{name}, and \textbf{test} properties are mandatory.
+Other properties are optional.
+
+DTF will look for test definitions in its working directory.
+This behaviour can be changed by supplying the appropriate flags.
+For every supplied source, it is checked whether it is a directory or a file.
+
+If a directory was supplied, the files in the directory are parsed.
+Directories inside supplied directories will not be read.
+In other words, directories are not traversed recursively and child directories have to be supplied explicitly.
+
+Each file found, be it a file directly supplied or found in a directory, is parsed as a YAML file.
+\begin{itemize}
+  \item If it cannot be parsed as a YAML file, a warning is shown.
+  \item If it can be parsed as a YAML, all objects in it are iterated upon.
+  \item If an object has the property \textbf{kind}, and it is set to \textbf{TestDefinition}, it will be handled as a test definition.
+  \item If any mandatory property, i.e., \textbf{kind}, \textbf{name}, or \textbf{test}, are missing, an error is printed.
+\end{itemize}
+
+\subsection{Similarities}\label{subsec:similarities}
+
+A similarity defines how similar a test is to other tests.
+It is used to select tests for a pipeline with a greater amount of variety than pure randomness.
+First, a random test is picked and added to the list of tests.
+Then, the list of all other possible tests is sorted by descending similarity, such that the most dissimilar test is at the beginning of the list.
+This test is then removed and added to the picked tests.
+Then, the list of tests is again sorted, but in reference to the last picked tests.
+By picking the test most dissimilar to the previous one the variety can be increased to choosing tests at random.
+
+A similarity file may look as follows.
+Note well that the similarity objects do not have a \verb|kind| property.
+Therefore, it is not possible to mix similarities with other types of YAML objects.
+This is done on purpose, to force a single file having all similarities neatly organized inside a project.
+
+\begin{verbatim}
+name: Another simple test
+similarity:
+  - name: A similar test
+    degree: similar
+  - name: A dissimilar test
+    degree: dissimilar
+exclusivity:
+  - An exclusive test
+dependency:
+  - A simple test
+---
+name: A similar test
+similarity:
+  - name: Another simple test
+    degree: similar
+  - name: A dissimilar test
+    degree: neutral
+---
+name: A dissimilar test
+similarity:
+  - name: A non existent test
+    degree: equal
+  - name: A different non existent test
+    degree: opposite
+\end{verbatim}
+
+The \textbf{name} property is used to reference a test.
+A value passed with this property must match the name of a test definition.
+If no test definition with the same name exists, the program will print an error.
+
+The \textbf{similarity} property lists the similarities to other test cases.
+Every list entry has a \textbf{name} property, referencing another tests, and a \textbf{degree} of similarity.
+The possible entries for the degree are as follows, starting with the highest dissimilarity.
+The degrees must be given as stated below and are case-sensitive, due to the way the used YAML parser works.
+
+\begin{itemize}
+  \item opposite
+  \item dissimilar
+  \item neutral
+  \item similar
+  \item same
+\end{itemize}
+
+If a different test is not referenced in the \textbf{similarity} list, the degree defaults to neutral or to the degree that the other test references.
+For example:
+\begin{itemize}
+  \item The test \verb|A| does not reference test \verb|B| and \verb|B| does not reference test \verb|A|. \verb|A| and \verb|B| are neutral to each other.
+  \item The test \verb|A| references test \verb|B| as \verb|dissimilar|, but \verb|B| does not reference test \verb|A|. \verb|A| and \verb|B| are dissimilar to each other.
+  \item The test \verb|A| does not reference test \verb|B|, but \verb|B| reference test \verb|A| as \verb|dissimilar|. \verb|A| and \verb|B| are dissimilar to each other.
+  \item The test \verb|A| references test \verb|B| as \verb|dissimilar|, but \verb|B| references test \verb|A| explicitly as \verb|neutral|. An error is thrown, because the similarities are inconsistent.
+\end{itemize}
+
+The properties \textbf{exclusivity} and \textbf{dependency} are planned to be used with tests that should either not run on the same cluster or that can run on the same cluster.
+However, this behaviour is not yet supported.
+It will either be implemented in the future or removed if deemed unnecessary.
