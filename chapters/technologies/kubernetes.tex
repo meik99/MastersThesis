@@ -27,7 +27,13 @@ Although it is possible to have clusters with only one or two nodes, but they ar
 Bigger clusters and clusters that are made for software systems with high availability requirements can also have multiple control nodes for redundancy.
 In such cluster, worker nodes interact with one control node at a time, with other control nodes taking over if one fails.
 
-\textbf{Pods}
+\textbf{Pods} are one of the smallest units of work a Kubernetes cluster uses to handle workloads.
+A pod can consist of multiples containers, grouping them logically.
+When deploying a container that way, a pod can manage the environment of the pod, such as mounted directories, network capabilities or environment variables.
+Furthermore, a pod can have two different kinds of containers, normal containers and init-containers.
+Normal containers describe the main workload of the pod.
+These containers are only started, however, after all of a pods init-containers have succeeded.
+For example, a pod may have a web server as a container that it runs continuously, but has an init container that executes setup tasks that need to run before the server starts.
 
 \textbf{ReplicaSets}
 
