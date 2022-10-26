@@ -86,8 +86,11 @@ When a Helm chart is applied to a Kubernetes cluster, this configuration can be 
 The resources are then generated based on the supplied configuration.
 Helm charts can also be compiled to an archive and distributed as such or as part of a repository.
 
-\textbf{Operators}
+\textbf{Operators}\cite{kubernetes-operator} are custom systems that interact with the Kubernetes API from within a Kubernetes cluster.
+To do so, they often supply their own custom resource with which an administrator can configure an operator.
+An operator's functionality is custom, but it is commonly deploying other resources on demand or maintaining them.
+As previously mentioned, Kubernetes manifests are usually static, but an operator can be used to configure these resources on the line.
 
-\textbf{Operator Lifecycle Management (OLM)}
+\textbf{Operator Lifecycle Manager (OLM)}
 
 \textbf{AWS, GKE, and OpenShift}
