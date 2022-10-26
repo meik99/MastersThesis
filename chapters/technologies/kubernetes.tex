@@ -4,7 +4,7 @@ A large part of this thesis concerns itself with a technology called \textbf{Kub
 Kubernetes is a complex software system and care must be taken to establish different parts and concepts of it.
 This section covers the basic information needed to understand how it works and what certain terminology means in its context.
 
-First, \textbf{Images} and \textbf{Containers}\cite{docker-image} act as the base of Kubernetes.
+First, \textbf{Images} and \textbf{Containers}\cite{docker-image,kubernetes-images,kubernetes-containers} act as the base of Kubernetes.
 An image can be seen as a template to a container.
 It includes instructions to be run to create a container.
 These instructions can range from simple commands to complex, multistep build instructions.
@@ -17,31 +17,48 @@ However, they do not contain an OS themselves, but make use of the host OS throu
 The advantage of not having to virtualize the OS is usually a better performance compared to virtual machines.
 On the other hand, due to them not being completely isolated from the host OS, they have a larger impact on a system's security.
 
-A Kubernetes system is structured as a \textbf{cluster} and therefore called a ``Kubernetes cluster''.
+A Kubernetes system is structured as a \textbf{cluster} and therefore called a ``Kubernetes cluster''\cite{kubernetes-cluster}.
 It is called a cluster because it is made of a cluster of \textbf{node}s.
 In the context of Kubernetes, a node is computer that serves as a part of a cluster.
 
-The smallest clusters typically have three nodes.
+The smallest clusters typically have three nodes\cite{kubernetes-cluster}.
 One control node and multiple worker nodes.
-Although it is possible to have clusters with only one or two nodes, but they are mostly only used for development and debugging purposes.
+Although it is possible to have clusters with only one or two nodes, but they are mostly only used for development and debugging purposes\cite{minikube}.
 Bigger clusters and clusters that are made for software systems with high availability requirements can also have multiple control nodes for redundancy.
 In such cluster, worker nodes interact with one control node at a time, with other control nodes taking over if one fails.
 
-\textbf{Pods} are one of the smallest units of work a Kubernetes cluster uses to handle workloads.
+\textbf{Pods}\cite{kubernetes-pods} are the smallest units of work a Kubernetes cluster uses to handle workloads.
 A pod can consist of multiples containers, grouping them logically.
 When deploying a container that way, a pod can manage the environment of the pod, such as mounted directories, network capabilities or environment variables.
-Furthermore, a pod can have two different kinds of containers, normal containers and init-containers.
+Furthermore, a pod can have three different kinds of containers, normal containers, \textbf{init-containers} and ephemeral containers.
 Normal containers describe the main workload of the pod.
+Usually the main application is run inside one container, while other tasks, such as logging, is done in another.
+This pattern is called Sidecar pattern and these pods are commonly referred to as \textbf{sidecar containers}\cite{sidecar-container}.
 These containers are only started, however, after all of a pods init-containers have succeeded.
 For example, a pod may have a web server as a container that it runs continuously, but has an init container that executes setup tasks that need to run before the server starts.
+Finally, ephemeral containers are containers added to an already deployed pod to be used for debugging.
 
-\textbf{ReplicaSets}
+\textbf{ReplicaSets}\cite{kubernetes-replicaset} are the simplest form of deploying multiple instances of pods.
+They are defined by providing a template of a pod and the number of replicas of the given template.
+The replicaset then does its best to deploy the specified amount of pods on the cluster.
+It schedules new ones if there are too few and deletes pods if there are too many.
+However, sometimes it is not possible for a specific amount of pods to actually be deployed due to resource constraints of the cluster and its nodes.
 
-\textbf{Deployments}
+\textbf{Deployments}\cite{kubernetes-deployments} build on top of replica sets.
+They are also defined by a pod specification and the required amount of replicas.
+However, a deployment does not manage the pods, but uses a replica set to do so.
+This enables a deployment to, for example, do rolling updates automagically\footnote{Automatically, but being reminiscent of wizardry}.
+When a deployment is changed, it can decrease the desired amount of replicas of the original replicaset, while gradually increasing it for the new one.
+An application can be updated seemingly and gradually to a new version, to avoid service outages in case of bugs or server downtimes.
 
-\textbf{StatefulSets}
-
-\textbf{Side-car- or init-containers}
+Similar to deployments, \textbf{StatefulSets}\cite{kubernetes-statefulsets} handle the deployment of pods.
+The difference is, that the name, i.e., the identity, of a pod is guaranteed.
+When a pod is created through a replica set or a deployment, the pod is assigned a semi-random name consisting of the deployment or replicaset name and random string.
+A pod created by a stateful set on the other hand is usually named with the name of the stateful set with the index of the pod at the end.
+For example, a pod of a deployment with the name of ``my-app'' results in the pod being named ``my-app-asd123-fgh456''.
+A pod of a stateful set of the same name would result in the name being ``my-app-1''.
+Furthermore, the naming is made consistent.
+If a stateful set controls three pods, ``pod-1'', ``pod-2'', and ``pod-3'', and ``pod-2'' is deleted, it will try to deploy a new pod with the name ``pod-2''.
 
 \textbf{Webhooks}
 
