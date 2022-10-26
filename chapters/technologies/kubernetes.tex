@@ -60,13 +60,31 @@ A pod of a stateful set of the same name would result in the name being ``my-app
 Furthermore, the naming is made consistent.
 If a stateful set controls three pods, ``pod-1'', ``pod-2'', and ``pod-3'', and ``pod-2'' is deleted, it will try to deploy a new pod with the name ``pod-2''.
 
-\textbf{Webhooks}
+The \textbf{Kubernetes API}\cite{kubernetes-api} is the part of Kubernetes that receives resource requests.
+I.e., if an administrator wants to create resource, such as a pod, a HTTP request is sent to the Kubernetes API describing that resource.
+From there, it is then applied to the cluster and other Kubernetes components are notified.
+Interacting with this API is commonly abstracted to the Kubernetes CLI for manual, or client libraries for automatic communication.
 
-\textbf{Manifests}
+\textbf{Webhooks}\cite{kubernetes-webhooks} are used to catch requests for pods and modify them before they are scheduled.
+Whenever a resource is modified in a cluster, it is handled as a HTTP request.
+These HTTP requests can then be sent to a webhook, before they are returned to Kubernetes for further processing.
+Webhooks that are used to mutate a resource are called mutating admission webhooks.
+A different type of webhook also exists called validating admission webhook.
+This type of webhook does not mutate a resource but is used to either allow or deny a resource being modified.
 
-\textbf{Helm charts}
+\textbf{Manifests}\cite{kubernetes-manifests} represent the state of a Kubernetes cluster as a configuration file.
+These configuration files are written in YAML.
+When such a configuration is applied to a cluster, Kubernetes tries its best to create the state that is described by this configuration.
+Multiple resource can be defined in a single configuration.
+Multiple configurations can be applied to a single cluster.
+Note well that these files are static, meaning that they do not accept the application of variables when applied to Kubernetes.
 
-\textbf{API}
+In order to manipulate manifests dynamically \textbf{Helm charts}\cite{helm-charts} can be used.
+A Helm chart is a package containing templates of Kubernetes resources and metadata.
+Helm charts also include a way to configure these templates.
+When a Helm chart is applied to a Kubernetes cluster, this configuration can be changed, either manually or dynamically.
+The resources are then generated based on the supplied configuration.
+Helm charts can also be compiled to an archive and distributed as such or as part of a repository.
 
 \textbf{Operators}
 

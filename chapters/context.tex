@@ -7,7 +7,7 @@ As a starting point, an existing project has been utilized to create a test tool
 Dynatrace Ltd.\footnote{\url{https://www.dynatrace.com/}}, a company specializing in software monitoring, maintains a project called Dynatrace Operator\footnote{\url{https://github.com/Dynatrace/dynatrace-operator}} (DTO).
 As stated before, an operator is a system, which runs inside a Kubernetes cluster and communicates with its API.
 The DTOs purpose is to communicate with the Kubernetes API in such a way, to deploy OneAgents and ActiveGates in a Kubernetes cluster.
-Furthermore, it uses webhooks to add a side-car container, containing a OneAgent installation, to scheduled pods so that they too can be monitored.
+Furthermore, it uses webhooks to add an init-container, containing a OneAgent installation, to scheduled pods so that they too can be monitored.
 
 The DTO is released on a number of ways.
 First, the GitHub page itself, in which updated manifests, an updated Helm chart and a new index for these charts are uploaded to.
