@@ -91,6 +91,19 @@ To do so, they often supply their own custom resource with which an administrato
 An operator's functionality is custom, but it is commonly deploying other resources on demand or maintaining them.
 As previously mentioned, Kubernetes manifests are usually static, but an operator can be used to configure these resources on the line.
 
-\textbf{Operator Lifecycle Manager (OLM)}
+The \textbf{Operator Framework}\cite{operator-framework, operator-lifecycle-manager} is a set of libraries which makes it easier to create operators in the Golang language.
+In combination with the \textbf{Operator Lifecycle Manager (OLM)}\cite{operator-lifecycle-manager}, operators created with this framework can be more easily run in a range of clusters.
+OLM describes and handles how an operator can be installed and managed on a cluster.
+Providers that offer Kubernetes clusters as a service can include support for OLM.
+These providers than commonly offer a marketplace from which an operator can be installed.
 
-\textbf{AWS, GKE, and OpenShift}
+\textbf{Amazon Web Services (AWS) and GCS (Google Cloud Service)}\cite{eks,gke} are two of the many providers of Kubernetes cluster that exists.
+These two, however, are important for this thesis, as mainly their infrastructure is used.
+The specific products with which to create a cluster are called Elastic Kubernetes Service (EKS) and Google Kubernetes Engine (GKE) respectively.
+EKS is later used to create clusters that run Openshift.
+
+\textbf{Openshift}\cite{openshift} is a software system built on top of a Kubernetes cluster.
+It abstracts different aspects of cluster administration, such as resource or credential management.
+Furthermore, it provides a marketplace from RedHat that uses OLM to install and manage operators.
+
+
