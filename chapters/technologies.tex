@@ -2,7 +2,6 @@
 
 An overview of the technologies that have been used is given in this section.
 The name and, if applicable, the acronym of a technology is stated followed by a short description of it.
-Then follows the reason for its involvement in this project.
 
 \textbf{Concourse} is a CI/CD system that can be used to automate certain tasks and group them into a pipeline.
 Tasks can then be run either concurrently or sequentially in the context of the pipeline they are grouped in.
@@ -41,16 +40,58 @@ It then adds certain items to a cart, evaluating the shown total on the site.
 It then removes and re-adds certain items while evaluating the subtotal.
 After the purchase is completed, it checks that the correct entries where made in the datastore of the web shop and that all transactions were made correctly and completely.
 
-\textbf{Vault}\cite{vault}
+\textbf{Vault}\cite{vault} is a system created by HashiCorp to manage credentials.
+It offers a user interface as well as a backend to store secrets, en- and decrypt them as wells as user management.
+The backend is accessible either through the provided client or the provided API.
+This API is used by Concourse to retrieve secrets during pipeline runs.
 
-\textbf{Permission bits}
+The \textbf{binary number system} represents numbers in base-2.
+This means, every number is represented as a series of ones and zeros, with every place representing a power of two.
+E.g., $110$, in binary, equates to $1 * 2^2 + 1 * 2^1 + 0 * 2^0 = 6$ in the decimal system.
+A single place in the binary system is called a bit, which can have a value of zero or one.
 
-\textbf{Hyper Text Transfer Protocol}
+\textbf{Permission bits}\cite{unix-file-permissions} are used by unix file systems to control access to files.
+Each file has three groups with three bits each.
+Every bit signifies if a certain action, reading, writing, or executing, can be taken for a file.
+The groups determine what the file owner, a group member or any other user, can do.
+For example:
 
-\textbf{Representational State Transfer}
+A file's permission bits are set to $7$, $4$, and $2$, or $742$ as a shorthand notation.
+Note here that $742$ does not represent the number sevenhundredfortytwo, but the decimal value of each group as a shortened form.
+That means, the file owner can do everything with the file, because the number $7$ in binary is represented as $111$.
+Therefore, all permission bits are set.
+Next, the number $4$ represents what the group of users that owns the file can do.
+A $4$ in binary is represented as $100$.
+That means, members of the group may read the file, but may neither write nor execute it.
+Finally, the $2$ represents what every user in the system can do.
+Since $2$ is represented as $010$, the permission bit for writing a file is set.
+So every user, that is neither the file owner nor a member of the aforementioned group, may write a file, but neither read nor execute it.
 
-\textbf{SHA Hashes}
+The \textbf{Hyper Text Transfer Protocol (HTTP)}\cite{http-rfc} is a protocol to transmit hypertext or non-linear text.
+It is most commonly used to transmit web pages from a server to a web client, but can be used for other applications as well.
+For the purposes of this thesis, HTTP defines how a request to a web server looks like.
+Different types of requests exist, the most common ones are \textit{GET}, \textit{POST}, \textit{PUT}, and \textit{DELETE}.
+As per the protocols specification, a \textit{GET} request is used to retrieve a resource from the server.
+\textit{POST} requests creates or processes resources, while \textit{PUT} is used to replace or update a resource.
+Finally, \textit{DELETE} requests are used to remove a resource from the server.
+Requests may also include a \textit{body}, i.e., additional information that can be interpreted by a backend.
+Note that the protocol is larger than stated here, but summarizing the whole of the protocol is out of scope of this thesis.
 
-\textbf{Virtual machines}
+\textbf{Representational State Transfer}\cite{extending-representation-state-transfer} is a way to build decentralized systems which depend on sharing resources.
+A REST based system commonly builds on top of HTTP to request, process and transmit resources.
+
+\textbf{SHA Hashes}\cite{cryptographic-hash-functions,sha-hashes} are a family of algorithms to create a fingerprint for a file.
+The main advantages of hashes is that they are irreversible.
+For every file, a hash can be created which identifies a file, but from the hash it is not possible to recreate the file.
+Furthermore, the latest iterations of hash algorithms, which are the \textit{SHA} family.
+They have a very low possibility of the fingerprints, or digests, of two different files accidentally matching, also known as hit collision.
+Therefore, if, for example, a website offers a file for download as well as a hash to verify the file's integrity, the file's integrity is not compromised if they match.
+
+\textbf{Virtual machines (VM)}\cite{what-is-a-virtual-machine} is a virtual operating system, which is emulated on top of a real operating system.
+The virtual operating system can vastly differ from the host system.
+For example, a Windows system can be emulated as a virtual machine inside a Linux host system.
+Going further, since a VM can be completely decoupled from the host system, a host system does not necessarily need an operating system of its own.
+Using an abstraction layer called a \textit{Hypervisor}, VMs can be started on a computer without the need for a full operating system, saving system resources.
+VMs, however, run slower than physical machines.
 
 \input{chapters/technologies/kubernetes.tex}
