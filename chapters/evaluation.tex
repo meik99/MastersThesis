@@ -102,4 +102,32 @@ The results show, that all the participants at least heard of Concourse and that
     \end{tabular}
 \end{table}
 
-\textbf{How complicated, do you think, are Concourse pipeline configurations?}
+\textbf{How complicated, do you think, are Concourse pipeline configurations?}\\
+One of the main abstractions the DTF provides is the automatic generation of pipeline configurations.
+The more complicated participants think Concourse is, the more improvement abstractions bring.
+The scaling is again done using an integer between one, described as ``Easy, hardly an inconvenience'', and six, ``Complicated as a four dimensional Rubik's cube''.
+On average, participants answered with a $4.2$, indicating a large potential for improvement.
+
+\textbf{What is the greatest challengee when writing pipeline configurations?}\\
+Now the question is on what specific points an abstraction can improve.
+Asked as an open question, the following answers were given.
+
+\begin{itemize}
+    \item Setting roles for authentication and authorization
+    \item Setting correct parameters
+    \item Passing vars\footnote{shorthand: variables} is a pain
+    \item Not breaking other things
+    \item Scared of breaking infrastructure
+    \item Steep learning curve
+    \item Files are related in a strange way
+    \item High necessity for domain knowledge
+    \item Correctly interpret results
+    \item Difficult syntax
+    \item Compartmentalize steps, so they make sense
+    \item Managing dependencies between steps
+\end{itemize}
+
+From this answer, the following pain points can be distilled.
+First, Concourse pipeline configuration show a steep learning curve.
+Then, the interconnectedness of pipelines, steps, tasks, and parameters can be confusing.
+Finally, verifying the correctness of configurations appears difficult.
