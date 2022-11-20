@@ -1,0 +1,76 @@
+\chapter{Evaluation}\label{ch:evaluation}
+
+Now that the background and implementation for this project have been discussed, this section deals with the evaluation of the implementation.
+The evaluation for \textit{Q1} and \textit{Q2} are done separately, as they need different approaches.
+These approaches are discussed in their respective sections.
+
+\section{\textit{Q1}: How can the setup and maintenance of an environment for higher level tests be abstracted and made accessible}\label{sec:textit{q1}:-how-can-the-setup-and-maintenance-of-an-environment-for-higher-level-tests-be-abstracted-and-made-accessible?}
+
+The evaluation for this question is done using an exploratory survey.
+This approach is chosen due to the circumstances of the project.
+An environment for higher level tests was needed as it did not exist.
+It was needed to create and run higher level tests, which did also not exist prior, to find faults in the DTO code base.
+As these things were non-existent before, an evaluation of faults found before and after is not possible, because there are no such records.
+
+It could be argued that bug reports of customers could be used and their decrease monitored.
+However, due to the complex nature of an operator and the environment it runs in, bug reports are extremely inflated.
+Often, customers have underlying problems with their environment or a misunderstanding of the DTOs feature set.
+These types of reports are most common and reports resulting in an actual bug report is, relative to all incoming reports, so low that even a significant drop would not be measurable in the time frame of this project.
+
+The survey was given to full time members of the team responsible for developing and maintaining the DTO.
+At the time of the survey, it consists of six developers with a variety of years of experience.
+The experience in developing software ranges from five to 20 years.
+Furthermore, different levels of seniority were also recorded.
+From the developer team, at the time of writing, it included three ``Software Engineer''s, two ``Senior Software Engineer''s and one ``Dev Directory''.
+
+The questionnaire is designed to give insight into the following.
+Is the interviewee experienced with E2E-testing itself and how they would define the term ``E2E-testing''.
+How experienced they are with Concourse and writing pipeline configuration.
+Since the DTF abstracts writing pipeline configurations, this part of the project is considered a failure if it is equally or more complicated to use than Concourse and its configurations.
+Then, it is important to gain insights into how experienced the interviewee is with the Golang programming language.
+The intention being, that a project written in Golang, such as the DTF, is easier to maintain than a bundle of pipeline configurations, if the maintainer is more experienced in Golang.
+
+Finally, questions about the DTF itself are asked.
+The first and obvious question is ``Have you used the Dynamic Testing Framework before?''.
+Due to the time frame of this project compared to the planning of the DTO, this question was unanimously answered with ``No''.
+The questions about the DTF are still of value, because the project outcome was presented beforhand.
+During this presentation, it was shown how the DTF works and is used.
+The similarity- and test-files were discussed as well as the structure of the project.
+Furthermore, the result of generating a configuration, the template behind it, and how it is applied to Concourse was shown.
+Therefore, although none of the interviewees have practical experience with the DTF, they are able to give informed answers to the stated questions.
+
+\textbf{What do you understand by the term E2E-testing?}\\
+This is an open question intended to gauge the familiarity with E2E-testing of the interviewee.
+Since ``E2E'' is a known shorthand, most peoples first answer is: ``testing something from the beginning to the end''.
+The interviewed then followed up with more specific interpretations, shown below, which met the definition of E2E-testing.
+Therefore, all subjects are familiar with this form of quality assurance.
+
+\begin{itemize}
+    \item Testing the output following a specific input.
+    \item Multiple things are tested at once
+    \item The interaction with the system is tested.
+    \item Testing a system from the idea through every detail of the implementation to the finished product.
+    \item Testing from the installation to usage, i.e., testing the whole system
+    \item Testing the whole software stack of the product
+    \item Testing from a customers view
+\end{itemize}
+
+\textbf{How easy, do you think, is the Dynamic Testing Framework to use?}\\
+This questions intention is to get a numeric value of a persons perceived difficulty when using the DTF.
+The answer can be an integer between one, described as ``Easy, hardly an inconvenience'', and six, ``Complicated as a four dimensional Rubik's cube''.
+Although the descriptions of the extremes seem more playful than serious, this style was chosen purposefully to make the interview process more engaging.
+Finally, this question is asked in the context of using Concourse pipeline configurations as an alternative, which is also the subject of a later question.
+The answers average value is $2,4$, indicating that it is overall easy to use and maintain the DTF, although some initial learning curve is expected.
+
+\textbf{How important do you regard E2E-testing?}\\
+Again, this question's possible answers are integers between one, ``Not important at all'', and six, ``My life depends on it''.
+An average of $5,4$ shows that most participants hold E2E-testing to high regards.
+In fact, none of the answers are below five.
+Some offhand notes from the interviewees are ``Depends on project scope'', ``Vital systems need it'', and ``Customer experience is important''.
+
+These notes give further insight into the reasoning why testing is of more or less importance.
+Subjectively, some projects do not seem to benefit from E2E-testing as their scope or importance is not large enough.
+For some, it is not the functionality of a system that is of the upmost importance, but the interaction between a customer and a system.
+
+\textbf{How important do you regard E2E-testing for the Dynatrace Operator?}\\
+
