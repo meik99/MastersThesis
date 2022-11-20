@@ -60,11 +60,11 @@ This questions intention is to get a numeric value of a persons perceived diffic
 The answer can be an integer between one, described as ``Easy, hardly an inconvenience'', and six, ``Complicated as a four dimensional Rubik's cube''.
 Although the descriptions of the extremes seem more playful than serious, this style was chosen purposefully to make the interview process more engaging.
 Finally, this question is asked in the context of using Concourse pipeline configurations as an alternative, which is also the subject of a later question.
-The answers average value is $2,4$, indicating that it is overall easy to use and maintain the DTF, although some initial learning curve is expected.
+The answers average value is $2.4$, indicating that it is overall easy to use and maintain the DTF, although some initial learning curve is expected.
 
 \textbf{How important do you regard E2E-testing?}\\
 Again, this question's possible answers are integers between one, ``Not important at all'', and six, ``My life depends on it''.
-An average of $5,4$ shows that most participants hold E2E-testing to high regards.
+An average of $5.4$ shows that most participants hold E2E-testing to high regards.
 In fact, none of the answers are below five.
 Some offhand notes from the interviewees are ``Depends on project scope'', ``Vital systems need it'', and ``Customer experience is important''.
 
@@ -73,4 +73,33 @@ Subjectively, some projects do not seem to benefit from E2E-testing as their sco
 For some, it is not the functionality of a system that is of the upmost importance, but the interaction between a customer and a system.
 
 \textbf{How important do you regard E2E-testing for the Dynatrace Operator?}\\
+This question is analogous to the one before and also with the same numeric scale.
+While the question before was to see how participants view E2E-testing in general, this one is meant to show how important it is specifically for the DTO.
+As seen by the notes given, for some interviewees the importance of E2E-testing correlates with properties of the project.
+In order to evaluate the purposefulness of \textit{Q1}'s system, it must be determined how significant the problem is it tries to solve.
+The average for this question is $5.8$, signifying a high importance of E2E-testing for the DTO for participants.
 
+\textbf{Do you have experience with the CI/CD tool called ``Concourse''?}\\
+The purpose of this question is two-fold.
+First, it sets the answers to the following question about the difficulty of pipeline configuration into perspective.
+Secondly, it changes the context for the interviewee from testing and the DTO to Concourse and its pipelines.
+This question is designed as a single choice between six options, the result is shown in table \ref{tab:participants-knowledge-of-concourse}.
+The results show, that all the participants at least heard of Concourse and that there is some practical experience for some team members.
+
+\begin{table}[h]
+    \centering
+    \caption{Participants knowledge of Concourse}
+    \label{tab:participants-knowledge-of-concourse}
+    \begin{tabular}{|l|l|}
+        Option & Participants identifying with the option \\
+        \hline
+        I live in its shining glory & 0 \\
+        I use it here and there & 1 \\
+        I used it once or twice & 3 \\
+        I have heard of it & 2 \\
+        Never heard of it & 0 \\
+        What is CI/CD? & 0 \\
+    \end{tabular}
+\end{table}
+
+\textbf{How complicated, do you think, are Concourse pipeline configurations?}
