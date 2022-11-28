@@ -161,3 +161,72 @@ The answers to this question are as follows.
 Notably, some participants answered very positive to this rather negatively phrased question.
 Stating that it is ``Beautiful'', ``Just a smooth ride'', and it ``Does what it is supposed to''.
 Others also mentioned ``Memory safe code'' and ``Test coverage and the test framework'' as positives side of the language.
+
+\textbf{How familiar are you with the Golang templating language?}\\
+In order to further gauge the maintainability of the DTF, participants are asked how familiar they are with the templating language of Golang.
+The DTF uses such templates to generate the actual configurations for tasks, scripts, and pipelines.
+An answer could be given on a scale from one, ``Not at all'', to six, ``My child's second name is Gopher''.
+On average, interviewees selected $3.0$, so while Concourse pipeline configurations are seen as complicated, the Golang templating language is unfamiliar.
+
+\textbf{What did you like about the Dynamic Testing Framework?}\\
+Based on the presentation introducing the DTF, interviewees are asked to describe what they liked about it.
+This question shows anticipated acceptation of the tool.
+The answers below show that the DTF has potential due to a varied array of positives.
+
+\begin{itemize}
+    \item Getting better results using randomness with predefined similarities.
+    \item The flexibility by not having to use one specific [CI/CD] tool.
+    \item Defining tests and checking their dependencies is nice as well as their re-usability.
+    \item The abstraction level provides a simpler way to define things.
+    \item It fills the gap between test-developer, and infrastructure.
+\end{itemize}
+
+\textbf{What do you think should be improved?}\\
+Designed as a follow-up question to the previous one, this question shows what participants disliked about the DTF.
+The answers below indicate that improvements can be made regarding the implementation of similarities.
+A shortcoming of this question is, however, that the system was only presented and was not used before.
+Therefore, more disadvantages may show if it is introduced into any process.
+
+\begin{itemize}
+    \item Adding an AI to enhance similarity configuration.
+    \item Visualizing similarities using a graph.
+    \item Selecting tests to always run.
+    \item Tests should be independent of the framework repo.
+\end{itemize}
+
+\textbf{What opportunities do you see when using this tool regularly as a part of the development process?}\\
+Participants were asked what they think using the DTF can provide.
+The answers below show that the main advantage is that due to the testing being easier, testing is done more frequently.
+This, in turn, increases the stability of the DTO and the confidence in it.
+
+\begin{itemize}
+    \item Randomization catches edge-cases.
+    \item Testing in general is a good thing.
+    \item Increases stability of the DTO.
+    \item Increases control over our tests.
+    \item Increases confidence in the product.
+    \item Decreases reliance on other teams.
+    \item No deep knowledge about any repository is needed.
+    \item A high variety of tests can be run.
+    \item Quick feedback on how my changes affect product.
+\end{itemize}
+
+\textbf{What risks do you see when using this tool regularly as a part of the development process?}\\
+After the potential opportunities have been assed, interviewees are now asked what they think the risks are in introducing the DTF.
+According to the answers given, which are shown below, having too much confidence in automated tests is one concern.
+Not only because they are automated, but due to the interconnectedness, a breakage of the underlying system may influence the test outcome.
+Delivering either false-positives or -negatives.
+This, in turn, can lead to increased maintenance cost of not only the DTF, but also the infrastructure.
+Due to the configuration being generated, another fear is that it might break other, unassociated pipelines, because of something going wrong during generation.
+
+\begin{itemize}
+    \item The time cost of adapting and maintaining a new tool.
+    \item Standard test-cases may not be included due to the randomization.
+    \item Similarities have to be well maintained.
+    \item Test returning a false-positive.
+    \item Tests failing because of a failing Concourse configuration instead of failure in the DTO.
+    \item Breaking other pipelines.
+    \item The DTF is potentially hard to maintain.
+    \item Having too much faith in automated tests.
+    \item Increases in infrastructure cost.
+\end{itemize}
