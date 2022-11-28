@@ -1,1 +1,48 @@
-\chapter{Conclusion}\label{ch:conclusion}
+\chapter{Summary \& Conclusion}\label{ch:conclusion}
+
+In summary, two problems and two research questions have been introduced.
+First, automation of E2E testing a software system that requires a complicated environment is challenging.
+The question of how it can be abstracted to make it simpler was answered by creating the Dynamic Testing Framework.
+Secondly, releasing a Kubernetes operator to multiple marketplaces is a tedious and time-consuming task.
+How the time needed for a release and be made more pleasant was answered by creating an automated pipeline that integrates the multiple marketplaces.
+
+The DTF implements a similarity based algorithm to choose tests to be run, since setting up an environment is time-consuming as well.
+Since it is time-consuming only a limited amount of tests can run at once.
+Based on the similarity input and definitions of tests, a pipeline is generated.
+This workflow abstracts creating and maintaining long and complicated Concourse pipeline configuration and replaces it with potentially simpler and shorter definitions and similarities.
+
+Team members were interviewed about the DTF to find out if it fulfills the potential of being simpler.
+The participants of the survey showed that they understood what E2E testing is and were given a presentation about the DTF.
+In the interview, they concluded that the DTF seemed easier to use.
+This conclusion is derived from the average answers.
+
+On the question of how complicated the participants thought the DTF is to use, the average answer is $2.4$ on a scale of one to six.
+When questioned about how complicated they think Concourse is in comparison, the average answer is $4.2$.
+This strongly indicates that the DTF appears to be easier to use.
+
+Regarding maintenance, however, the result is inconclusive.
+On the one hand, participants showed that they are more familiar with the Golang programming language.
+The average answer for how much experience they have with the language is $4$, which means the tool itself would be easier to maintain for the team.
+On the other hand, familiarity with the templating language used is answered with an average of $3$.
+This shows a tendency that the templates used to generate a pipeline and tasks are more expensive to maintain.
+
+Concluding \textit{Q1}, it appears that introducing the DTF in the general workflow should be carefully considered.
+Alternative approaches might exist, which are less complicated than Concourse pipeline configuration while also being easier to maintain.
+One such alternative could be employing a person with the skill-set needed to create and maintain such a testing pipeline.
+Having the intrinsic ability of processing natural language, combined with a practically limitless computing engine, a specialised human might be a better alternative in this case.
+
+Regarding the second research question, the Dynatrace Operator had been released manually to various different marketplaces.
+Due to the varied ways of creating a release for different marketplaces, this task is time-consuming and tedious.
+Most of the time-consumptions come from missing and then debugging details, such as having a specific name or value inside a specific file.
+
+A pipeline to automatically find and combine information about a release has therefore been implemented.
+It includes various tasks, such as finding the latest release version, preparing artifacts, and creating releases for marketplaces.
+The goal of this pipeline is to bring releases for all marketplaces to a state where they only have to be approved by human to ``go live''.
+In the best case, a press of a single button should trigger the automated run of all mentioned tasks.
+
+Concluding \textit{Q2}, in practice, people working with the pipeline preferred manually triggering each task.
+The task itself then still runs autonomously.
+This way of triggering tasks is preferred to check the output of each task before it is used as an input for the next one.
+Other than that, usage of the pipeline showed a reduction of time spent on a release ticket by $75 \%$.
+In more absolute terms, the reduction is from about one week of work time to about one day of work time.
+This shows that it is indeed cost-effective to spend work time on creating such a pipeline as it greatly increases the time that is available for other tasks, such as implementing new features or fixing bugs.
