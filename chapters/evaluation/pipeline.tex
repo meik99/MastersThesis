@@ -1,0 +1,57 @@
+\section{Q2: How can multiple distribution systems be integrated into an automatic pipeline using a common base of data and metadata}\label{sec:q2:-how-can-multiple-distribution-systems-be-integrated-into-an-automatic-pipeline-using-a-common-base-of-data-and-metadata}
+
+The evaluation for this question is done by analyzing the data of time used on releases.
+Data is used from previous DTO releases from version v0.1.0 up to and including v0.6.0.
+JIRA tickets are used as a source for this data.
+For most releases, release tickets exist that track the time spent on it.
+Three of these releases do not have associated tickets, the absence of data is marked accordingly.
+Furthermore, it is annotated if the release pipeline was used or not.
+In table\ \ref{tab:logged-time-for-each-release}, the resulting data is shown.
+The logged time that is shown has been sanitized, to not include testing the release or implementing bug-fixes since those are not in the scope of the release pipeline.
+Note that abbreviations are used to denote certain time units\footnote{w - weeks, d - days, h - hours, m - minutes} and that the time is rounded to quarter hours.
+The latter is a result of the time-tracking used at Dynatrace.
+
+\begin{table}[h]
+    \centering
+    \caption{Logged time for each release}
+    \label{tab:logged-time-for-each-release}
+    \begin{tabular}{|l|l|l|}
+        DTO version & Logged time for release & Pipeline used \\
+        \hline
+        v0.1.0 & 0w 4d 3h 30min & No \\
+        v0.2.0 & No data & No \\
+        v0.2.1 & 1w 0d 5h 0m & No \\
+        v0.2.2 & 1w 3d 3h 45m & No \\
+        v0.3.0 & 0w 4d 7h 15m & No \\
+        v0.4.0 & 0w 1d 6h 30m & Yes, first run \\
+        v0.4.1 & 0w 1d 4h 30m & Yes \\
+        v0.4.2 & No data & Yes \\
+        v0.5.0 & 0w 1d 2h 30m & Yes \\
+        v0.5.1 & No data & Yes \\
+        v0.6.0 & 0w 1d 1h 0m & Yes \\
+    \end{tabular}
+\end{table}
+
+In the following table\ \ref{tab:evaluation-of-logged-time}, an evaluation of this data is shown.
+First, the time-spans of table\ \ref{tab:logged-time-for-each-release} are summed up as minutes.
+Then, the value is averaged across the amount of tickets that have data available.
+Finally, the ratio and percentage of time saved is highlighted.
+
+\begin{table}[h]
+    \centering
+    \caption{Evaluation of logged time}
+    \label{tab:evaluation-of-logged-time}
+    \begin{tabular}{|l|l|}
+        Minutes spent without pipeline & Minutes spent with pipeline \\
+        11250 & 2790 \\
+        \hline
+        Tickets without pipeline & Tickets with pipeline \\
+        4 & 4 \\
+        \hline
+        Average without pipeline & Average with pipeline \\
+        $2812.5$ & $697.5$ \\
+        \hline
+        Ratio & Time saved \\
+        4.032 & $75.2 \%$ \\
+    \end{tabular}
+\end{table}
