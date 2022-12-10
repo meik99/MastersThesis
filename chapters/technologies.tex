@@ -3,24 +3,24 @@
 An overview of the technologies that have been used is given in this section.
 The name and, if applicable, the acronym of a technology is stated followed by a short description of it.
 
-\textbf{Concourse} is a CI/CD system that can be used to automate certain tasks and group them into a pipeline.
+\textbf{Concourse}\cite{concourse} is a CI/CD system that can be used to automate certain tasks and group them into a pipeline.
 Tasks can then be run either concurrently or sequentially in the context of the pipeline they are grouped in.
 In addition, resources to be used can be defined and added to tasks, so they are available to them.
 Such resources can be files, online resources, storage locations or any number of information a task may need.
 Concourse is used to implement the pipeline answering \textit{Q2}.
 
-\textbf{YAML and JSON} are data formats.
+\textbf{YAML and JSON}\cite{yaml,json} are data formats.
 They define the structure of information that makes it easier to transform and read the information in an automated manner.
 
-\textbf{Golang (Go)} is a programming language.
+\textbf{Golang (Go)}\cite{golang} is a programming language.
 It is the language of choice that is used to implement a tool to answer \textit{Q1}.
 
-\textbf{BitBucket} is a system that utilizes \textbf{Git} to store project files.
+\textbf{BitBucket}\cite{bitbucket} is a system that utilizes \textbf{Git}\cite{git} to store project files.
 Git is used to version a project and make it easier for a team of people to simultaneously work on a project.
 A project that is worked on in this manner is commonly called a repository.
 BitBucket itself then stores the repository online to ease access to it.
 
-\textbf{OneAgents and ActiveGates} are Dynatrace proprietary software systems.
+\textbf{OneAgents and ActiveGates}\cite{oneagents,activegates} are Dynatrace proprietary software systems.
 The Dynatrace OneAgent\cite{oneagents} is a software system to monitor other systems and collect metrics of them.
 These metrics can range from memory or cpu usage to more complex ones such as network connections or amount of specific function calls.
 Two different kinds of OneAgents exist, a host agent and a special agents.
@@ -28,7 +28,7 @@ The host agents purpose is to monitor the host of any given system, for example,
 Then, for different technologies, different special agents exist.
 A special agent's purpose is to monitor an application, such as the web application mentioned earlier.
 
-An ActiveGates\cite{activegates} main purpose is to ac as a proxy between OneAgents and the Dynatrace cluster.
+An ActiveGates\cite{activegates} main purpose is to act as a proxy between OneAgents and the Dynatrace cluster.
 It can be used to buffer information sent by a OneAgent inside a local network, before uploading it to the main Dynatrace cluster.
 Furthermore, it can be used to monitor cloud centric technologies, such as AWS, Kubernetes, Openshift, or other cloud systems.
 
@@ -75,7 +75,7 @@ As per the protocols specification, a \textit{GET} request is used to retrieve a
 \textit{POST} requests creates or processes resources, while \textit{PUT} is used to replace or update a resource.
 Finally, \textit{DELETE} requests are used to remove a resource from the server.
 Requests may also include a \textit{body}, i.e., additional information that can be interpreted by a backend.
-Note that the protocol is larger than stated here, but summarizing the whole of the protocol is out of scope of this thesis.
+Note that the protocol encompasses more than stated here, but listing the whole of the protocol is out of scope of this thesis.
 
 \textbf{Representational State Transfer}\cite{extending-representation-state-transfer} is a way to build decentralized systems which depend on sharing resources.
 A REST based system commonly builds on top of HTTP to request, process and transmit resources.
@@ -83,11 +83,11 @@ A REST based system commonly builds on top of HTTP to request, process and trans
 \textbf{SHA Hashes}\cite{cryptographic-hash-functions,sha-hashes} are a family of algorithms to create a fingerprint for a file.
 The main advantages of hashes is that they are irreversible.
 For every file, a hash can be created which identifies a file, but from the hash it is not possible to recreate the file.
-Furthermore, the latest iterations of hash algorithms, which are the \textit{SHA} family.
+The \textit{SHA} family of hash algorithms is the latest iteration of hash algorithms.
 They have a very low possibility of the fingerprints, or digests, of two different files accidentally matching, also known as hit collision.
-Therefore, if, for example, a website offers a file for download as well as a hash to verify the file's integrity, the file's integrity is not compromised if they match.
+For example, if a website offers a file for download as well as a hash to verify the file's integrity, the file's integrity is not compromised if they match.
 
-\textbf{Virtual machines (VM)}\cite{what-is-a-virtual-machine} is a virtual operating system, which is emulated on top of a real operating system.
+\textbf{Virtual machines (VM)}\cite{what-is-a-virtual-machine} are a virtual operating system, which is emulated on top of a real operating system.
 The virtual operating system can vastly differ from the host system.
 For example, a Windows system can be emulated as a virtual machine inside a Linux host system.
 Going further, since a VM can be completely decoupled from the host system, a host system does not necessarily need an operating system of its own.

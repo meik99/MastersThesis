@@ -14,9 +14,9 @@ Using the system to generate a concrete configuration does not necessitate knowl
 As previously discussed, on of the main difficulties of testing highly scaled and complex systems, is the need of setting up complex environments.
 Later it is shown, that for certain technologies, the setup for a single test may take multiple hours.
 For large test suits, it is therefore unpractical to run all tests everytime, as the time-cost is too high.
-In order to mitigate this issue a technique called similarity-based variability testing is used.
+In order to mitigate this issue, a technique called similarity-based variability testing is used.
 
-Al-Hajjaji et. al., describe this technique in the context of product line testing\cite{SimilarityBasedPrioritizationInSoftwareProductLineTesting}.
+Al-Hajjaji et.al., describe this technique in the context of product line testing\cite{SimilarityBasedPrioritizationInSoftwareProductLineTesting}.
 A software product line is described as a base software system, which is extended with features that make use of the base system.
 Due to the high variability, not all combinations and features can be practically tested.
 Therefore, an algorithm is proposed, that selects tests based on similarity.
@@ -32,7 +32,7 @@ This algorithm, while used in a different context, is also valuable when testing
 As previous discussed, for sufficiently complex environments and large test suits, not all tests can realistically be run at all times.
 Analogous to configurations, metadata can also be added to define the similarity of tests to each other.
 A similar algorithm as described above can then be used to sort and select tests which are possible to run in a limited timeframe.
-In section \ref{sec:dynamic-testing-framework} it is shown that this algorithm helps in implementing a solution for \textit{Q1}. %%TODO: replace "later section" with actual section
+In section \ref{sec:dynamic-testing-framework}, it is shown that this algorithm helps in implementing a solution for \textit{Q1}.
 
 In order to answer \textit{Q2}, another pipeline is created for a specific system.
 This pipeline contains steps to gather information, build necessary files and then deploy those files to different platforms.
