@@ -1,13 +1,13 @@
 \chapter{Context}\label{ch:context}
 
 In order to find answers for \textit{Q1} and \textit{Q2}, two systems have been implemented.
-One of which exploring \textit{Q1}, while the other concerns itself with \textit{Q2}.
-As a starting point, an existing project has been utilized to create a test tool as well as a release pipeline for.
+The first one is exploring \textit{Q1}, while the other concerns itself with \textit{Q2}.
+As a starting point, an existing project has been utilized to create a test tool as well as a release pipeline.
 
 Dynatrace Ltd.\footnote{\url{https://www.dynatrace.com/}}, a company specializing in software monitoring, maintains a project called Dynatrace Operator\footnote{\url{https://github.com/Dynatrace/dynatrace-operator}} (DTO).
 As stated before, an operator is a system, which runs inside a Kubernetes cluster and communicates with its API.
 The DTOs purpose is to communicate with the Kubernetes API in such a way, to deploy OneAgents and ActiveGates in a Kubernetes cluster.
-Furthermore, it uses webhooks to add an init-container, containing a OneAgent installation, to scheduled pods so that they too can be monitored.
+Furthermore, it uses webhooks to add an init-container, containing an OneAgent installation, to scheduled pods, in order to monitor them as well.
 
 The DTO is released on a number of ways.
 First, the GitHub page itself, in which updated manifests, an updated Helm chart and a new index for these charts are uploaded to.
@@ -16,7 +16,7 @@ Then, it is released to six different marketplace.
 Four of which use one proprietary format to create a marketplace listing, one uses a second proprietary format, while the final one uses a third proprietary format.
 Two of the four marketplaces have different rules how this marketplace listing has to look like, although they use the same file format.
 
-The four marketplace using the ClusterServiceVersion (CSV) format are called RedHat Marketplace (RHMP), certified-operators, community-operators, and community-operators-prod.
+The four marketplaces using the ClusterServiceVersion (CSV) format are called RedHat Marketplace (RHMP), certified-operators, community-operators, and community-operators-prod.
 All of which operated, or to some degree maintained, by RedHat.
 Some rumors say that the name ClusterServiceVersion was specifically chosen to annoy developers working with it.
 As everytime a problem is searched for in a search engine, the results are usually about the much more common CommaSeperatedValues (CSV) format.
@@ -27,9 +27,9 @@ Finally, RHMP and certified-operators use one set of validation rules for the li
 
 The fifth marketplace mentioned earlier is the Google Cloud Marketplace (GCM).
 It is used to automatically deploy an operator on a Google Kubernetes Engine (GKE) Kubernetes cluster, analogous to RedHat's marketplaces, which deploy an operator on an OpenShift cluster.
-Google's marketplace also uses a proprietary format for its listing, conveniently completely different to the CSVs Redhat uses.
+Google's marketplace also uses a proprietary format for its listing, which is conveniently completely different to the CSVs Redhat uses.
 In the same manner, the sixth and last marketplace, Rancher, use a proprietary format as well.
-Similar to the format used by the GCM listing, it is conveniently completely different.
+Similar to the format used by the GCM listing, it is also completely different.
 
 Finally, all the mentioned marketplace have different release mechanisms.
 Some of them similar, some of them entirely distinct.
