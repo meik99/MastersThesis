@@ -10,8 +10,8 @@ If the parameter is not set, the latest version available is downloaded.
 
 Then the release branch is checked out of the target repository.
 From this branch, the CSV branch is created.
-This CSV branch is first deleted if it exists and the deletion is force pushed afterwards, to make sure the generation happens on a clean branch.
-Force deleting the branch will close open pull request based on this branch.
+In order to get a clean branch, it is first deleted if it exists and the deletion is force pushed afterwards.
+Force deleting the branch will close open pull requests that are based on this branch.
 
 Afterwards, the following changes are made. \\
 In \verb|<repository>/config/helm/chart/default/Chart.yaml|:
@@ -26,14 +26,15 @@ In \verb|<repository>/config/helm/schema.yaml|
 \begin{itemize}
     \item The \verb| x-google-marketplace.publishedVersion | property is set to the version which is going to be released
     \item The \verb| x-google-marketplace.publishedVersionMetadata.releaseNote | property is set to the generated changelog
-    \item Again, the license text is re-added afterwards.
+    \item Again, the license text is re-added afterwards
 \end{itemize}
 
 In \verb|dynatrace-operator/config/helm/chart/default/templates/application.yaml|
 \begin{itemize}
     \item The \verb|version| property is set to the version which is going to be released
-    \item Since this file is a Helm template and not a normal YAML, the same library used before cannot be used here to set this property.
-    \item Therefore, the replacement is done using \verb|sed| and the license text does not need to be re-added.
+    \item This file is a Helm template, which has some extended notations compared to a normal YAML file.
+        Therefore, the same library used before cannot be used here to set this property.
+    \item In order to mitigate this problem, the replacement is done using \verb|sed| and the license text does not need to be re-added.
 \end{itemize}
 
 Then, the CSV bundles are generated.

@@ -80,13 +80,13 @@ A pull request is then created.
 
 A python script then creates a draft release and uploads the artifacts to it.
 For the script to work, a GitHub token and the target repository have to be supplied as well as the generated release data.
-Therefore, the script takes the following arguments.
+Therefore, the script takes the arguments shown in table \ref{tab:parameters-for-release-generation}.
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{Parameters for release generation}
     \label{tab:parameters-for-release-generation}
-    \begin{tabular}{p{0.3\linewidth}|p{0.7\linewidth}}
+    \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--release-data| & Expects the version found by parsing the release branches form the previous task. \\
@@ -109,11 +109,11 @@ A \verb|/releases| postfix is then added as well to specifically target releases
 E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \url{https://api.github.com/repos/Dynatrace/dynatrace-operator/releases}.
 The header for this request contains the fields described in table \ref{tab:header-fields-to-create-a-release-request}.
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{Header fields to create a release request}
     \label{tab:header-fields-to-create-a-release-request}
-    \begin{tabular}{|p{0.3\linewidth}|p{0.7\linewidth}|}
+    \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Header field name & Value \\
         \hline
         Accept & \verb|application/vnd.github.v3+json|  \\

@@ -26,6 +26,6 @@ If any of those image cannot be pulled, the task fails.
 
 The digest is then parsed for each image.
 From the \verb|docker pull| command, for the DockerHub and RHCC image, the response is taken.
-Since the digest can be found in the response, it is parsed from there using \verb|grep "Digest:"| to find the line.
-Then, using shell expansion, the ''Digest: '' prefix is removed with \verb|${digest#"Digest: "}|.
+Since the digest can be found in the response, it is parsed using \verb|grep "Digest:"| to find the line.
+Then, using shell expansion, the ``Digest: '' prefix is removed with \verb|${digest#"Digest: "}|.
 This functionality is used twice and therefore put into a function called \verb|parse_digest| which takes the response from the pull command as its parameter.

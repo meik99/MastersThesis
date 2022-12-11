@@ -10,7 +10,7 @@ This task builds the Dockerfile at \verb|<repository>/config/helm/| and pushes t
 
 \subsubsection{Preparing a cluster}\label{subsubsec:prepare-cluster}
 
-The purpose of this task is to prepare a GKE cluster for the deployment of deployer image.
+The purpose of this task is to prepare a GKE cluster for the deployment of a deployer image.
 This includes cleaning any leftover resources created by a previous DTO deployment and applying the GKE Application CRD.
 This task prepares a GKE cluster to be able to deploy the previously built deployer image.
 First, the kube-config is read from the vault secret, which is set by the task of section \ref{subsubsec:fetch-kubeconfig}.
@@ -24,14 +24,14 @@ Afterwards, the namespace is created and the DynaKube CRD is applied again.
 
 \subsubsection{Installing the deployer image}\label{subsubsec:install-deployer-image}
 
-This tasks purpose is to deploy the deployer image on a prepared GKE cluster.
+The purpose of this task is to deploy the deployer image on a prepared GKE cluster.
 The deployment is then monitored by the next task.
 This task uses Google's \verb|mpdev| tool to deploy the deployer image onto the cluster mentioned above.
 Since it also uses a Docker in Docker image, it first installs \verb|jq| to read the image name from the release data.
 It then installs the \verb|mpdev| tool and prepares the kube-config file as well as the GKE service account.
 
 The \verb|mpdev| tool can take parameters which are passed to the custom resource of the DTO.
-In order to check a simple deployment, the following properties are given to the tool in a JSON format.
+In order to check a simple deployment, the following properties are given to the tool in the JSON format.
 
 \begin{verbatim}
 {
@@ -48,8 +48,8 @@ After executing a command, \verb|./mpdev install|, with the parameters \verb|--d
 
 \subsubsection{Sanity checking the deployer deployment}\label{subsubsec:sanity-check-deployer}
 
-This tasks purpose is to make a quick test whether the deployer image can deploy the DTO successfully.
-This task checks the deployment job the \verb|mpdev| tool creates for its success.
+This tasks purpose is to make a quick test whether the deployer image can deploy the DTO successfully or not.
+This task checks the deployment job, that the \verb|mpdev| tool creates, for its success.
 To do so, it again sets up the kube-config.
 Afterwards, the condition type of the job \verb|job/dynatrace-operator-deployer| is monitored.
 

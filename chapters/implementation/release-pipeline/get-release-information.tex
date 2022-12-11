@@ -1,28 +1,28 @@
 \subsection{Get release information}\label{subsec:get-release-information}
 
 This tasks main purpose is to get the generated changelogs from the GitHub API.
-To do so, the GitHub API expects the branch hash to now for which commit to generate changelogs for.
-Other information which is conveniently available is then also added to the resulting release data.
+To do so, the GitHub API expects the branch hash to know for which commit to generate changelogs for.
+All additional information is then also added to the resulting release data.
 
 This task is used to generate a changelog and collect metadata.
 First, the branches SHA-hash is determined, by cloning the target repository and switching to the release branch, determined by the of section \ref{subsec:finding-the-latest-release-branch}.
 The bash command \verb|git rev-parse "${branch}"| then returns the hash value, which is used later.
 
-Then, the prefix for the Google Container Registry (GCR) is determined.
-The task uses the GKE service account, read from a vault secret, to query the project name.
+Then, the prefix for the Google Container Registry (GCR)\footnote{https://cloud.google.com/container-registry} is determined.
+The task uses the GKE service account, that is retrieved from a vault secret, to query the project name.
 By adding the prefix \verb|gcr.io/| and replacing colons with forward slashes, the registry for the image, which is built and uploaded in a later task, can be determined.
-The project name depends on the marketplace that is set to be used.
+The project name depends on the set marketplace value.
 It can be configured by changing the \verb|gcp_marketplace| parameter.
 Usually, these steps result in the prefix \verb|gcr.io/{gcp_marketplace}|.
 
 After the project name and the branch hash are determined, a python script is called.
-This script takes the following parameters.
+This script takes the parameters shown in table \ref{tab:params-to-generate-release-information}.
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{Parameters to generate release information}
     \label{tab:params-to-generate-release-information}
-    \begin{tabular}{p{0.3\linewidth}|p{0.7\linewidth}}
+    \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb| --release-data | & The path to the release data currently compiled by previous tasks.  \\

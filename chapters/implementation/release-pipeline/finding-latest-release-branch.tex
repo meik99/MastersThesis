@@ -1,7 +1,7 @@
 \subsection{Finding the latest release branch}\label{subsec:finding-the-latest-release-branch}
 
-The purpose of this task is to automatically find the branch to operate on, since pipeline is designed to generate releases for the next version of the operator.
-Since the script already parses version information, the branch names which are used by other tasks to generate CSV files and Helm charts on are also generated.
+The purpose of this task is to automatically find the branch to operate on, since the pipeline is designed to generate releases for the next version of the operator.
+Since the script already parses version information, the branch names, which are used by other tasks to generate CSV files and Helm charts on, are also generated.
 Furthermore, it filters any branches which are not used for releases, to avoid generating wrong files.
 
 This task finds the latest release branch using the branches from the GitHub repository of the DTO.
@@ -9,14 +9,14 @@ First, the repository is cloned.
 Then, the command \\
 \verb%git branch -a | grep "${RELEASE_BRANCH_PREFIX}" > ../branches% \\
 is used to query all branches, filter the ones with the appropriate prefix and write their names into a file.
-The prefix which is used for filtering the names can be configured with the \verb|release_branch_prefix| parameter.
+The prefix, which is used for filtering the names, can be configured with the \verb|release_branch_prefix| parameter.
 Afterwards a python script, which takes the following parameters, is called.
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{Parameters for the python script finding a release branch}
     \label{tab:py-finding-the-release-branch}
-    \begin{tabular}{l|l}
+    \begin{tabular}{p{0.2\linewidth}|p{0.7\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--branch-list| & The path to the file containing the filtered branch names \\
@@ -32,15 +32,15 @@ Afterwards a python script, which takes the following parameters, is called.
 
 This python script, using the parameters shown in table \ref{tab:py-finding-the-release-branch}, reads through the list of branches, tries to find a version for each one and then compares the versions found.
 It does so, by first removing the strings \verb| {release-prefix}-v | and \verb| {release-prefix}- | from the name.
-The resulting name is then split by a dot, i.e., \verb| . |, because it assumes the usage of a semantic versioning scheme.
-Since the branches usually contain two version numbers, the major and minor version, the resulting array is extended with \verb| .0 | until is length is two.
+The resulting name is then split by a dot, i.e., \verb|.|, because it assumes the usage of a semantic versioning scheme.
+Since the branches usually contain two version numbers, the major and minor version, the resulting array is extended with \verb|.0| until is length is two.
 These steps are necessary to obtain a normalized array for further processing.
 
 The normalized arrays of two branches are then compared to each other.
 If an array has a length greater than two, it is not in the expected form for release branches and is discarded.
 If an element of the array cannot be parsed to an integer value, it is not in the semver format and is discarded.
 If the elements of both arrays can be parsed, they are compared to each other.
-If one element is larger then the element with the same index in the other array, it is considered as the later version.
+If one element is larger than the element with the same index in the other array, it is considered as the later version.
 
 Examples:
 \begin{itemize}
@@ -52,7 +52,7 @@ Examples:
     \item The branch \verb| release-1 | is considered later than \verb| release-0.9 |. \\ The former version is appended with zeros. \\ The actual comparison would be \verb| 1.0 | against \verb| 0.9 |.
 \end{itemize}
 
-After the latest release branch is found, the version from it is also used to generate the CSV and Helm chart branches.
+After the latest release branch is found, the version derived from it is also used to generate the CSV and Helm chart branches.
 The resulting branches are \verb`{csv-prefix}-{version}` and \verb`{helm-prefix}-{version}`.
 The following string is then written to the \verb`{output}` path.
 
