@@ -2,7 +2,7 @@
 
 This task creates a GitHub release for the manifest files and the DTO Helm charts.
 It first checks out the release branch of the DTO repository and creates a new branch with the value of \verb|helm_branch| in the release data.
-If this branch already exists it is force deleted, to also close and remove any open pull requests.
+If this branch already exists it is force-deleted, to also close and remove any open pull requests.
 This way, a consistent state is ensured.
 Then, the Helm package is generated.
 
@@ -32,13 +32,13 @@ helm package \
     --passphrase-file ~/.gnupg/password
 \end{verbatim}
 
-The first argument points to the Helm charts which are packaged.
+The first argument points to the Helm charts, which are packaged.
 The \verb|-d| option defines where the new package is written to.
 With the \verb|--sign| option, the GPG keyring is used to sign the package, while the \verb|--keyring| option defines which keyring to use.
 \verb|--key| sets which of the secrets in the keyring to use and \verb|--passphrase-file| defines where to find the password the secret expects.
 
 After the package is generated, the Helm index \verb|index.yaml|, which lists available packages, is copied to \verb|index.yaml.previous|.
-The importance of this file is explained later on.
+The importance of this file is explained in more detail in the next paragraph.
 Then, the index is regenerated with the following command.
 The \verb|--url| parameter must point to the path where the \verb|index.yaml| will be available after the release.
 
@@ -132,5 +132,6 @@ In order to upload assets, the \verb|try_upload_asset| function of the \verb|Git
 It uploads the assets to the \verb|upload_url| from before.
 The header for the request contains similar fields to the ones of table \ref{tab:header-fields-to-create-a-release-request}.
 The \verb|Content-Type| is usually changed to \verb|application/octet-stream| to signify the upload of a file.
-If the upload fails, \verb|try_upload_asset| returns \verb|False| and prints the error message, otherwise it returns true \verb|True|.
+If the upload fails, \verb|try_upload_asset| returns \verb|False| and prints the error message.
+If the upload succeeds, the function returns \verb|True|.
 If uploading an asset fails, the task fails.

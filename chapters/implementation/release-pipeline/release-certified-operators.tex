@@ -7,13 +7,13 @@ This includes forking the repository and following the RedHat Catalog guidelines
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the RedHat certified operators repository.
-Forking is done by a python script takes the following arguments.
+Forking is done by a python script that takes the arguments seen table\ \ref{tab:parameters-to-fork-the-certified-operators-repository}.
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{Parameters to fork the certified operators repository}
     \label{tab:parameters-to-fork-the-certified-operators-repository}
-    \begin{tabular}{|p{0.3\linewidth}|p{0.7\linewidth}}
+    \begin{tabular}{|p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--token| & A personal access token for GitHub.

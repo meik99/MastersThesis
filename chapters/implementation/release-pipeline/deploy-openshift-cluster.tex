@@ -3,16 +3,16 @@
 This task deploys an Openshift cluster on AWS infrastructure.
 First, it checks if a state file exists in the S3 bucket created in the previous task.
 The file is then unzipped.
-If a install configuration already exists in this file, the installation was already done and the current one is skipped.
+If an install-configuration already exists in this file, the installation was already done and the current one is skipped.
 
 Otherwise, Openshift is installed.
-First, a new install configuration file is created, based one the \verb|{install_config}| parameter.
-In it, the AWS region and the cluster name, which are configured with the \verb|{aws_region}| and \verb|{cluster_name}| respectively, are set.
+First, a new install-configuration file is created, based one the \verb|{install_config}| parameter.
+It specifies the AWS region and the cluster name, which are configured with the \verb|{aws_region}| and \verb|{cluster_name}| respectively, are set.
 
 Downloading the Openshift installer is done in one of two ways.
 First, by setting a installer URL.
 If this URL is set, the Openshift installer is downloaded from the URL and the script assumes it is a binary.
-This way of downloading the Openshift installer is not tested, therefore there is no parameter provided to set the installer URL.
+Since changing the installer URL is not necessary for this particular pipeline, there is no parameter to set it and it is instead hard-coded.
 
 The second way of downloading Openshift, which is supported by the pipeline, is by defining the target version, URL to the Openshift installer directory and whether unstable versions should also be considered or not.
 Configuring these values is done with the \verb|{ocp_version}|, \verb|{ocp_installer_directory_url}|, and \verb|{ocp_installer_unstable}| parameters respectively.

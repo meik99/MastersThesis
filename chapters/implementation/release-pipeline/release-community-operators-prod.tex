@@ -6,15 +6,14 @@ The purpose of this task is to execute all steps necessary to release the CSV bu
 This includes forking the repository and following the OperatorHub guidelines.
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
-
 It first clones the DTO repository and then creates a fork of the community-operators-prod repository.
-Forking is done by a python script that takes the following arguments.
+Forking is done by a python script that takes the arguments shown in table \ref{tab:parameters-to-fork-the-community-operators-prod-repository}.
 
 \begin{table}
     \centering
     \caption{Parameters to fork the community-operators-prod repository}
     \label{tab:parameters-to-fork-the-community-operators-prod-repository}
-    \begin{tabular}{|p{0.3\linewidth}|p{0.7\linewidth}|}
+    \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--token| & A personal access token for GitHub.
@@ -43,5 +42,5 @@ The metadata of the forked repository is then written to \verb|{output-file}|.
 
 In this forked repository, the folder \verb|version| folder is created inside the folder designated for the DTO for the new version.
 The bundle's Dockerfile is placed in the version's folder.
-The previously mentioned folder is then also populated with generated CSV bundles.
+The previously mentioned folder is then also populated with the generated CSV bundles.
 Finally, the changes are added, committed and pushed to the forked repository.

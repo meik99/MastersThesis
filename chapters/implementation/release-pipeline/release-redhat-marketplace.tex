@@ -7,13 +7,13 @@ This includes forking the repository and following the RedHat Marketplace guidel
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the RedHat marketplace repository.
-Forking is done by a python script which takes the following arguments.
+Forking is done by a python script which takes the arguments shown in table\ \ref{tab:parameters-to-fork-the-redhat-marketplace-repository}.
 
-\begin{table}
+\begin{table}[H]
     \centering
     \caption{Parameters to fork the RedHat marketplace repository}
     \label{tab:parameters-to-fork-the-redhat-marketplace-repository}
-    \begin{tabular}{|p{0.3\linewidth}|p{0.7\linewidth}|}
+    \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--token| & A personal access token for GitHub.
@@ -46,12 +46,12 @@ The directories are named after the released version, i.e., \verb|0.2.2|, \verb|
 The latest version is then saved in a variable \verb|last_version|.
 If no version exist, it defaults to an empty string.
 
-Afterwards, a new folder for the version to be released is created.
+Afterwards, a new folder for the version that is to be released is created.
 The folders for the manifest and metadata are then populated with the generated CSV bundles respectively.
 In the CSV file of the version to be released, the \verb|replaces| property is then updated, if \verb|last_version| is not empty.
 If the variable is empty, the property is removed.
 Setting this property allows Openshift to correctly update the DTO.
 
-Then, annotations mentioning the string ''dynatrace-operator'' are changed to read ''dynatrace-operator-rhmp'' and the CSV file is renamed from  mentioning ''dynatrace-operator'' to mentioning ''dynatrace-operator-rhmp'' as well.
+Then, annotations mentioning the string ``dynatrace-operator'' are changed to read ``dynatrace-operator-rhmp'' and the CSV file is renamed from  mentioning ``dynatrace-operator'' to mentioning ``dynatrace-operator-rhmp'' as well.
 This is necessary to reflect the different directory name RedHat has given its Marketplace releases.
 Finally, the changes are added, committed and pushed to the forked repository.
