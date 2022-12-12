@@ -4,8 +4,8 @@ This task runs RedHat's CI pipeline for Operators to check if they can be merged
 First, the Vault secret \verb|openshift| is read and written to \verb|~/.kube/config| to allow for a connection to the cluster.
 Then, \verb|tekton| the CI tool that is needed for RedHat's CI pipeline, is downloaded and installed.
 Afterwards, the manifests for the pipeline and its tasks are applied.
-Finally, the pipeline is started using \verb|tekton|.
-This is used to debug CSV files and OLM deployment, as it is faster and generates more helpful logs as RedHat's hosted CI pipeline.
+Finally, the pipeline is started using \verb|tekton| for the same reason as in section \ref{subsec:test-certified-operators}.
+Similarly, the same restriction concerning handling a task failure as in section \ref{subsubsec:test-certified-operators-important-note} applies.
 The \verb|tekton| command uses the following parameters.
 
 \verb|--use-param-defaults|: If a parameter is not explicitly given, it uses a default value instead if it is available.
@@ -41,9 +41,3 @@ This parameters is necessary so the digest-pinned CSV files can be pushed to the
 \verb|--workspace name=registry-credentials,secret=registry-dockerconfig-secret|: Defines how the secret is called under which the Dockerconfig is stored in the namespace so the digests for images in the CSV files can be queried.
 
 \verb|--showlog|: Enables \verb|tekton| to print the log output of the pipeline tasks to standard output.
-
-\subsubsection{Important note}\label{subsubsec:test-redhat-marketplace-important-note}
-
-Since \verb|tekton| only shows logs of a pipeline tasks which runs in a cluster, it does not exit with an error code if a task fails.
-This means, that even if the bundle does not pass the verification, this task is still "green" and marked as successful.
-It must be manually checked whether all CI pipeline tasks have succeeded.

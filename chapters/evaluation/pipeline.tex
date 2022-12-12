@@ -5,17 +5,17 @@ Data is used from previous DTO releases from version v0.1.0 up to and including 
 JIRA tickets are used as a source for this data.
 For most releases, release tickets exist that track the time spent on it.
 Three of these releases do not have associated tickets, the absence of data is marked accordingly.
-Furthermore, it is annotated if the release pipeline was used or not.
+Furthermore, it is annotated, if the release pipeline was used or not.
 In table\ \ref{tab:logged-time-for-each-release}, the resulting data is shown.
 The logged time that is shown has been sanitized, to not include testing the release or implementing bug-fixes since those are not in the scope of the release pipeline.
 Note that abbreviations are used to denote certain time units\footnote{w - weeks, d - days, h - hours, m - minutes} and that the time is rounded to quarter hours.
 The latter is a result of the time-tracking used at Dynatrace.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \caption{Logged time for each release}
     \label{tab:logged-time-for-each-release}
-    \begin{tabular}{|l|l|l|}
+    \begin{tabular}{l|l|l}
         DTO version & Logged time for release & Pipeline used \\
         \hline
         v0.1.0 & 0w 4d 3h 30min & No \\
@@ -37,11 +37,11 @@ First, the time-spans of table\ \ref{tab:logged-time-for-each-release} are summe
 Then, the value is averaged across the amount of tickets that have data available.
 Finally, the ratio and percentage of time saved is highlighted.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \caption{Evaluation of logged time}
     \label{tab:evaluation-of-logged-time}
-    \begin{tabular}{|l|l|}
+    \begin{tabular}{l|l}
         Minutes spent without pipeline & Minutes spent with pipeline \\
         11250 & 2790 \\
         \hline

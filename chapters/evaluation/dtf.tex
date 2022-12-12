@@ -6,10 +6,11 @@ An environment for higher level tests was needed as it did not exist.
 It was needed to create and run higher level tests, which did also not exist prior, to find faults in the DTO code base.
 As these things were non-existent before, an evaluation of faults found before and after is not possible, because there are no such records.
 
-It could be argued that bug reports of customers could be used and their decrease monitored.
+It could be argued that bug reports of customers could be used.
+If the amount of those reports decrease after introducing the described system, conclusions about the effectiveness could be drawn.
 However, due to the complex nature of an operator and the environment it runs in, bug reports are extremely inflated.
 Often, customers have underlying problems with their environment or a misunderstanding of the DTOs feature set.
-These types of reports are most common and reports resulting in an actual bug report is, relative to all incoming reports, so low that even a significant drop would not be measurable in the time frame of this project.
+These types of reports are most common and reports resulting in an actual bug report are, relative to all incoming reports, so low that even a significant drop would not be measurable in the time frame of this project.
 
 The survey was given to full time members of the team responsible for developing and maintaining the DTO.
 At the time of the survey, it consists of six developers with a variety of years of experience.
@@ -40,10 +41,10 @@ The interviewed then followed up with more specific interpretations, shown below
 Therefore, all subjects are familiar with this form of quality assurance.
 
 \begin{itemize}
-    \item Testing the output following a specific input.
+    \item Testing the output following a specific input
     \item Multiple things are tested at once
-    \item The interaction with the system is tested.
-    \item Testing a system from the idea through every detail of the implementation to the finished product.
+    \item The interaction with the system is tested
+    \item Testing a system from the idea through every detail of the implementation to the finished product
     \item Testing from the installation to usage, i.e., testing the whole system
     \item Testing the whole software stack of the product
     \item Testing from a customers view
@@ -80,11 +81,11 @@ Secondly, it changes the context for the interviewee from testing and the DTO to
 This question is designed as a single choice between six options, the result is shown in table\ \ref{tab:participants-knowledge-of-concourse}.
 The results show, that all the participants at least heard of Concourse and that there is some practical experience for some team members.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \caption{Participants knowledge of Concourse}
     \label{tab:participants-knowledge-of-concourse}
-    \begin{tabular}{|l|l|}
+    \begin{tabular}{l|l}
         Option & Participants identifying with the option \\
         \hline
         I live in its shining glory & 0 \\
@@ -102,8 +103,8 @@ The more complicated participants think Concourse is, the more improvement abstr
 The scaling is again done using an integer between one, described as ``Easy, hardly an inconvenience'', and six, ``Complicated as a four dimensional Rubik's cube''.
 On average, participants answered with a $4.2$, indicating a large potential for improvement.
 
-\textbf{What is the greatest challengee when writing pipeline configurations?}\\
-Now the question is on what specific points an abstraction can improve.
+\textbf{What is the greatest challenge when writing pipeline configurations?}\\
+This question highlights which steps a higher level of abstraction could simplify.
 Asked as an open question, the following answers were given.
 
 \begin{itemize}
@@ -144,12 +145,12 @@ If there are fewer downsides, or less difficult challenges, it is an advantage t
 The answers to this question are as follows.
 
 \begin{itemize}
-    \item The package management is weird.
-    \item The low-levelness of the languages.
-    \item Switching from object-oriented programming to procedural structure needs some getting used to.
-    \item Pointer magic, or pointer allocations are hard to deal with.
-    \item Finding the right structure of files or system architecture.
-    \item Writing reusable code.
+    \item The package management is weird
+    \item The low-levelness of the languages
+    \item Switching from object-oriented programming to procedural structure needs some getting used to
+    \item Pointer magic, or pointer allocations are hard to deal with
+    \item Finding the right structure of files or system architecture
+    \item Writing reusable code
 \end{itemize}
 
 Notably, some participants answered very positive to this rather negatively phrased question.
@@ -168,24 +169,24 @@ This question shows anticipated acceptation of the tool.
 The answers below show that the DTF has potential due to a varied array of positives.
 
 \begin{itemize}
-    \item Getting better results using randomness with predefined similarities.
-    \item The flexibility by not having to use one specific [CI/CD] tool.
-    \item Defining tests and checking their dependencies is nice as well as their re-usability.
-    \item The abstraction level provides a simpler way to define things.
-    \item It fills the gap between test-developer, and infrastructure.
+    \item Getting better results using randomness with predefined similarities
+    \item The flexibility by not having to use one specific [CI/CD] tool
+    \item Defining tests and checking their dependencies is nice as well as their re-usability
+    \item The abstraction level provides a simpler way to define things
+    \item It fills the gap between test-developer, and infrastructure
 \end{itemize}
 
 \textbf{What do you think should be improved?}\\
 Designed as a follow-up question to the previous one, this question shows what participants disliked about the DTF.
 The answers below indicate that improvements can be made regarding the implementation of similarities.
 A shortcoming of this question is, however, that the system was only presented and was not used before.
-Therefore, more disadvantages may show if it is introduced into any process.
+Therefore, more disadvantages may show, if it is introduced into any process.
 
 \begin{itemize}
-    \item Adding an AI to enhance similarity configuration.
-    \item Visualizing similarities using a graph.
-    \item Selecting tests to always run.
-    \item Tests should be independent of the framework repo.
+    \item Adding an AI to enhance similarity configuration
+    \item Visualizing similarities using a graph
+    \item Selecting tests to always run
+    \item Tests should be independent of the framework repo
 \end{itemize}
 
 \textbf{What opportunities do you see when using this tool regularly as a part of the development process?}\\
@@ -194,15 +195,15 @@ The answers below show that the main advantage is that due to the testing being 
 This, in turn, increases the stability of the DTO and the confidence in it.
 
 \begin{itemize}
-    \item Randomization catches edge-cases.
-    \item Testing in general is a good thing.
-    \item Increases stability of the DTO.
-    \item Increases control over our tests.
-    \item Increases confidence in the product.
-    \item Decreases reliance on other teams.
-    \item No deep knowledge about any repository is needed.
-    \item A high variety of tests can be run.
-    \item Quick feedback on how my changes affect product.
+    \item Randomization catches edge-cases
+    \item Testing in general is a good thing
+    \item Increases stability of the DTO
+    \item Increases control over our tests
+    \item Increases confidence in the product
+    \item Decreases reliance on other teams
+    \item No deep knowledge about any repository is needed
+    \item A high variety of tests can be run
+    \item Quick feedback on how my changes affect product
 \end{itemize}
 
 \textbf{What risks do you see when using this tool regularly as a part of the development process?}\\
@@ -214,13 +215,13 @@ This, in turn, can lead to increased maintenance cost of not only the DTF, but a
 Due to the configuration being generated, another fear is that it might break other, unassociated pipelines, because of something going wrong during generation.
 
 \begin{itemize}
-    \item The time cost of adapting and maintaining a new tool.
-    \item Standard test-cases may not be included due to the randomization.
-    \item Similarities have to be well maintained.
-    \item Test returning a false-positive.
-    \item Tests failing because of a failing Concourse configuration instead of failure in the DTO.
-    \item Breaking other pipelines.
-    \item The DTF is potentially hard to maintain.
-    \item Having too much faith in automated tests.
-    \item Increases in infrastructure cost.
+    \item The time cost of adapting and maintaining a new tool
+    \item Standard test-cases may not be included due to the randomization
+    \item Similarities have to be well maintained
+    \item Test returning a false-positive
+    \item Tests failing because of a failing Concourse configuration instead of failure in the DTO
+    \item Breaking other pipelines
+    \item The DTF is potentially hard to maintain
+    \item Having too much faith in automated tests
+    \item Increases in infrastructure cost
 \end{itemize}

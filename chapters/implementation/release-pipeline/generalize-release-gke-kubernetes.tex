@@ -23,5 +23,5 @@ The kubeconfig is then generated using those parameters and written to the Vault
 
 This task configures the GKE cluster previously deployed.
 If there is no \verb|ClusterRoleBinding| for the \verb|cluster-admin| user, it is applied to the cluster.
-Furthermore, if the \verb|{istio_enabled}| parameter is set to \verb|True|, it deploys Istio.
+Furthermore, if the \verb|{istio_enabled}| parameter is set to \verb|True|, it also deploys Istio\footnote{https://istio.io/}.
 The purpose of this task is to configure the GKE cluster for further usage.

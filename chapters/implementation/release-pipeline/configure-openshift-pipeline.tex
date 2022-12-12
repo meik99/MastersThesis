@@ -1,6 +1,6 @@
 \subsection{Configure OpenShift pipeline}\label{subsec:configure-openshift-pipeline}
 
-This tasks purpose is to create the infrastructure necessary to run RedHat's CI pipeline.
+The purpose of this task is to create the infrastructure necessary to run RedHat's CI pipeline.
 This pipeline can then be used to debug and verify the previously generated CSV bundles.
 This tasks executes the steps necessary to deploy RedHat's CI pipeline infrastructure.
 These steps are documented in RedHat's ``certification-releases''\footnote{https://github.com/redhat-openshift-ecosystem/certification-releases/blob/main/4.9/ga/ci-pipeline.md\#step1} repository.
@@ -8,25 +8,25 @@ These steps are documented in RedHat's ``certification-releases''\footnote{https
 First, the \verb|kubeconfig| from the Vault secret \verb|openshift| is read and written to \verb|~/kube/config|.
 With this config written, a connection to the Openshift cluster can be made.
 
-Then, a function `setup-project` is defined.
+Then, a function \verb|setup-project| is defined.
 This function is executed twice at the bottom of the script.
-Once with the argument `release-certified-operators` and another time with `release-redhat-marketplace`.
+Once with the argument \verb|release-certified-operators| and another time with \verb|release-redhat-marketplace|.
 
 This function the first defines the given argument as \verb|project_name|.
 It then recreates the namespace or project with that name.
-The project is first deleted if it exists and then created again.
+The project is deleted if it exists and then created again.
 Since it may take a few seconds for a project to be deleted, the create command is executed until it succeeds.
 Then, the new project is set as the currently active one.
 The kubeconfig is then applied as a secret to the project.
 
 Afterwards, the RedHat image catalogs \verb|certified-operator-index| and \\ \verb|redhat-marketplace-index| are imported.
-Importing those catalogs may take some time, therefore the commands have a timeout of 600 seconds or ten minutes.
-It usually does not take ten minutes to import these catalogs, but they are necessary for the steps following, therefor it is set quite high.
+Importing those catalogs may take some time, therefore, these commands have a timeout of 600 seconds or ten minutes.
+It usually does not take ten minutes to import these catalogs, but they are necessary for the steps following, for which it is set quite high.
 The standard output is also redirected to not be included in the task's logs.
 This is due to the fact that these commands produce absurd amounts of logs.
 If the import needs to be debugged, the lines \verb|--request-timeout 600 1> /dev/null| can be changed to read \verb|--request-timeout 600| to include these logs.
 
-Next, the Vault secret \verb|dockerconfig| is created as a pull secret in the project, to allows pulling necessary images.
+Next, the Vault secret \verb|dockerconfig| is used to create a pull secret in the project, to allow pulling necessary images.
 Then, the GitHub SSH keys are added as a secret to the cluster, to allow cloning the repositories containing CSV files.
 I.e., the forked \verb|certified-operators| and \verb|redhat-marketplace-operators| repositories.
 Finally, a subscription to the RedHat Certification Pipelines Operator is applied.
