@@ -18,12 +18,13 @@ Two of the four marketplaces have different rules how this marketplace listing h
 
 The four marketplaces using the ClusterServiceVersion (CSV) format are called RedHat Marketplace (RHMP), certified-operators, community-operators, and community-operators-prod.
 All of which operated, or to some degree maintained, by RedHat.
-Some rumors say that the name ClusterServiceVersion was specifically chosen to annoy developers working with it.
-As everytime a problem is searched for in a search engine, the results are usually about the much more common CommaSeperatedValues (CSV) format.
-How this issue was not noticed by RedHat developers when naming this format is a question out of scope of this thesis.
 RHMP, certified-operators, and community-operators-prod all create listing which be found in OpenShift.
 The remaining community-operator release creates a listing for the Kubernetes OLM deployment.
 Finally, RHMP and certified-operators use one set of validation rules for the listing, while the other two use a similar, but different one.
+
+It could be argued that the name ClusterServiceVersion was specifically chosen to annoy developers working with it.
+As everytime a problem is searched for in a search engine, the results are usually about the much more common CommaSeperatedValues (CSV) format.
+How this issue was not noticed by RedHat developers when naming this format is a question out of scope of this thesis and further research is required.
 
 The fifth marketplace mentioned earlier is the Google Cloud Marketplace (GCM).
 It is used to automatically deploy an operator on a Google Kubernetes Engine (GKE) Kubernetes cluster, analogous to RedHat's marketplaces, which deploy an operator on an OpenShift cluster.
@@ -47,6 +48,8 @@ On the other hand, they give confidence to the development team, which is respon
 In order to test the DTO appropriately, a tool is implemented as part of this thesis to organize and execute integration tests.
 Due to the nature of an operator, running in big clusters, it uses the techniques of similarity testing mentioned in chapter \ref{ch:introduction} to select a manageable amount of tests to run.
 The system to select and manage tests has been called Dynamic Testing Framework (DTF).
+
+\pagebreak
 
 Both systems are using the Concourse CI/CD system in one way or the other.
 The release pipeline is built to run entirely in it, as a pipeline that can be executed either manually or automatically to create a functioning release.

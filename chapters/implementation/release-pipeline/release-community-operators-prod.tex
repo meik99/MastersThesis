@@ -9,7 +9,7 @@ A pull request or draft pull request is not done to avoid operating on a foreign
 It first clones the DTO repository and then creates a fork of the community-operators-prod repository.
 Forking is done by a python script that takes the arguments shown in table \ref{tab:parameters-to-fork-the-community-operators-prod-repository}.
 
-\begin{table}
+\begin{table}[h]
     \centering
     \caption{Parameters to fork the community-operators-prod repository}
     \label{tab:parameters-to-fork-the-community-operators-prod-repository}
@@ -26,6 +26,8 @@ Forking is done by a python script that takes the arguments shown in table \ref{
         \verb|--retry-timeout| & How long, in seconds, the script waits between request retries. \\
     \end{tabular}
 \end{table}
+
+\pagebreak
 
 After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
 This class implements some REST requests GitHub's API provides.

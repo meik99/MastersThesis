@@ -56,6 +56,8 @@ This is because the name in the Concourse configuration will be in a normalized 
 In this form, spaces are replaced with dashes and all text will be in lowercase.
 Going back to the previous example, both names will result in the string \verb|a-test| when normalized.
 
+\pagebreak
+
 The \textbf{setup} property allows for specifying scripts which are run before the test steps are run.
 Practically speaking, it would have the same effect as moving the scripts to the top of the \textbf{test} list.
 However, this way allows for a better folder structure in a test repository, since the files for test steps can be more cleanly seperated from utility scripts.
@@ -83,6 +85,8 @@ If a directory was supplied, the files in the directory are parsed.
 Directories inside supplied directories will not be read.
 In other words, directories are not traversed recursively and child directories have to be supplied explicitly.
 
+\pagebreak
+
 Each file found, be it a file directly supplied or found in a directory, is parsed as a YAML file.
 \begin{itemize}
   \item If it cannot be parsed as a YAML file, a warning is shown.
@@ -105,6 +109,8 @@ A similarity file may look as follows.
 Note well that the similarity objects do not have a \verb|kind| property.
 Therefore, it is not possible to mix similarities with other types of YAML objects.
 This is done on purpose, to force a single file having all similarities neatly organized inside a project.
+
+\pagebreak
 
 \begin{verbatim}
 name: Another simple test
@@ -136,6 +142,8 @@ similarity:
 The \textbf{name} property is used to reference a test.
 A value passed with this property must match the name of a test definition.
 If no test definition with the same name exists, the program will print an error.
+
+\pagebreak
 
 The \textbf{similarity} property lists the similarities to other test cases.
 Every list entry has a \textbf{name} property, referencing another tests, and a \textbf{degree} of similarity.

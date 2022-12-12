@@ -30,6 +30,9 @@ Forking is done by a python script which takes the arguments shown in table\ \re
 After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
 This class implements some REST requests GitHub's API provides.
 First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
+
+\pagebreak
+
 To ensure a consistent environment, forked repositories are deleted if they already exist.
 Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesn't.
 Additionally, the response from the GitHub API is also returned.

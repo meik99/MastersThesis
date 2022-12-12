@@ -1,3 +1,4 @@
+\pagebreak
 \subsection{Get next version}\label{subsec:get-next-version}
 
 This task uses the version found in the previous task from section \ref{subsec:finding-the-latest-release-branch} to infer the next patch version.
@@ -31,6 +32,8 @@ Therefore, the script takes the arguments shown in table \ref{tab:py-finding-the
         \verb|--output| & The path to which the calculated version is written. \\
     \end{tabular}
 \end{table}
+
+\pagebreak
 
 After parsing the arguments, the script creates an instance of \verb|GitHubApi|.
 This class implements the Representational State Transfer (REST) requests provided by the GitHub API.

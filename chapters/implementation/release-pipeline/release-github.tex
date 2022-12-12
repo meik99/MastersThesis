@@ -19,7 +19,6 @@ The created files get \verb|600| as permission bits.
 By issuing the command \verb|gpg --list-secret-keys|, the existence of the keyring can be confirmed.
 
 Then, the following command is issued.
-
 \begin{verbatim}
 helm package \
     "./dynatrace-operator/config/helm/chart/default/" \
@@ -31,6 +30,8 @@ helm package \
     --keyring ~/.gnupg/secring.gpg \
     --passphrase-file ~/.gnupg/password
 \end{verbatim}
+
+\pagebreak
 
 The first argument points to the Helm charts, which are packaged.
 The \verb|-d| option defines where the new package is written to.
@@ -66,13 +67,19 @@ MASTER_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 OLM_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 \end{verbatim}
 
+\pagebreak
+
 \textbf{Openshift}
 
 \begin{verbatim}
-IMG="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
-BRANCH_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
-MASTER_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
-OLM_IMAGE="registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
+IMG=
+    "registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
+BRANCH_IMAGE=
+    "registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
+MASTER_IMAGE=
+    "registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
+OLM_IMAGE=
+    "registry.connect.redhat.com/dynatrace/dynatrace-operator:v${version}"
 \end{verbatim}
 
 The generated Helm package, index and manifests are then added, committed and pushed to the repository.

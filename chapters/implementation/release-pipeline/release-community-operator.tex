@@ -7,9 +7,9 @@ This includes forking the repository and following the OperatorHub guidelines.
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the community operators repository using a Python script
-This script takes the following arguments.
+This script takes the arguments shown in table \ref{tab:parameters-to-clone-and-fork-a-repository}.
 
-\begin{table}[H]
+\begin{table}[h]
     \centering
     \caption{Parameters to clone and fork a repository}
     \label{tab:parameters-to-clone-and-fork-a-repository}
@@ -46,6 +46,6 @@ ${fork_name}/operators/dynatrace-operator/${version}/manifests
 ${fork_name}/operators/dynatrace-operator/${version}/metadata
 \end{verbatim}
 
-The Dockerfile located at \verb|{repository}/config/olm/kubernetes/bundle-${version}.Dockerfile| is placed in the version's folder.
-The previously mentioned folders, are then populated with the CSV bundles from \verb|{repository}/config/olm/kubernetes/${version}/manifests| and \verb|{repository}/config/olm/kubernetes/${version}/metadata| respectively.
+The Dockerfile located at \verb|{repository}/config/olm/kubernetes/bundle-${version}.|\\\verb|Dockerfile| is placed in the version's folder.
+The previously mentioned folders, are then populated with the CSV bundles from \verb|{repository}/config/olm/kubernetes/${version}|\\\verb|/manifests| and \verb|{repository}/config/olm/kubernetes/${version}/metadata| respectively.
 Finally, the changes are added, committed and pushed to the forked repository.
