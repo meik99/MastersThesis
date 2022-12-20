@@ -40,9 +40,57 @@ To mitigate this, the final DevOps practice is to ensure a stable, possibly self
 
 This thesis concerns itself with the first two principles of DevOps.
 Making sure stuff works and making sure said stuff is distributed.
+In order to make sure stuff works and is distributed, in an automated manner, Concourse~\cite{concourse} is used.
 
+Concourse~\cite{concourse} is a CI/CD system that can be used to automate certain tasks and group them into a pipeline.
+Tasks can then be run either concurrently or sequentially in the context of the pipeline they are grouped in.
+In addition, resources to be used can be defined and added to tasks, so they are available to them.
+Such resources can be files, online resources, storage locations or any number of information a task may need.
+Files that are used to configure Concourse are written in either the JSON or YAML data format.
+
+From its description, it becomes clear why Concourse, or CI/CD systems in general, are heavily utilized by DevOps.
+It is described as ``an open-source continuous thinger-doer'' \cite{concourse}.
+Using appropriate configuration files, it can continuously and automatically do things, such as testing code, and distributing the resulting system.
+Many other CI/CD systems exist as well, notably Jenkins\footnote{https://www.jenkins.io/}, GitLab\footnote{https://about.gitlab.com/}, or circleci\footnote{https://circleci.com/}.
+They function in a similar manner to Concourse and could be used instead in other projects as needed.
 
 \section{Testing}\label{sec:testing}
+
+Arguably, if there is the need to automatically integrate code into code bases, there is also the need for testing.
+After all, faulty code or code with unintended behaviour must not be integrated and certainly not automatically.
+The need for automated testing is even higher if the integration task is also automated.
+If code is integrated manually, a developer can also manually test its integration.
+If code is integrated automatically, this might not be possible anymore.
+
+Testing code in an automated fashion has developed as software projects grew in size and importance.
+The first commercially successful programming language, Fortran, was released in 1957~\cite{history-of-software}.
+In 1961, automatic testing was already in use~\cite{automatic-grading-of-graphical-user-interface-programs}.
+The first documented software lifecycle model, the waterfall model, was documented in 1970~\cite{history-of-waterfall-model}.
+This very first model already includes testing as part of its lifecycle.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textheight]{img/introduction/software-testing-v.drawio}
+    \caption{Levels of abstraction and their corresponding tests}
+    \label{fig:levels-of-abstraction-and-tests}
+\end{figure}
+
+Figure~\ref{fig:levels-of-abstraction-and-tests} describes another model, the V-model~\cite{waterfall-vs-v-model-vs-agile}.
+Although in general it is considered out of date, given that agile practices are used nowadays as described before, it is helpful to visualize the layers of systems and their corresponding tests.
+Single components are unit tested in isolation, while their interaction is tested using integration tests and so on and so forth.
+In order to validate code before an automatic integration occurs, a well-founded set of tests is needed.
+Not only on the lowest levels, but also on the highest level, which is acceptance testing.
+Without strong test suits, faulty code may be integrated into a system and delivered to stakeholders.
+
+This paper focuses on the second layer of testing, which is integration testing.
+Integration testing commonly take the form of \textbf{End-to-End (E2E) testing}~\cite{end-to-end-integration-testing-design}.
+As the name suggests, this technique tests a software system from one end, i.e., a hypothetical user, across user-system interaction, to the other end, i.e., the results of a feature.
+
+For example, buying an item on an online shop can be tested using e2e tests.
+First, a test program may open a browser and navigate to the website.
+It then adds certain items to a cart, evaluating the shown total on the site.
+It then removes and re-adds certain items while evaluating the subtotal.
+After the purchase is completed, it checks that the correct entries where made in the datastore of the web shop and that all transactions were made correctly and completely.
 
 \section{Virtualization}\label{sec:virtualization}
 
