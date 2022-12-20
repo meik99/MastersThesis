@@ -1,17 +1,55 @@
-
 \chapter{Background}\label{ch:background}
 
-In order to answer \textit{Q1}, a system is developed to help abstract the complexity of maintaining higher level tests.
-This system's purpose is to use a template of a configuration file and then generate a concrete configuration for a pipeline.
-Since the pipeline configuration is stored in code, as discussed before, the template must contain a common basis of this code.
+In this section, the background to this thesis is discussed.
+Its aim is to give context to the project that is implemented in addition to specific technical knowledge.
+The context of this work is mostly DevOps as it heavily uses implementations of DevOps practices, such as CI/CD tools which are explained in section~\ref{sec:devops-and-agile-programming}.
+Testing as a concept exists in software engineering since the beginning and deeper insights are given in section~\ref{sec:testing}.
+The DTF, briefly mentioned in section~\ref{ch:introduction} implements theoretical concepts of similarity-based variability testing, which is picked up on in section~\ref{sec:similarities}.
+Finally, virtualization of applications and a technology building on top of it, Kubernetes, are described in section~\ref{sec:virtualization} and section~\ref{sec:kubernetes}.
 
-This method has a few advantages to manually maintaining configurations.
-First, if a pipeline configuration contains a fault, a fix in the template fixes all concrete configurations derived from it.
-Secondly, only one configuration must be maintained, avoiding a problem analogous to one known as ''shotgun-surgery''\footnote{\url{https://refactoring.guru/smells/shotgun-surgery}} in software engineering, were one small changes must be made in many different files.
-Thirdly, once the template is written, the domain knowledge is sufficiently abstracted for other team members.
-Using the system to generate a concrete configuration does not necessitate knowledge about the domain of pipeline configurations.
+\section{DevOps and agile programming}\label{sec:devops-and-agile-programming}
 
-As previously discussed, on of the main difficulties of testing highly scaled and complex systems, is the need of setting up complex environments.
+All things start with Agile programming.
+Different practices have emerged since the writing of the agile manifesto~\cite{AgileManifesto} in 2001.
+Extreme programming, Scrum and Kanban are only a few examples of such practices~\cite{ADecadeOfAgileMethodologies}.
+All of them with the goal of increasing the velocity of software development and the speed at which a project can change into different directions.
+These agile practices are more and more adopted in the industry~\cite{BecomingAgileTogether} and taught at universities~\cite{StudienhandbuchProjectManagement}.
+
+As an example of agile programming, Scrum can be dissected.
+The inventors of Scrum, Jeff Sutherland and Ken Schwaber, describe Scrum as the following.
+
+``Scrum is a lightweight framework that helps people, teams and organizations generate value through
+adaptive solutions for complex problems''~\cite{the-scrum-guide}
+
+It is meant to be simple, as well as easy to understand and execute.
+According to the Scrum guide~\cite{the-scrum-guide}, it is supposed to allow changes to a system as early as possible.
+Planning only as much as needed and even if planned, allow space for deviation.
+In short, the goal is to have a system that allows focused planning while also having a high velocity when developing projects.
+
+In that context, DevOps, as a practice, is an extension as well as an evolution of agile practices.
+Instead of applying it to software development itself, it is applied to things surrounding it.
+Scrum, for example, describes how a feature is supposed to be planned and implemented.
+A DevOps practice describes how this feature is integrated into the code base, tested, or distributed.
+
+In more elaborate terms, DevOps is all about making sure new code works well and as intended~\cite{the-software-architext-and-devops}.
+If code fulfills these criteria, it is supposed to be automatically integrated in to the existing code base.
+After the integration was successful, it should then be distributed, again automatically.
+Some systems depend on certain infrastructure, such as servers.
+Naturally, this infrastructure has the potential to fail.
+To mitigate this, the final DevOps practice is to ensure a stable, possibly self-repairing, infrastructure~\cite{container-and-microservice-driven-design-for-cloud-infrastructure-devops}.
+
+This thesis concerns itself with the first two principles of DevOps.
+Making sure stuff works and making sure said stuff is distributed.
+
+
+\section{Testing}\label{sec:testing}
+
+\section{Virtualization}\label{sec:virtualization}
+
+\input{chapters/technologies/kubernetes.tex}
+
+\section{Similarity based variability testing}\label{sec:similarities}
+As previously discussed, one of the main difficulties of testing highly scaled and complex systems, is the need of setting up complex environments.
 Later it is shown, that for certain technologies, the setup for a single test may take multiple hours.
 For large test suits, it is therefore unpractical to run all tests everytime, as the time-cost is too high.
 In order to mitigate this issue, a technique called similarity-based variability testing is used.
@@ -34,10 +72,3 @@ Analogous to configurations, metadata can also be added to define the similarity
 A similar algorithm as described above can then be used to sort and select tests which are possible to run in a limited timeframe.
 In section \ref{sec:dynamic-testing-framework}, it is shown that this algorithm helps in implementing a solution for \textit{Q1}.
 
-In order to answer \textit{Q2}, another pipeline is created for a specific system.
-This pipeline contains steps to gather information, build necessary files and then deploy those files to different platforms.
-The platforms to be deployed are specific marketplaces for this system and will be discussed in section \ref{sec:release-pipeline}
-
-The goal is to find and use data, that is common to each platform and prepare it as much as possible before distributing it.
-Each platform may have special steps that need to be taken into account.
-Combining these steps in small scripts may increase the maintainability of the whole pipeline.

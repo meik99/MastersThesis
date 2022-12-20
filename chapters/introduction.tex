@@ -1,43 +1,35 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
-All things start with Agile programming.
-Different practices have emerged since the writing of the agile manifesto\cite{AgileManifesto} in 2001.
-Extreme programming, Scrum and Kanban are only a few examples of such practices\cite{ADecadeOfAgileMethodologies}.
-All of them with the goal of increasing the velocity of software development and the speed at which a project can change into different directions.
-These agile practices are more and more adopted in the industry\cite{BecomingAgileTogether} and taught at universities\cite{StudienhandbuchProjectManagement}.
-
-In recent years, however, a new set of practices emerged.
+In recent years, a set of practices have emerged with the goal of supporting software development.
 Expanding on agile practices, these have the same goal albeit with other means.
 This set of practices is commonly referred to as ``DevOps'' practices.
 A short summary, which is explored shortly, would be:
 
 ``DevOps is IT for software developers.''\footnote{A quote once overheard in passing.}
 
-Ebert et.al.\ explain the field as an integration of two worlds\cite{DevOps}.
-Automating both, development and operations.
-Automating integration and delivery.
-Automating testing and deploying.
-Automating logging and monitoring.
+Ebert et.al.\ explain the field as an integration of two worlds~\cite{DevOps}: \\
+Automating development and operations; \\
+Automating integration and delivery; \\
+Automating testing and deploying; \\
+Automating logging and monitoring;
 
 The first need that arises to achieve this level of automation is the need for tools.
-Again, Ebert et.al., as well as Leite et.al, identify this necessity\cite{DevOps, ASurveyofDevOpsConceptsandChallenges}.
+Again, Ebert et.al., as well as Leite et.al, identify this necessity~\cite{DevOps, ASurveyofDevOpsConceptsandChallenges}.
 First and foremost, build tools are required to automate building software systems.
 Most of which also include some form of dependency management to automatically link required libraries to the resulting system.
 
-\pagebreak
-
 Then, testing tools are required to automate testing newly integrated code and therefore streamline automatic integration.
-Since this process is also called continuous integration, these tools are known as continuous integration tools\cite{DevOps}.
+Since this process is also called continuous integration, these tools are known as continuous integration tools~\cite{DevOps}.
 Closely related are the continuous delivery tools.
 These satisfy the need of automatically delivering or deploying newly integrated code.
 Usually, a tool that does continuous integration (CI) also does continuous delivery (CD) because of that fact.
 They are then often called CI/CD tools for short.
 
-Taking back a step, agile methods, as discussed in the beginning, have the goal of increasing the velocity of software development\cite{ADecadeOfAgileMethodologies}.
-One of the principles these methods use to achieve this goal is the principle of collective code ownership\cite{CommonAgilePracticesInSoftwareProcesses, ManagingCodeOwnership}.
-Until fairly recently, pipelines to automatically integrate and deliver code were often clicked together\cite{JenkinsClassicUi}.
-As this practice slowly faded out, infrastructure as code emerged\cite{ASystematicMappingStudyOfInfrastructureAsCodeResearch}.
+Taking back a step, agile methods, as discussed in the beginning, have the goal of increasing the velocity of software development~\cite{ADecadeOfAgileMethodologies}.
+One of the principles these methods use to achieve this goal is the principle of collective code ownership~\cite{CommonAgilePracticesInSoftwareProcesses, ManagingCodeOwnership}.
+Until fairly recently, pipelines to automatically integrate and deliver code were often clicked together~\cite{JenkinsClassicUi}.
+As this practice slowly faded out, infrastructure as code emerged~\cite{ASystematicMappingStudyOfInfrastructureAsCodeResearch}.
 Since the infrastructure is now represented as code, it too can be collectively owned, enabling more DevOps practices and further increase development velocity.
 
 Summarizing briefly, it is now established that automated pipelines exist and are used.
@@ -50,34 +42,18 @@ First, it must be discussed how to verify that the newly and automatically integ
 Secondly, where to deliver the system and how this can be done in a way, that is automatic as well as correct.
 After all, the system cannot just be put somewhere on the internet with the hopes that the customer will eventually figure out how to use the updated version.
 Changelogs, version bumps, installation instructions and more must be carefully considered.
-As this paper will show,  automating the maintenance of this secondary information must be done in a thoughtful and precise manner.
+As this paper will show, automating the maintenance of this secondary information must be done in a thoughtful and precise manner.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textheight]{img/introduction/software-testing-v.drawio}
-\caption{Levels of abstraction and their corresponding tests}
-\label{fig:levels-of-abstraction-and-tests}
-\end{figure}
-
-Automated tests address the first issue.
-Testing is well established and understood in software development.
-In figure \ref{fig:levels-of-abstraction-and-tests}, different types of tests can be seen that correspond to different levels of abstraction of the system.
-Single components are unit tested in isolation, while their interaction is tested using integration tests and so on and so forth.
-In order to validate code before an automatic integration occurs, a well-founded set of tests is needed.
-Not only on the lowest levels, but also on the highest level, which is acceptance testing.
-Without strong test suits,  faulty code may be integrated into a system and delivered to stakeholders.
-
-For many systems, this is where the story ends.
-Tests are designed and implemented.
-The system grows so do its tests.
+For many basic systems, the story ends with basic tests.
+They are unit tested, integration tests cover multiple units and system tests make sure features as a whole work correctly and as intended by simply executing a program.
+In a system's lifetime, tests are designed and implemented.
+When the system grows so do its tests.
 Everytime new code is written, tests are added, previous ones are run and the code is integrated.
 
 The problem is solved.
 Well, not entirely.
 One small type of complex systems still holds out against the tests.
-And life is not easy for the testers, who garrison the test suits of components, architecture, design and requirements\cite{AsterixBeginningSentence}.
-
-\pagebreak
+And life is not easy for the testers, who garrison the test suits of components, architecture, design and requirements~\cite{AsterixBeginningSentence}.
 
 These systems are those that run in clusters.
 A collection of servers, varying in size, connected together fulfilling one or many business cases.
@@ -90,15 +66,33 @@ After a test ran, this environment then needs to be destroyed and recreated, so 
 
 With great complexity comes a great learning curve.
 Not all developers in a team might have the domain knowledge to create and maintain a pipeline configuration for such a setup.
-Therefore, the first research question for this paper is the following:
-
-\textit{Q1}: How can the setup and maintenance of an environment for higher level tests be abstracted and made accessible?
+Therefore, one of the two objectives of this thesis is to make creating pipeline configurations easier and more accessible by abstracting complicated domain knowledge to a more general interface.
 
 The second problem after testing such highly complex systems is the delivery and distribution.
 Usually, programs are delivered in the form of binaries, distributed often by a website or package management system.
 As is shown later, distribution of cluster systems is highly diverse with many so-called ``marketplaces'' from which that software can be deployed from.
 Targeting many of these systems multiplies the problem touched before, needing more changelogs, setting versions correctly and, additionally, adhering to proprietary configurations for specific marketplaces.
-Henceforth, the second research question to be answered is as follows:
+The second objective is therefore, to integrate these multiple systems into one, automating as much as possible, while using a common base for the data and metadata that is needed.
 
-\textit{Q2}: How can multiple distribution systems be integrated into an automatic pipeline using a common base of data and metadata.
+In order to tackle the first problem, a system is developed to help abstract the complexity of maintaining higher level tests.
+This system's purpose is to use a template of a configuration file and then generate a concrete configuration for a pipeline.
+Going forward, this system is called the Dynamic Testing Framework (DTF).
 
+This method has a few advantages to manually maintaining configurations.
+First, if a pipeline configuration contains a fault, a fix in the template fixes all concrete configurations derived from it.
+Secondly, only one configuration must be maintained, avoiding a problem analogous to one known as ``shotgun-surgery''\footnote{\url{https://refactoring.guru/smells/shotgun-surgery}} in software engineering, were one small changes must be made in many different files.
+Thirdly, once the template is written, the domain knowledge is sufficiently abstracted for other team members.
+Using the system to generate a concrete configuration does not necessitate knowledge about the domain of pipeline configurations.
+
+To address the second problem, another pipeline is created for a specific system.
+This pipeline contains steps to gather information, build necessary files and then deploy those files to different platforms.
+The platforms to be deployed are specific marketplaces for this system and will be discussed in section~\ref{sec:release-pipeline}
+
+The goal is to find and use data, that is common to each platform and prepare it as much as possible before distributing it.
+Each platform may have special steps that need to be taken into account.
+Combining these steps in small scripts may increase the maintainability of the whole pipeline.
+Since the main purpose of this pipeline is to distribute a system, it is simply called ``Release pipeline''.
+
+In order to solve the problems stated, this thesis first introduces the general area of software engineering in which these problems fall into: The area of ``DevOps''.
+%% TODO: Define structure after restructuring thesis
+%% TODO: Name the tools of that implement the solutions

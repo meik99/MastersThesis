@@ -11,8 +11,6 @@ These instructions can range from simple commands to complex, multistep build in
 Any image can also serve as the starting point for a new image.
 This allows the creation of complex systems that can be instantiated as containers at any time.
 
-\pagebreak
-
 A container\cite{what-are-linux-containers} is a process that runs on an operating system (OS), which is mostly isolated from the host system and other processes that run on it.
 In a way, they act as virtual machines.
 However, they do not contain an OS themselves, but make use of the host OS through abstraction layers.
@@ -40,8 +38,6 @@ These containers are only started, however, after all of a pods init-containers 
 For example, a pod may have a web server as a container that it runs continuously, but has an init container that executes setup tasks that need to run before the server starts.
 Finally, ephemeral containers are containers added to an already deployed pod to be used for debugging.
 
-\pagebreak
-
 \textbf{ReplicaSets}\cite{kubernetes-replicaset} are the simplest form of deploying multiple instances of pods.
 They are defined by providing a template of a pod and the number of replicas of the given template.
 The replicaset then does its best to deploy the specified amount of pods on the cluster.
@@ -68,8 +64,6 @@ The \textbf{Kubernetes API}\cite{kubernetes-api} is the part of Kubernetes that 
 I.e., if an administrator wants to create resource, such as a pod, a HTTP request is sent to the Kubernetes API describing that resource.
 From there, it is then applied to the cluster and other Kubernetes components are notified.
 Interacting with this API is commonly abstracted to the Kubernetes CLI for manual, or client libraries for automatic communication.
-
-\pagebreak
 
 \textbf{Webhooks}\cite{kubernetes-webhooks} are used to catch requests for pods and modify them before they are scheduled.
 Whenever a resource is modified in a cluster, it is handled as a HTTP request.
@@ -111,5 +105,3 @@ EKS is later used to create clusters that run Openshift.
 \textbf{Openshift}\cite{openshift} is a software system built on top of a Kubernetes cluster.
 It abstracts different aspects of cluster administration, such as resource or credential management.
 Furthermore, it provides a marketplace from RedHat that uses OLM to install and manage operators.
-
-
