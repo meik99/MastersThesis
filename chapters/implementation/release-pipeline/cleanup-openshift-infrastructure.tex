@@ -1,8 +1,8 @@
-\subsection{Cleanup Openshift infrastructure}\label{subsec:cleanup-openshift-infrastructure}
+\textbf{Cleanup Openshift infrastructure}
 
 This task deletes the S3 bucket with the openshift installer state.
 It uses a python script to do so.
-This script takes the parameters shown in table \ref{tab:params-remove-s3-bucket}.
+This script takes the parameters shown in table~\ref{tab:params-remove-s3-bucket}.
 The \verb|boto3| python library is then used to connect to AWS S3 service and delete the bucket.
 
 \begin{table}[H]

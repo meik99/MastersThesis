@@ -1,4 +1,4 @@
-\subsection{Test certified operators}\label{subsec:test-certified-operators}
+\textbf{Test certified operators}
 
 This task runs RedHat's CI pipeline for Operators to check, if they can be merged into their \verb|certified-operators| repository.
 First, the Vault secret \verb|openshift| is read and written to \verb|~/.kube/config| to allow for a connection to the cluster.
@@ -42,8 +42,8 @@ The \verb|tekton| command uses the following parameters.
 
 \verb|--showlog|: Enables \verb|tekton| to print the log output of the pipeline tasks to standard output.
 
-\subsubsection{Important note}\label{subsubsec:test-certified-operators-important-note}
+\textit{Important note}
 
 Since \verb|tekton| only shows logs of a pipelines tasks which run in a cluster, it does not exit with an error code if a task fails.
-This means, that even if the bundle does not pass the verification, this task is still "green" and marked as successful.
+This means, that even if the bundle does not pass the verification, this task is still ``green'' and marked as successful.
 It must be manually checked whether all CI pipeline tasks have succeeded.

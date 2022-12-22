@@ -1,9 +1,9 @@
-\subsection{Destroy OpenShift cluster}\label{subsec:destroy-openshift-cluster}
+\textbf{Destroy OpenShift cluster}
 
 This task destroys and deletes an Openshift cluster from AWS infrastructure.
 First, it unzips the state file in the S3 bucket created in a previous task.
 Then, the Openshift installer is downloaded.
-The process of downloading this installer here is the same as in section \ref{subsec:deploy-openshift-cluster}.
+The process of downloading this installer here is the same as for creating the cluster.
 
 When the installer has finished, it is checked whether a \verb|metadata.json| file exists in the state file.
 If it does not exist, it is assumed that there is no cluster to destroy.

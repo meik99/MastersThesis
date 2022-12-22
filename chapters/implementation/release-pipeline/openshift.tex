@@ -1,0 +1,21 @@
+\subsection{OpenShift infrastructure}\label{subsec:openshift-infrastructure}
+
+These group of tasks manage the creation and configuration of an OpenShift infrastructure.
+This infrastructure can then be used to test the releases for the marketplaces using CSVs and OLM.
+In general these tasks do not have to run for every release, but can be used to debug one should errors arise.
+
+\input{chapters/implementation/release-pipeline/prepare-openshift-infrastructure}
+
+\input{chapters/implementation/release-pipeline/deploy-openshift-cluster}
+
+\input{chapters/implementation/release-pipeline/configure-openshift-cluster}
+
+\input{chapters/implementation/release-pipeline/configure-openshift-pipeline}
+
+\input{chapters/implementation/release-pipeline/test-certified-operators}
+
+\input{chapters/implementation/release-pipeline/test-redhat-marketplace-operators}
+
+\input{chapters/implementation/release-pipeline/destroy-openshift-cluster}
+
+\input{chapters/implementation/release-pipeline/cleanup-openshift-infrastructure}

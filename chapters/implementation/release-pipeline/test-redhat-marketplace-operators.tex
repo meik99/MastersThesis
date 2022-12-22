@@ -1,11 +1,11 @@
-\subsection{Test RedHat Marketplace}\label{subsec:test-redhat-marketplace}
+\textbf{Test RedHat Marketplace}
 
 This task runs RedHat's CI pipeline for Operators to check if they can be merged into their \verb|redhat-marketplace-operators| repository.
 First, the Vault secret \verb|openshift| is read and written to \verb|~/.kube/config| to allow for a connection to the cluster.
 Then, \verb|tekton| the CI tool that is needed for RedHat's CI pipeline, is downloaded and installed.
 Afterwards, the manifests for the pipeline and its tasks are applied.
-Finally, the pipeline is started using \verb|tekton| for the same reason as in section \ref{subsec:test-certified-operators}.
-Similarly, the same restriction concerning handling a task failure as in section \ref{subsubsec:test-certified-operators-important-note} applies.
+Finally, the pipeline is started using \verb|tekton| for the same reason as the previous task.
+Similarly, the same restriction concerning handling a task failure applies.
 The \verb|tekton| command uses the following parameters.
 
 \verb|--use-param-defaults|: If a parameter is not explicitly given, it uses a default value instead if it is available.
@@ -19,11 +19,11 @@ The \verb|tekton| command uses the following parameters.
 \verb|--param env=prod|: Only used when actively developing RedHat's CI pipeline.
 In this instance, \verb|prod| is always the correct value.
 
-\verb|--param pin_digests=true|: Defines whether images should be digest pinned.
+\verb|--param pin_digests=true|: Defines whether images should be digest-pinned.
 I.e., if the tags of images should be replaced with their SHA hash.
-Images referenced in a CSV file must be digest pinned to be able to be released to RedHat's marketplaces.
+Images referenced in a CSV file must be digest-pinned to be able to be released to RedHat's marketplaces.
 If this parameter is set to true, digest pinning is done automatically and pushed to the repository \verb|{git_repo_url}| points to.
-The branch the changes are pushed to has a \verb|-pinned| suffix.
+The branch, the changes are pushed to, has a \verb|-pinned| suffix.
 
 \verb|--param git_username="${GITHUB_USERNAME}"|: Defines the username with which to push the changes from the digest pinning step.
 The user must have the SSH key, applied in the previous step, configured on their GitHub account.
