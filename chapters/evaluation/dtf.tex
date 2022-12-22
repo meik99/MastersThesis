@@ -1,4 +1,4 @@
-\section{\textit{Q1}: How can the setup and maintenance of an environment for higher level tests be abstracted and made accessible}\label{sec:textit{q1}:-how-can-the-setup-and-maintenance-of-an-environment-for-higher-level-tests-be-abstracted-and-made-accessible?}
+\section{Q1: Method}\label{sec:q1:-how-useful-is-the-dtf-in-a-practical-context?}
 
 The evaluation for this question is done using an exploratory survey.
 This approach is chosen due to the circumstances of the project.
@@ -34,20 +34,18 @@ The similarity- and test-files were discussed as well as the structure of the pr
 Furthermore, the result of generating a configuration, the template behind it, and how it is applied to Concourse was shown.
 Therefore, although none of the interviewees have practical experience with the DTF, they are able to give informed answers to the stated questions.
 
+\section{Q1: Results}\label{sec:q1:-results}
+
 \textbf{What do you understand by the term E2E-testing?}\\
 This is an open question intended to gauge the familiarity with E2E-testing of the interviewee.
 Since ``E2E'' is a known shorthand, most peoples first answer is: ``testing something from the beginning to the end''.
-The interviewed then followed up with more specific interpretations, shown below, which met the definition of E2E-testing.
+The interviewed then followed up with more specific interpretations, a summary of which is shown below, which met the definition of E2E-testing.
 Therefore, all subjects are familiar with this form of quality assurance.
 
 \begin{itemize}
-    \item Testing the output following a specific input
-    \item Multiple things are tested at once
-    \item The interaction with the system is tested
-    \item Testing a system from the idea through every detail of the implementation to the finished product
-    \item Testing from the installation to usage, i.e., testing the whole system
-    \item Testing the whole software stack of the product
-    \item Testing from a customers view
+    \item Testing for a specific output for a specific input
+    \item Testing multiple parts of the system and its interactions with the environment
+    \item Testing a system from the customers point of view
 \end{itemize}
 
 \textbf{How easy, do you think, is the Dynamic Testing Framework to use?}\\
@@ -105,21 +103,14 @@ On average, participants answered with a $4.2$, indicating a large potential for
 
 \textbf{What is the greatest challenge when writing pipeline configurations?}\\
 This question highlights which steps a higher level of abstraction could simplify.
-Asked as an open question, the following answers were given.
+Asked as an open question, certain pain-points crystallized.
 
 \begin{itemize}
     \item Setting roles for authentication and authorization
-    \item Setting correct parameters
-    \item Passing vars\footnote{shorthand: variables} is a pain
-    \item Not breaking other things
-    \item Scared of breaking infrastructure
-    \item Steep learning curve
-    \item Files are related in a strange way
-    \item High necessity for domain knowledge
-    \item Correctly interpret results
-    \item Difficult syntax
-    \item Compartmentalize steps, so they make sense
-    \item Managing dependencies between steps
+    \item Setting correct parameters and passing variables to the tasks
+    \item A feeling of uncertainty and fearing that other infrastructure could be negatively affected
+    \item A high learning curve, especially in how files and configurations interact with each other
+    \item Correctly interpreting results is challenging
 \end{itemize}
 
 From this answer, the following pain points can be distilled.
@@ -142,15 +133,11 @@ This strongly suggests that the maintenance cost of the DTF is lower compared to
 \textbf{What is the greatest challenge when programming Golang?}\\
 In order to compare the benefits or downsides of using a Golang based system to a Concourse configuration, this question asks about the challenges of Golang.
 If there are fewer downsides, or less difficult challenges, it is an advantage to use Golang, or Concourse otherwise.
-The answers to this question are as follows.
+The answers to this question can b grouped in the following two categories.
 
 \begin{itemize}
-    \item The package management is weird
-    \item The low-levelness of the languages
-    \item Switching from object-oriented programming to procedural structure needs some getting used to
-    \item Pointer magic, or pointer allocations are hard to deal with
-    \item Finding the right structure of files or system architecture
-    \item Writing reusable code
+    \item Writing good code that is maintainable while dealing with unfamiliarity of the language
+    \item The toolchain can be tricky to use at times
 \end{itemize}
 
 Notably, some participants answered very positive to this rather negatively phrased question.
@@ -166,14 +153,11 @@ On average, interviewees selected $3.0$, so while Concourse pipeline configurati
 \textbf{What did you like about the Dynamic Testing Framework?}\\
 Based on the presentation introducing the DTF, interviewees are asked to describe what they liked about it.
 This question shows anticipated acceptation of the tool.
-The answers below show that the DTF has potential due to a varied array of positives.
+The main points made, shown below, show that the DTF has potential due to a varied array of positives.
 
 \begin{itemize}
     \item Getting better results using randomness with predefined similarities
-    \item The flexibility by not having to use one specific [CI/CD] tool
-    \item Defining tests and checking their dependencies is nice as well as their re-usability
-    \item The abstraction level provides a simpler way to define things
-    \item It fills the gap between test-developer, and infrastructure
+    \item The abstraction level provides a simpler way to define things and their dependencies
 \end{itemize}
 
 \textbf{What do you think should be improved?}\\
@@ -191,19 +175,14 @@ Therefore, more disadvantages may show, if it is introduced into any process.
 
 \textbf{What opportunities do you see when using this tool regularly as a part of the development process?}\\
 Participants were asked what they think using the DTF can provide.
-The answers below show that the main advantage is that due to the testing being easier, testing is done more frequently.
+The answers can be grouped into the points shown below.
+They show that the main advantage is that due to the testing being easier, testing is done more frequently.
 This, in turn, increases the stability of the DTO and the confidence in it.
 
 \begin{itemize}
-    \item Randomization catches edge-cases
-    \item Testing in general is a good thing
-    \item Increases stability of the DTO
-    \item Increases control over our tests
-    \item Increases confidence in the product
-    \item Decreases reliance on other teams
-    \item No deep knowledge about any repository is needed
-    \item A high variety of tests can be run
-    \item Quick feedback on how my changes affect product
+    \item Randomization catches edge-cases and increases test coverage
+    \item Increased test coverage increases stability and confidence in the product
+    \item Less domain knowledge of infrastructure is needed
 \end{itemize}
 
 \textbf{What risks do you see when using this tool regularly as a part of the development process?}\\
@@ -215,13 +194,29 @@ This, in turn, can lead to increased maintenance cost of not only the DTF, but a
 Due to the configuration being generated, another fear is that it might break other, unassociated pipelines, because of something going wrong during generation.
 
 \begin{itemize}
-    \item The time cost of adapting and maintaining a new tool
-    \item Standard test-cases may not be included due to the randomization
-    \item Similarities have to be well maintained
-    \item Test returning a false-positive
-    \item Tests failing because of a failing Concourse configuration instead of failure in the DTO
-    \item Breaking other pipelines
-    \item The DTF is potentially hard to maintain
-    \item Having too much faith in automated tests
-    \item Increases in infrastructure cost
+    \item Potential maintenance increase due to having to maintain the DTF, its test definitions and similarities
+    \item Tests might not be sufficient and create a false sense of security
+    \item Trusting the generated configurations too much and inadvertently breaking other pipelines
 \end{itemize}
+
+\section{Q1: Discussion}\label{sec:q1:-discussion}
+
+Team members were interviewed about the DTF to find out if it fulfills the potential of being simpler.
+The participants of the survey showed that they understood what E2E testing is and were given a presentation about the DTF.
+In the interview, they concluded that the DTF seemed easier to use compared to the current approach.
+This conclusion is derived from the average answers.
+
+On the question of how complicated the participants thought the DTF is to use, the average answer is $2.4$ on a scale of one to six.
+When questioned about how complicated they think Concourse is in comparison, the average answer is $4.2$.
+This strongly indicates that the DTF appears to be easier to use.
+
+Regarding maintenance, however, the result is inconclusive.
+On the one hand, participants showed that they are more familiar with the Golang programming language.
+The average answer for how much experience they have with the language is $4$, which means the tool itself would be easier to maintain for the team.
+On the other hand, familiarity with the templating language used is answered with an average of $3$.
+This shows a tendency, that the templates used to generate a pipeline and tasks are more expensive to maintain.
+
+Concluding \textit{Q1}, it appears that introducing the DTF in the general workflow should be carefully considered.
+Alternative approaches might exist, which are less complicated than Concourse pipeline configurations while also being easier to maintain.
+One such alternative could be employing a person with the skill-set needed to create and maintain such a testing pipeline.
+Having the intrinsic ability of processing natural language, combined with a practically limitless computing engine, a specialised human might be a better alternative in this case.

@@ -1,12 +1,19 @@
-\section{Q2: How can multiple distribution systems be integrated into an automatic pipeline using a common base of data and metadata}\label{sec:q2:-how-can-multiple-distribution-systems-be-integrated-into-an-automatic-pipeline-using-a-common-base-of-data-and-metadata}
+\section{Q2: Method}\label{sec:q2:-method}
 
 The evaluation for this question is done by analyzing the data of time used on releases.
 Data is used from previous DTO releases from version v0.1.0 up to and including v0.6.0.
 JIRA tickets are used as a source for this data.
+Time spent on each ticket is then accumulated, grouped by whether the release pipeline was used or not.
+The results show that, on average, $75 \%$ less time was spent on a release when the pipeline was used.
+This shows a significant impact of the implemented automation on overall productivity.
+
+\section{Q2: Dataset}\label{sec:q2:-dataset}
+
 For most releases, release tickets exist that track the time spent on it.
 Three of these releases do not have associated tickets, the absence of data is marked accordingly.
 Furthermore, it is annotated, if the release pipeline was used or not.
-In table\ \ref{tab:logged-time-for-each-release}, the resulting data is shown.
+
+In table~\ref{tab:logged-time-for-each-release}, the resulting data is shown.
 The logged time that is shown has been sanitized, to not include testing the release or implementing bug-fixes since those are not in the scope of the release pipeline.
 Note that abbreviations are used to denote certain time units\footnote{w - weeks, d - days, h - hours, m - minutes} and that the time is rounded to quarter hours.
 The latter is a result of the time-tracking used at Dynatrace.
@@ -32,8 +39,10 @@ The latter is a result of the time-tracking used at Dynatrace.
     \end{tabular}
 \end{table}
 
-In the following table\ \ref{tab:evaluation-of-logged-time}, an evaluation of this data is shown.
-First, the time-spans of table\ \ref{tab:logged-time-for-each-release} are summed up as minutes.
+\section{Q2: Results}\label{sec:q2:-results}
+
+In the following table~\ref{tab:evaluation-of-logged-time}, an evaluation of this data is shown.
+First, the time-spans of table~\ref{tab:logged-time-for-each-release} are summed up as minutes.
 Then, the value is averaged across the amount of tickets that have data available.
 Finally, the ratio and percentage of time saved is highlighted.
 
@@ -55,3 +64,19 @@ Finally, the ratio and percentage of time saved is highlighted.
         4.032 & $75.2 \%$ \\
     \end{tabular}
 \end{table}
+
+\section{Q2: Discussion}\label{sec:q2:-discussion}
+
+Regarding the second research question, the Dynatrace Operator had been released manually to various different marketplaces.
+Due to the varied ways of creating a release for different marketplaces, this task is time-consuming and tedious.
+Most of the time-consumptions come from missing details and then debugging these details.
+For example, the need to have a specific name or value inside a specific file.
+
+In practice, people working with the pipeline preferred manually triggering each task.
+The task itself then still runs autonomously.
+This way of triggering tasks is preferred to check the output of each task before it is used as an input for the next one.
+
+Other than that, usage of the pipeline showed a reduction of time spent on a release ticket by $75 \%$.
+In more absolute terms, the reduction is from about one week of work time to about one day of work time.
+This shows that it is indeed cost-effective to spend work time on creating such a pipeline as it greatly increases the time that is available for other tasks, such as implementing new features or fixing bugs.
+A time reduction of this magnitude makes it clear that implementing this form of automation is hugely beneficial to overall productivity.
