@@ -1,8 +1,8 @@
-\subsection{Create release GKE infrastructure}\label{subsec:create-release-gke-infrastructure}
+\textbf{Create release GKE infrastructure}
 
-This task uses \verb| terraform | to deploy a GKE cluster and create the necessary infrastructure for the GCM release.
-First, the \verb| terraform | configuration is read from the \verb| {terraform_config} | parameter and written to \verb| terraform.tfvars |.
-Then, a GKE service account is read from the corresponding Vault secret and written to \verb| account.json |.
+This task uses \verb|terraform| to deploy a GKE cluster and create the necessary infrastructure for the GCM release.
+First, the \verb|terraform| configuration is read from the \verb|{terraform_config}| parameter and written to \verb|terraform.tfvars|.
+Then, a GKE service account is read from the corresponding Vault secret and written to \verb|account.json|.
 This service account is needed to authenticate with GKE.
-Finally, \verb| terraform | is executed with the given configuration to create the cluster.
+Finally, \verb|terraform| is executed with the given configuration to create the cluster.
 This task is needed to create the infrastructure needed to sanity check the deployer image of the GKE release.

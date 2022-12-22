@@ -12,8 +12,6 @@ However, due to the complex nature of an operator and the environment it runs in
 Often, customers have underlying problems with their environment or a misunderstanding of the DTOs feature set.
 These types of reports are most common and reports resulting in an actual bug report are, relative to all incoming reports, so low that even a significant drop would not be measurable in the time frame of this project.
 
-\pagebreak
-
 The survey was given to full time members of the team responsible for developing and maintaining the DTO.
 At the time of the survey, it consists of six developers with a variety of years of experience.
 The experience in developing software ranges from five to 20 years.
@@ -42,8 +40,6 @@ Since ``E2E'' is a known shorthand, most peoples first answer is: ``testing some
 The interviewed then followed up with more specific interpretations, shown below, which met the definition of E2E-testing.
 Therefore, all subjects are familiar with this form of quality assurance.
 
-\pagebreak
-
 \begin{itemize}
     \item Testing the output following a specific input
     \item Multiple things are tested at once
@@ -70,8 +66,6 @@ Some offhand notes from the interviewees are ``Depends on project scope'', ``Vit
 These notes give further insight into the reasoning why testing is of more or less importance.
 Subjectively, some projects do not seem to benefit from E2E-testing as their scope or importance is not large enough.
 For some, it is not the functionality of a system that is of the upmost importance, but the interaction between a customer and a system.
-
-\pagebreak
 
 \textbf{How important do you regard E2E-testing for the Dynatrace Operator?}\\
 This question is analogous to the one before and also with the same numeric scale.
@@ -132,8 +126,6 @@ From this answer, the following pain points can be distilled.
 First, Concourse pipeline configuration show a steep learning curve.
 Then, the interconnectedness of pipelines, steps, tasks, and parameters can be confusing.
 Finally, verifying the correctness of configurations appears to be difficult.
-
-\pagebreak
 
 \textbf{How much experience do you have in the programming language Golang?}\\
 Now, the focus changes to the long-term maintenance cost of the DTF.
@@ -221,8 +213,6 @@ Not only because they are automated, but due to the interconnectedness, a breaka
 Delivering either false-positives or -negatives.
 This, in turn, can lead to increased maintenance cost of not only the DTF, but also the infrastructure.
 Due to the configuration being generated, another fear is that it might break other, unassociated pipelines, because of something going wrong during generation.
-
-\pagebreak
 
 \begin{itemize}
     \item The time cost of adapting and maintaining a new tool

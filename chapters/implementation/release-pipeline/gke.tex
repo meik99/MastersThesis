@@ -1,0 +1,12 @@
+\subsection{GKE infrastructure}\label{subsec:gke-infrastructure}
+
+
+These group of tasks manage the creation and configuration of a GKE infrastructure.
+This infrastructure can then be used to test the releases for the Google Marketplace.
+A running GKE infrastructure is needed for the GKE release, as deploying the deployer image is embedded in the release task and to deploy the image a running cluster is needed.
+
+\input{chapters/implementation/release-pipeline/create-release-gke-infrastructure}
+
+\input{chapters/implementation/release-pipeline/generalize-release-gke-kubernetes}
+
+\input{chapters/implementation/release-pipeline/destroy-release-gke-infrastructure}
