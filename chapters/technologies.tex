@@ -3,40 +3,20 @@
 An overview of the technologies that have been used is given in this section.
 The name and, if applicable, the acronym of a technology is stated followed by a short description of it.
 
-\textbf{Golang (Go)}\cite{golang} is a programming language.
-It is the language of choice that is used to implement a tool to answer \textit{Q1}.
+\textbf{Golang (Go)}~\cite{golang} is a programming language.
+It is the language of choice that is used to implement the DTF.
 
-\textbf{BitBucket}\cite{bitbucket} is a system that utilizes \textbf{Git}\cite{git} to store project files.
+\textbf{BitBucket}~\cite{bitbucket} is a system that utilizes \textbf{Git}~\cite{git} to store project files.
 Git is used to version a project and make it easier for a team of people to simultaneously work on a project.
 A project that is worked on in this manner is commonly called a repository.
 BitBucket itself then stores the repository online to ease access to it.
 
-\textbf{OneAgents and ActiveGates}\cite{oneagents,activegates} are Dynatrace proprietary software systems.
-The Dynatrace OneAgent\cite{oneagents} is a software system to monitor other systems and collect metrics of them.
-These metrics can range from memory or cpu usage to more complex ones such as network connections or amount of specific function calls.
-Two different kinds of OneAgents exist, a host agent and a special agents.
-The host agents purpose is to monitor the host of any given system, for example, a server on which a web application is deployed on.
-Then, for different technologies, different special agents exist.
-A special agent's purpose is to monitor an application, such as the web application mentioned earlier.
-
-An ActiveGates\cite{activegates} main purpose is to act as a proxy between OneAgents and the Dynatrace cluster.
-It can be used to buffer information sent by a OneAgent inside a local network, before uploading it to the main Dynatrace cluster.
-Furthermore, it can be used to monitor cloud centric technologies, such as AWS, Kubernetes, Openshift, or other cloud systems.
-
-\textbf{End-to-End (E2E) testing}\cite{end-to-end-integration-testing-design} is the process of testing a software system.
-As the name suggests, this technique tests a software system from one end, i.e., a hypothetical user, across user-system interaction, to the other end, i.e., the results of a feature.
-For example, buying an item on an online shop can be e2e tests.
-First, a test program may open a browser and navigate to the website.
-It then adds certain items to a cart, evaluating the shown total on the site.
-It then removes and re-adds certain items while evaluating the subtotal.
-After the purchase is completed, it checks that the correct entries where made in the datastore of the web shop and that all transactions were made correctly and completely.
-
-\textbf{Vault}\cite{vault} is a system created by HashiCorp to manage credentials.
+\textbf{Vault}~\cite{vault} is a system created by HashiCorp to manage credentials.
 It offers a user interface as well as a backend to store secrets, en- and decrypt them as wells as user management.
 The backend is accessible either through the provided client or the provided API.
 This API is used by Concourse to retrieve secrets during pipeline runs.
 
-\textbf{Permission bits}\cite{unix-file-permissions} are used by unix file systems to control access to files.
+\textbf{Permission bits}~\cite{unix-file-permissions} are used by unix file systems to control access to files.
 Each file has three groups with three bits each.
 Every bit signifies if a certain action, reading, writing, or executing, can be taken for a file.
 The groups determine what the file owner, a group member or any other user, can do.
@@ -53,12 +33,5 @@ Finally, the $2$ represents what every user in the system can do.
 Since $2$ is represented as $010$, the permission bit for writing a file is set.
 So every user, that is neither the file owner nor a member of the aforementioned group, may write a file, but neither read nor execute it.
 
-\textbf{Representational State Transfer}\cite{extending-representation-state-transfer} is a way to build decentralized systems which depend on sharing resources.
+\textbf{Representational State Transfer}~\cite{extending-representation-state-transfer} is a way to build decentralized systems which depend on sharing resources.
 A REST based system commonly builds on top of HTTP to request, process and transmit resources.
-
-\textbf{Virtual machines (VM)}\cite{what-is-a-virtual-machine} are a virtual operating system, which is emulated on top of a real operating system.
-The virtual operating system can vastly differ from the host system.
-For example, a Windows system can be emulated as a virtual machine inside a Linux host system.
-Going further, since a VM can be completely decoupled from the host system, a host system does not necessarily need an operating system of its own.
-Using an abstraction layer called a \textit{Hypervisor}, VMs can be started on a computer without the need for a full operating system, saving system resources.
-VMs, however, run slower than physical machines.

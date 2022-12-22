@@ -71,7 +71,7 @@ This very first model already includes testing as part of its lifecycle.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textheight]{img/introduction/software-testing-v.drawio}
-    \caption{Levels of abstraction and their corresponding tests}
+    \caption{Levels of abstraction and their corresponding tests~\cite{waterfall-vs-v-model-vs-agile}}
     \label{fig:levels-of-abstraction-and-tests}
 \end{figure}
 
@@ -94,19 +94,53 @@ After the purchase is completed, it checks that the correct entries where made i
 
 \section{Virtualization}\label{sec:virtualization}
 
-Some of the implementation part of this thesis is build upon Kubernetes, which is explained in section~\ref{sec:kubernetes}.
-However, to effectively explain what Kubernetes is and does, containerization must be explained.
+Some of the implementation part of this thesis is build upon Kubernetes, which is discussed in section~\ref{sec:kubernetes}.
+However, to effectively explain what Kubernetes is and does, containerization must first be explained.
 Containerization on the other hand is a subcategory of the more general field of virtualization.
 
-\input{chapters/technologies/kubernetes.tex}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/background/standalone-vm}
+    \caption{Standalone VM~\cite{a-survey-on-virtualization-technologies}}
+    \label{fig:standalone-vm}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/background/hosted-vm}
+    \caption{Hosted VM~\cite{a-survey-on-virtualization-technologies}}
+    \label{fig:hosted-vm}
+\end{figure}
+
+
+There are three types of virtualization that are commonly used nowadays~\cite{containers-vs-virtual-machines, a-survey-on-virtualization-technologies}.
+First, virtualization using a virtual machine (VM) that utilizes the host's hardware, also called a Standalone Virtual Machine seen in figure~\ref{fig:standalone-vm}.
+Second, virtualization using a VM that runs on top of a host operating system, plainly called Hosted Virtual Machine seen in figure~\ref{fig:hosted-vm}.
+Both utilize techniques to run a full OS, sandboxed as a process, either on a host or shared hardware.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/background/container}
+    \caption{Containerization}
+    \label{fig:containerization}
+\end{figure}
+
+A container~\cite{what-are-linux-containers} is a process that runs on an operating system (OS), which is mostly isolated from the host system and other processes that run on it.
+In a way, they act as virtual machines.
+However, they do not contain an OS themselves, but make use of the host OS through abstraction layers as seen in figure~\ref{fig:containerization}.
+The advantage of not having to virtualize the OS is usually a better performance compared to virtual machines.
+On the other hand, due to them not being completely isolated from the host OS, they have a larger impact on a system's security.
+
+\input{chapters/kubernetes}
 
 \section{Similarity based variability testing}\label{sec:similarities}
+
 As previously discussed, one of the main difficulties of testing highly scaled and complex systems, is the need of setting up complex environments.
 Later it is shown, that for certain technologies, the setup for a single test may take multiple hours.
 For large test suits, it is therefore unpractical to run all tests everytime, as the time-cost is too high.
 In order to mitigate this issue, a technique called similarity-based variability testing is used.
 
-Al-Hajjaji et.al., describe this technique in the context of product line testing\cite{SimilarityBasedPrioritizationInSoftwareProductLineTesting}.
+Al-Hajjaji et.al., describe this technique in the context of product line testing~\cite{SimilarityBasedPrioritizationInSoftwareProductLineTesting}.
 A software product line is described as a base software system, which is extended with features that make use of the base system.
 Due to the high variability, not all combinations and features can be practically tested.
 Therefore, an algorithm is proposed, that selects tests based on similarity.
@@ -122,5 +156,4 @@ This algorithm, while used in a different context, is also valuable when testing
 As previous discussed, for sufficiently complex environments and large test suits, not all tests can realistically be run at all times.
 Analogous to configurations, metadata can also be added to define the similarity of tests to each other.
 A similar algorithm as described above can then be used to sort and select tests which are possible to run in a limited timeframe.
-In section \ref{sec:dynamic-testing-framework}, it is shown that this algorithm helps in implementing a solution for \textit{Q1}.
-
+In section~\ref{sec:dynamic-testing-framework}, it is shown that this algorithm helps in implementing a solution for the problem of abstracting pipeline configurations.
