@@ -1,4 +1,4 @@
-\subsection{Release certified operators}\label{subsec:release-certified-operators}
+\textbf{Release certified operators}
 
 This task releases the CSV bundle for Openshift to the RedHat certified operators repository.
 Releasing the CSV files to this repository makes the DTO available on the RedHat Catalog for certified Operators.
@@ -8,7 +8,7 @@ This includes forking the repository and following the RedHat Catalog guidelines
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the RedHat certified operators repository.
-Forking is done by a python script that takes the arguments seen table\ \ref{tab:parameters-to-fork-the-certified-operators-repository}.
+Forking is done by a python script that takes the arguments seen table~\ref{tab:parameters-to-fork-the-certified-operators-repository}.
 
 \begin{table}[H]
     \centering
@@ -35,8 +35,6 @@ To ensure a consistent environment, forked repositories are deleted if they alre
 Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesn't.
 Additionally, the response from the GitHub API is also returned.
 
-\pagebreak
-
 If the forked repository does not exist or has successfully been deleted, it is recreated.
 This is done by calling the \verb|fork| function and passing \verb|{original-repository}| as a parameters.
 On a success, a check is made, if the forked repository has the expected name \verb|{forked-repository}|.
@@ -55,4 +53,3 @@ In the CSV file of the version to be released, the \verb|replaces| property is t
 If the variable is empty, the property is removed.
 Setting this property allows Openshift to correctly update the DTO.
 Finally, the changes are added, committed and pushed to the forked repository.
-

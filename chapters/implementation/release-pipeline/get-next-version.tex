@@ -1,7 +1,6 @@
-\pagebreak
-\subsection{Get next version}\label{subsec:get-next-version}
+\textbf{Get next version}
 
-This task uses the version found in the previous task from section \ref{subsec:finding-the-latest-release-branch} to infer the next patch version.
+This task uses the version found in the previous task to infer the next patch version.
 It does so by first querying all GitHub releases.
 Then, they are filtered by the version found in the previous task.
 For example, if releases exist on GitHub for the version 0.2.0, 0.2.1, 0.3.0, 0.3.1, and 0.4.0, and the release branch has a 0.4 postfix, only the 0.4.0 release is considered.
@@ -15,7 +14,7 @@ Otherwise, the patch version is \verb|0|.
 
 The querying, filtering and comparison of releases is done again using a python script.
 For the script to work, a GitHub token and the target repository have to be supplied as well as the branch version.
-Therefore, the script takes the arguments shown in table \ref{tab:py-finding-the-next-version}.
+Therefore, the script takes the arguments shown in table~\ref{tab:py-finding-the-next-version}.
 
 \begin{table}[H]
     \centering
@@ -33,15 +32,13 @@ Therefore, the script takes the arguments shown in table \ref{tab:py-finding-the
     \end{tabular}
 \end{table}
 
-\pagebreak
-
 After parsing the arguments, the script creates an instance of \verb|GitHubApi|.
 This class implements the Representational State Transfer (REST) requests provided by the GitHub API.
 From this instance, the \verb|find_releases| function is called.
 The URL used for the request is built by a static prefix \verb|https://api.github.com/repos/|, followed by the target repository name.
 A \verb|/releases| prefix is then added as well to specifically target releases.
 E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \verb|https://api.github.com/repos/Dynatrace/dynatrace-operator/releases|.
-The header for this request contains the fields shown in table \ref{tab:http-header}.
+The header for this request contains the fields shown in table~\ref{tab:http-header}.
 
 \begin{table}[H]
     \centering

@@ -1,12 +1,11 @@
-\pagebreak
-\subsection{Release Rancher}\label{subsec:release-rancher}
+\textbf{Release Rancher}
 
 This task releases the DTO helm chart to the Rancher repository for partner charts.
 It first clones the DTO repository and then creates a fork of Rancher's repository.
 The purpose of this task is to execute all steps necessary to release the DTO Helm charts to Rancher.
 This includes forking their repository and follow their guidelines.
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
-Forking is done with a python script, which takes the arguments seen in table \ref{tab:parameters-for-forking-the-rancher-repository}.
+Forking is done with a python script, which takes the arguments seen in table~\ref{tab:parameters-for-forking-the-rancher-repository}.
 
 \begin{table}[H]
     \centering
@@ -30,7 +29,7 @@ After parsing the arguments, an instance of \verb|GitHubApi| is created using \v
 This class implements some REST requests GitHub's API provides.
 First, the \verb|exists| function is called, which returns \verb|True|, if the forked repository already exists.
 To ensure a consistent environment, forked repositories are deleted, if they already exist.
-Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesnt.
+Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesn't.
 Additionally, the response from the GitHub API is also returned.
 
 If the forked repository does not exist or has successfully been deleted, it is recreated.

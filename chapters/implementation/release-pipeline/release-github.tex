@@ -1,4 +1,4 @@
-\subsection{Release GitHub}\label{subsec:release-github}
+\textbf{Release GitHub}
 
 This task creates a GitHub release for the manifest files and the DTO Helm charts.
 It first checks out the release branch of the DTO repository and creates a new branch with the value of \verb|helm_branch| in the release data.
@@ -31,8 +31,6 @@ helm package \
     --passphrase-file ~/.gnupg/password
 \end{verbatim}
 
-\pagebreak
-
 The first argument points to the Helm charts, which are packaged.
 The \verb|-d| option defines where the new package is written to.
 With the \verb|--sign| option, the GPG keyring is used to sign the package, while the \verb|--keyring| option defines which keyring to use.
@@ -58,7 +56,7 @@ Therefore, the correct dates from \verb|index.yaml.previous| are read and then r
 Then, the manifests are generated for each platform, Kubernetes and Openshift.
 Similar to generating the bundle, i.e., CSV, files, the following properties are added to the \verb|make manifest| command, to make sure the image is set correctly.
 
-\textbf{Kubernetes}
+\textit{Kubernetes}
 
 \begin{verbatim}
 IMG="docker.io/dynatrace/dynatrace-operator:v${version}"
@@ -67,9 +65,7 @@ MASTER_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 OLM_IMAGE="docker.io/dynatrace/dynatrace-operator:v${version}"
 \end{verbatim}
 
-\pagebreak
-
-\textbf{Openshift}
+\textit{Openshift}
 
 \begin{verbatim}
 IMG=
@@ -87,7 +83,7 @@ A pull request is then created.
 
 A python script then creates a draft release and uploads the artifacts to it.
 For the script to work, a GitHub token and the target repository have to be supplied as well as the generated release data.
-Therefore, the script takes the arguments shown in table \ref{tab:parameters-for-release-generation}.
+Therefore, the script takes the arguments shown in table~\ref{tab:parameters-for-release-generation}.
 
 \begin{table}[H]
     \centering
@@ -114,7 +110,7 @@ The \verb|create_release| function then uses the release data to send a post req
 The URL used for the request is built by a static prefix \url{https://api.github.com/repos/}, followed by the target repository name.
 A \verb|/releases| postfix is then added as well to specifically target releases.
 E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \url{https://api.github.com/repos/Dynatrace/dynatrace-operator/releases}.
-The header for this request contains the fields described in table \ref{tab:header-fields-to-create-a-release-request}.
+The header for this request contains the fields described in table~\ref{tab:header-fields-to-create-a-release-request}.
 
 \begin{table}[H]
     \centering
@@ -137,7 +133,7 @@ The script then proceeds to upload the assets necessary for the release, which w
 
 In order to upload assets, the \verb|try_upload_asset| function of the \verb|GitHubApi| instance is used.
 It uploads the assets to the \verb|upload_url| from before.
-The header for the request contains similar fields to the ones of table \ref{tab:header-fields-to-create-a-release-request}.
+The header for the request contains similar fields to the ones of table~\ref{tab:header-fields-to-create-a-release-request}.
 The \verb|Content-Type| is usually changed to \verb|application/octet-stream| to signify the upload of a file.
 If the upload fails, \verb|try_upload_asset| returns \verb|False| and prints the error message.
 If the upload succeeds, the function returns \verb|True|.

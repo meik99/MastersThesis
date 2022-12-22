@@ -1,4 +1,4 @@
-\subsection{Release community operators prod}\label{subsec:release-community-operators-prod}
+\textbf{Release community operators prod}
 
 This task releases the CSV bundle for Kubernetes to the community-operators-prod repository.
 Releasing the CSV files to this repository makes the DTO available on the embedded OperatorHub in OpenShift and OKD.
@@ -7,7 +7,7 @@ This includes forking the repository and following the OperatorHub guidelines.
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the community-operators-prod repository.
-Forking is done by a python script that takes the arguments shown in table \ref{tab:parameters-to-fork-the-community-operators-prod-repository}.
+Forking is done by a python script that takes the arguments shown in table~\ref{tab:parameters-to-fork-the-community-operators-prod-repository}.
 
 \begin{table}[h]
     \centering
@@ -33,7 +33,7 @@ After parsing the arguments, an instance of \verb|GitHubApi| is created using \v
 This class implements some REST requests GitHub's API provides.
 First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
 To ensure a consistent environment, forked repositories are deleted if they already exist.
-Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesnt.
+Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesn't.
 Additionally, the response from the GitHub API is also returned.
 
 If the forked repository does not exist or has successfully been deleted, it is recreated.

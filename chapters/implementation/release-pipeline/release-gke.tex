@@ -1,28 +1,28 @@
-\subsection{Release GKE}\label{subsec:release-gke}
+\textbf{Release GKE}
 
 This job consists of multiple tasks.
 Their goal is to build and push the deployer image for GCM, prepare a GKE cluster, install the deployer image on it and check if a basic Operator deployment succeeds.
 
-\subsubsection{Building and pushing a deployer image}\label{subsubsec:build-and-publish-deployer-image}
+\textit{Building and pushing a deployer image}
 
 The purpose of this task is to build a deployer image and publish it to GCR.
 This task builds the Dockerfile at \verb|<repository>/config/helm/| and pushes the resulting image to GCR as the deployer image.
 
-\subsubsection{Preparing a cluster}\label{subsubsec:prepare-cluster}
+\textit{Preparing a cluster}
 
 The purpose of this task is to prepare a GKE cluster for the deployment of a deployer image.
 This includes cleaning any leftover resources created by a previous DTO deployment and applying the GKE Application CRD.
 This task prepares a GKE cluster to be able to deploy the previously built deployer image.
-First, the kube-config is read from the vault secret, which is set by the task of section \ref{subsubsec:fetch-kubeconfig}.
+First, the kube-config is read from the vault secret, which is set by the task of section~\ref{subsubsec:fetch-kubeconfig}.
 Therefore, for this task, and by extension this job, to succeed, a GKE cluster must be running.
-A GKE cluster can be created with the task of section \ref{subsec:create-release-gke-infrastructure}.
+A GKE cluster can be created with the task of section~\ref{subsec:create-release-gke-infrastructure}.
 
 After the kube-config is read and written to \verb|\${HOME}/.kube/config|, the GCPs application CRD is applied from \url{https://raw.githubusercontent.com/GoogleCloudPlatform/marketplace-k8s-app-tools/master/crd/app-crd.yaml}.
 This CRD is needed so GCP applications can be deployed.
 If the \verb|dynatrace| namespace or the DynaKube CRD exist on the cluster, they are deleted to ensure a clean state.
 Afterwards, the namespace is created and the DynaKube CRD is applied again.
 
-\subsubsection{Installing the deployer image}\label{subsubsec:install-deployer-image}
+\textit{Installing the deployer image}
 
 The purpose of this task is to deploy the deployer image on a prepared GKE cluster.
 The deployment is then monitored by the next task.
@@ -46,7 +46,7 @@ In order to check a simple deployment, the following properties are given to the
 The API URL, the API token, as well as the PAAS token, are defined as vault secrets.
 After executing a command, \verb|./mpdev install|, with the parameters \verb|--deployer="${image}"| and \verb|--parameters="${parameters}|, \verb|mpdev| deploys the deployer image with the parameters from above.
 
-\subsubsection{Sanity checking the deployer deployment}\label{subsubsec:sanity-check-deployer}
+\textit{Sanity checking the deployer deployment}
 
 This tasks purpose is to make a quick test whether the deployer image can deploy the DTO successfully or not.
 This task checks the deployment job, that the \verb|mpdev| tool creates, for its success.

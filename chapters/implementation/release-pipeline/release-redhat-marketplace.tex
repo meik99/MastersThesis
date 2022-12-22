@@ -1,4 +1,4 @@
-\subsection{Release RedHat marketplace}\label{subsec:release-redhat-marketplace}
+\textbf{Release RedHat marketplace}
 
 This task releases the CSV bundle for Openshift to the RedHat marketplace repository.
 Releasing the CSV files to this repository makes the DTO available on the RedHat Marketplace for Operators.
@@ -7,7 +7,7 @@ This includes forking the repository and following the RedHat Marketplace guidel
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the RedHat marketplace repository.
-Forking is done by a python script which takes the arguments shown in table\ \ref{tab:parameters-to-fork-the-redhat-marketplace-repository}.
+Forking is done by a python script which takes the arguments shown in table~\ref{tab:parameters-to-fork-the-redhat-marketplace-repository}.
 
 \begin{table}[H]
     \centering
@@ -30,8 +30,6 @@ Forking is done by a python script which takes the arguments shown in table\ \re
 After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
 This class implements some REST requests GitHub's API provides.
 First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
-
-\pagebreak
 
 To ensure a consistent environment, forked repositories are deleted if they already exist.
 Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesn't.

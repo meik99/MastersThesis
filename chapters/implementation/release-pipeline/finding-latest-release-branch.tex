@@ -1,4 +1,4 @@
-\subsection{Finding the latest release branch}\label{subsec:finding-the-latest-release-branch}
+\textbf{Finding the latest release branch}
 
 The purpose of this task is to automatically find the branch to operate on, since the pipeline is designed to generate releases for the next version of the operator.
 Since the script already parses version information, the branch names, which are used by other tasks to generate CSV files and Helm charts on, are also generated.
@@ -10,7 +10,7 @@ Then, the command \\
 \verb%git branch -a | grep "${RELEASE_BRANCH_PREFIX}" > ../branches% \\
 is used to query all branches, filter the ones with the appropriate prefix and write their names into a file.
 The prefix, which is used for filtering the names, can be configured with the \verb|release_branch_prefix| parameter.
-Afterwards a python script, which takes parameters shown in table \ref{tab:py-finding-the-release-branch}, is called.
+Afterwards a python script, which takes parameters shown in table~\ref{tab:py-finding-the-release-branch}, is called.
 
 \begin{table}[H]
     \centering
@@ -30,7 +30,7 @@ Afterwards a python script, which takes parameters shown in table \ref{tab:py-fi
     \end{tabular}
 \end{table}
 
-This python script, using the parameters shown in table \ref{tab:py-finding-the-release-branch}, reads through the list of branches, tries to find a version for each one and then compares the versions found.
+This python script, using the parameters shown in table~\ref{tab:py-finding-the-release-branch}, reads through the list of branches, tries to find a version for each one and then compares the versions found.
 It does so, by first removing the strings \verb| {release-prefix}-v | and \verb| {release-prefix}- | from the name.
 The resulting name is then split by a dot, i.e., \verb|.|, because it assumes the usage of a semantic versioning scheme.
 Since the branches usually contain two version numbers, the major and minor version, the resulting array is extended with \verb|.0| until is length is two.
@@ -42,15 +42,13 @@ If an element of the array cannot be parsed to an integer value, it is not in th
 If the elements of both arrays can be parsed, they are compared to each other.
 If one element is larger than the element with the same index in the other array, it is considered as the later version.
 
-\pagebreak
-
 Examples:
 \begin{itemize}
     \item The branch \verb| release-v0.2 | is considered lower than \verb| release-v0.3 |
     \item The branch \verb| release-0.2 |  is considered lower than \verb| release-v0.2.1 |
     \item The branch \verb| release-1.3 | is considered later than \verb| release-0.5 |
-    \item The branch \verb| release-2.0.0 | is considered invalid since is has too many version numbers. \\ Therefore any other branch ''wins'' the comparison.
-    \item The branch \verb| release-vA.B | is considered invalid since \verb| A | cannot be parsed as an integer. \\ Therefore any other branch ''wins'' the comparison.
+    \item The branch \verb| release-2.0.0 | is considered invalid since is has too many version numbers. \\ Therefore any other branch ``wins'' the comparison.
+    \item The branch \verb| release-vA.B | is considered invalid since \verb| A | cannot be parsed as an integer. \\ Therefore any other branch ``wins'' the comparison.
     \item The branch \verb| release-1 | is considered later than \verb| release-0.9 |. \\ The former version is appended with zeros. \\ The actual comparison would be \verb| 1.0 | against \verb| 0.9 |.
 \end{itemize}
 

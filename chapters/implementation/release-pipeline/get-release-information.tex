@@ -1,11 +1,11 @@
-\subsection{Get release information}\label{subsec:get-release-information}
+\textbf{Get release information}
 
-This tasks main purpose is to get the generated changelogs from the GitHub API.
+This task's main purpose is to get the generated changelogs from the GitHub API.
 To do so, the GitHub API expects the branch hash to know for which commit to generate changelogs for.
 All additional information is then also added to the resulting release data.
 
 This task is used to generate a changelog and collect metadata.
-First, the branches SHA-hash is determined, by cloning the target repository and switching to the release branch, determined by the of section \ref{subsec:finding-the-latest-release-branch}.
+First, the branches SHA-hash is determined, by cloning the target repository and switching to the release branch, that was determined by the task for finding the latest release branch.
 The bash command \verb|git rev-parse "${branch}"| then returns the hash value, which is used later.
 
 Then, the prefix for the Google Container Registry (GCR)\footnote{https://cloud.google.com/container-registry} is determined.
@@ -16,7 +16,7 @@ It can be configured by changing the \verb|gcp_marketplace| parameter.
 Usually, these steps result in the prefix \verb|gcr.io/{gcp_marketplace}|.
 
 After the project name and the branch hash are determined, a python script is called.
-This script takes the parameters shown in table \ref{tab:params-to-generate-release-information}.
+This script takes the parameters shown in table~\ref{tab:params-to-generate-release-information}.
 
 \begin{table}[h]
     \centering
@@ -27,7 +27,9 @@ This script takes the parameters shown in table \ref{tab:params-to-generate-rele
         \hline
         \verb| --release-data | & The path to the release data currently compiled by previous tasks.  \\
         \verb| --branch-sha | & The release branches hash value as determined before. \\
-        \verb| --github-token | & A personal access token for GitHub. It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|. The same token can be used by multiple tasks if these scopes are set \\
+        \verb| --github-token | & A personal access token for GitHub.
+            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+            The same token can be used by multiple tasks if these scopes are set \\
         \verb| --operator-repository | & The target repository from which the releases are queried \\
         \verb| --gke-registry | & The name of the GCR registry for the GKE release step later on. \\
         \verb| --gke-app-name | & The name under which the DTO is released. \\
@@ -37,7 +39,7 @@ This script takes the parameters shown in table \ref{tab:params-to-generate-rele
 This script then proceeds to compile the given data, excluding the token and repository, together into a dictionary.
 The descriptions for the GitHub and Helm releases are also added.
 It then uses the token to request a changelog for the given repository from the GitHub API.
-Similarly to how the task of section \ref{subsec:get-next-version} requests releases, this script calls the \url{https://api.github.com/repos/<operator_repository>/releases/generate-notes} endpoint.
+Similarly to how the task to get the next version requests releases, this script calls the \url{https://api.github.com/repos/<operator_repository>/releases/generate-notes} endpoint.
 The generated changelog is then also appended to the resulting release data.
 This task should then output the following JSON document.
 
