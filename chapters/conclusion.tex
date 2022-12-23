@@ -1,18 +1,28 @@
-\chapter{Summary \& Conclusion}\label{ch:conclusion}
+\chapter{Conclusion}\label{ch:conclusion}
 
-In summary, two problems and two research questions have been introduced.
-First, automation of E2E testing a software system, that requires a complex environment, is challenging.
-The question of how it can be abstracted to make it simpler was answered by creating the Dynamic Testing Framework.
-Secondly, releasing a Kubernetes operator to multiple marketplaces is a tedious and time-consuming task.
-In order to solve that, an automated pipeline has been created that integrates multiple marketplaces.
+In this thesis, two problems were introduced in chapter~\ref{ch:introduction}.
+First, testing systems that need complex environments is difficult and is in need for automation.
+Secondly, releasing a system to multiple different marketplaces must be automated as it decreases productivity significantly if done manually.
+Furthermore, the implemented tools are introduced, namely the DTF and the release pipeline.
 
-The DTF implements a similarity based algorithm to choose tests to be run, since setting up an environment is time-consuming as well.
-Since it is time-consuming, only a limited amount of tests can run at once.
-Based on the similarity input and definitions of tests, a pipeline is generated.
-This workflow abstracts creating and maintaining long and complicated Concourse pipeline configurations and replaces them with potentially simpler and shorter definitions and similarities.
+Chapter~\ref{ch:background} discusses the background of these problems and their implementations.
+It goes into more detail about DevOps and its history as well as testing.
+The principles of virtualization and the development of containerization and Kubernetes are also discussed.
+The chapter ends with the introduction of similarity-based variability testing.
 
+The architecture and the context of the work is shown in chapter~\ref{ch:context}.
+It introduces the specific problem Dynatrace faces with the DTO.
+Diagrams are used to show the overall architecture of a DTO deployment as well as the proposed architecture of the solutions to the stated problems.
+This chapter also includes a section of peripheral tools used to support the implementation.
 
-A pipeline to automatically find and combine information about a release has therefore been implemented.
-It includes various tasks, such as finding the latest release version, preparing artifacts, and creating releases for marketplaces.
-The goal of this pipeline is to bring releases for all marketplaces to a state where they only have to be approved by human to ``go live''.
-In the best case, a press of a single button should trigger the automated run of all mentioned tasks.
+The actual implementation is explained in chapter~\ref{ch:implementation}.
+First test definitions and similarities are introduced in the context of the DTF.
+Then, the release pipelines tasks are described in detail.
+Tasks that are used to create necessary infrastructure for certain releases are also shown.
+
+Finally, the evaluation of chapter~\ref{ch:evaluation} shows the impact of both solutions.
+The DTF itself only replaces on set of complexity with a different one, making it not more or less useful than any established process.
+This result is derived by analyzing the answers of the survey given to the DTO's development team.
+On the other hand, the release pipeline's evaluation suggests a significant increase in productivity by reducing time spent on a release by about $75 \%$.
+In order to arrive at this conclusion, the time spent on releases was taken from tickets on which the time was booked on.
+An aggregation of the work-time used on releases with the pipeline showed a drop in time spent compared to releases done manually.

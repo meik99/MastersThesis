@@ -94,5 +94,16 @@ Combining these steps in small scripts may increase the maintainability of the w
 Since the main purpose of this pipeline is to distribute a system, it is simply called ``Release pipeline''.
 
 In order to solve the problems stated, this thesis first introduces the general area of software engineering in which these problems fall into: The area of ``DevOps''.
-%% TODO: Define structure after restructuring thesis
-%% TODO: Name the tools of that implement the solutions
+The background described in chapter~\ref{ch:background} also covers testing, virtualization, Kubernetes and similarity based variability-testing, since they are important concepts used in this thesis.
+Architectural design decisions of the implementation and context are discussed in chapter~\ref{ch:context}.
+
+Chapter~\ref{ch:implementation} shows how the problems described are solved, using one system, called the Dynamic Testing Framework (DTF) to generate a pipeline for tests, and using a second pipeline, simply called a release pipeline, to generate releases.
+Both implementations are then evaluated in chapter~\ref{ch:evaluation}.
+The DTF is evaluated using a survey to establish if it is easier to use than the previously established process.
+The release pipeline is evaluated by analysing the time needed for a release based on recorded time-tracking.
+It shows that the DTF only abstracts complexity behind a different set of complexity.
+However, the implementation of the release pipeline shows significant improvement in overall productivity.
+
+Chapter~\ref{ch:conclusion} summarizes and concludes this work.
+The need for more standards in the field of cloud computing is then discussed in chapter~\ref{ch:outlook}.
+

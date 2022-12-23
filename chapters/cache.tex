@@ -1,8 +1,15 @@
-For the first question, a survey has been made.
-It consists of various questions probing participants knowledge about E2E testing, Concourse, Golang, and the Golang templating language.
-The participants are the team members at the time.
-In sum, six people have been asked to answer these questions.
-They vary in skill level, experience and expertise, some of them are software engineers, some senior software engineers, others are managers.
-The results show that all of them understand E2E-testing and that they are less familiar with Concourse than with Golang.
-However, they are also less familiar with the Golang templating language than with Golang itself.
-The d
+In summary, two problems and two research questions have been introduced.
+First, automation of E2E testing a software system, that requires a complex environment, is challenging.
+The question of how it can be abstracted to make it simpler was answered by creating the Dynamic Testing Framework.
+Secondly, releasing a Kubernetes operator to multiple marketplaces is a tedious and time-consuming task.
+In order to solve that, an automated pipeline has been created that integrates multiple marketplaces.
+
+The DTF implements a similarity based algorithm to choose tests to be run, since setting up an environment is time-consuming as well.
+Since it is time-consuming, only a limited amount of tests can run at once.
+Based on the similarity input and definitions of tests, a pipeline is generated.
+This workflow abstracts creating and maintaining long and complicated Concourse pipeline configurations and replaces them with potentially simpler and shorter definitions and similarities.
+
+A pipeline to automatically find and combine information about a release has therefore been implemented.
+It includes various tasks, such as finding the latest release version, preparing artifacts, and creating releases for marketplaces.
+The goal of this pipeline is to bring releases for all marketplaces to a state where they only have to be approved by human to ``go live''.
+In the best case, a press of a single button should trigger the automated run of all mentioned tasks.
