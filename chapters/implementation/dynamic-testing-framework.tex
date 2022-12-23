@@ -16,6 +16,8 @@ A test definitions defines what should be run inside a test.
 For each test definition, two sets of files will be generated, one set for Kubernetes and one for Openshift.
 A set consists of two files, a script that is run by Concourse and a Concourse specific task configuration.
 
+\pagebreak
+
 The generated files and folder structures are specific to Concourse at the time of writing and other systems are currently not supported.
 In the same manner, the template files are embedded and cannot be changed without recompiling the tool.
 These flaws are planned to be fixed in the future\footnote{They were indeed fixed, however only at a later date and outside of the scope of this thesis}.
@@ -47,6 +49,8 @@ The file can either consist of one or multiple test definitions or a combination
 In order to find every test definition, if a folder is passed as the source, every file will be parsed as a YAML file.
 If it can be parsed successfully, every object is iterated over.
 If the object contains this ``kind'' property and its value is \verb|TestDefinition|, it is recognized as such.
+
+\pagebreak
 
 The \textbf{name} property defines how the test definition is referenced in the similarity file and how the name in the test configuration for Concourse will look like.
 This property must be case-insensitive unique.
@@ -107,6 +111,8 @@ Note well that the similarity objects do not have a \verb|kind| property.
 Therefore, it is not possible to mix similarities with other types of YAML objects.
 This is done on purpose, to force a single file having all similarities neatly organized inside a project.
 
+\pagebreak
+
 \begin{verbatim}
 name: Another simple test
 similarity:
@@ -142,6 +148,8 @@ The \textbf{similarity} property lists the similarities to other test cases.
 Every list entry has a \textbf{name} property, referencing another tests, and a \textbf{degree} of similarity.
 The possible entries for the degree are as follows, starting with the highest dissimilarity.
 The degrees must be given as stated below and are case-sensitive, due to the way the used YAML parser works.
+
+\pagebreak
 
 \begin{itemize}
   \item opposite

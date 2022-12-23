@@ -34,6 +34,8 @@ The similarity- and test-files were discussed as well as the structure of the pr
 Furthermore, the result of generating a configuration, the template behind it, and how it is applied to Concourse was shown.
 Therefore, although none of the interviewees have practical experience with the DTF, they are able to give informed answers to the stated questions.
 
+\pagebreak
+
 \section{Q1: Results}\label{sec:q1:-results}
 
 \textbf{What do you understand by the term E2E-testing?}\\
@@ -130,6 +132,8 @@ The average across the given answers is $4$.
 On average, the complexity of Concourse pipeline configurations is rated at $4.2$.
 This strongly suggests that the maintenance cost of the DTF is lower compared to pipeline configurations, because participants view the latter one as complicated, while they already have experience working with the former.
 
+\pagebreak
+
 \textbf{What is the greatest challenge when programming Golang?}\\
 In order to compare the benefits or downsides of using a Golang based system to a Concourse configuration, this question asks about the challenges of Golang.
 If there are fewer downsides, or less difficult challenges, it is an advantage to use Golang, or Concourse otherwise.
@@ -159,6 +163,8 @@ The main points made, shown below, show that the DTF has potential due to a vari
     \item Getting better results using randomness with predefined similarities
     \item The abstraction level provides a simpler way to define things and their dependencies
 \end{itemize}
+
+\pagebreak
 
 \textbf{What do you think should be improved?}\\
 Designed as a follow-up question to the previous one, this question shows what participants disliked about the DTF.
@@ -190,6 +196,7 @@ After the potential opportunities have been assed, interviewees are now asked wh
 According to the answers given, which are shown below, having too much confidence in automated tests is one concern.
 Not only because they are automated, but due to the interconnectedness, a breakage of the underlying system may influence the test outcome.
 Delivering either false-positives or -negatives.
+
 This, in turn, can lead to increased maintenance cost of not only the DTF, but also the infrastructure.
 Due to the configuration being generated, another fear is that it might break other, unassociated pipelines, because of something going wrong during generation.
 
@@ -215,6 +222,8 @@ On the one hand, participants showed that they are more familiar with the Golang
 The average answer for how much experience they have with the language is $4$, which means the tool itself would be easier to maintain for the team.
 On the other hand, familiarity with the templating language used is answered with an average of $3$.
 This shows a tendency, that the templates used to generate a pipeline and tasks are more expensive to maintain.
+
+\pagebreak
 
 Concluding \textit{Q1}, it appears that introducing the DTF in the general workflow should be carefully considered.
 Alternative approaches might exist, which are less complicated than Concourse pipeline configurations while also being easier to maintain.

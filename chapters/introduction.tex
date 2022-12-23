@@ -26,6 +26,8 @@ These satisfy the need of automatically delivering or deploying newly integrated
 Usually, a tool that does continuous integration (CI) also does continuous delivery (CD) because of that fact.
 They are then often called CI/CD tools for short.
 
+\pagebreak
+
 Taking back a step, agile methods, as discussed in the beginning, have the goal of increasing the velocity of software development~\cite{ADecadeOfAgileMethodologies}.
 One of the principles these methods use to achieve this goal is the principle of collective code ownership~\cite{CommonAgilePracticesInSoftwareProcesses, ManagingCodeOwnership}.
 Until fairly recently, pipelines to automatically integrate and deliver code were often clicked together~\cite{JenkinsClassicUi}.
@@ -55,6 +57,8 @@ Well, not entirely.
 One small type of complex systems still holds out against the tests.
 And life is not easy for the testers, who garrison the test suits of components, architecture, design and requirements~\cite{AsterixBeginningSentence}.
 
+\pagebreak
+
 These systems are those that run in clusters.
 A collection of servers, varying in size, connected together fulfilling one or many business cases.
 They exist and run in sometimes huge environments.
@@ -78,6 +82,8 @@ In order to tackle the first problem, a system is developed to help abstract the
 This system's purpose is to use a template of a configuration file and then generate a concrete configuration for a pipeline.
 Going forward, this system is called the Dynamic Testing Framework (DTF).
 
+\pagebreak
+
 This method has a few advantages to manually maintaining configurations.
 First, if a pipeline configuration contains a fault, a fix in the template fixes all concrete configurations derived from it.
 Secondly, only one configuration must be maintained, avoiding a problem analogous to one known as ``shotgun-surgery''\footnote{\url{https://refactoring.guru/smells/shotgun-surgery}} in software engineering, were one small changes must be made in many different files.
@@ -97,13 +103,17 @@ In order to solve the problems stated, this thesis first introduces the general 
 The background described in chapter~\ref{ch:background} also covers testing, virtualization, Kubernetes and similarity based variability-testing, since they are important concepts used in this thesis.
 Architectural design decisions of the implementation and context are discussed in chapter~\ref{ch:context}.
 
-Chapter~\ref{ch:implementation} shows how the problems described are solved, using one system, called the Dynamic Testing Framework (DTF) to generate a pipeline for tests, and using a second pipeline, simply called a release pipeline, to generate releases.
+Chapter~\ref{ch:implementation} shows how the problems described are solved.
+One system, called the Dynamic Testing Framework (DTF), is used to generate a pipeline for tests.
+A second system, another pipeline simply called a release pipeline, is used to generate releases.
+
+\pagebreak
+
 Both implementations are then evaluated in chapter~\ref{ch:evaluation}.
 The DTF is evaluated using a survey to establish if it is easier to use than the previously established process.
 The release pipeline is evaluated by analysing the time needed for a release based on recorded time-tracking.
 It shows that the DTF only abstracts complexity behind a different set of complexity.
 However, the implementation of the release pipeline shows significant improvement in overall productivity.
-
 Chapter~\ref{ch:conclusion} summarizes and concludes this work.
 The need for more standards in the field of cloud computing is then discussed in chapter~\ref{ch:outlook}.
 

@@ -21,6 +21,8 @@ Although it is possible to have clusters with only one or two nodes, but they ar
 Bigger clusters and clusters that are made for software systems with high availability requirements can also have multiple control nodes for redundancy.
 In such a cluster, worker nodes interact with one control node at a time, with other control nodes taking over if one fails.
 
+\pagebreak
+
 \textbf{Pods}~\cite{kubernetes-pods} are the smallest units of work a Kubernetes cluster uses to handle workloads.
 A pod can consist of multiples containers, grouping them logically.
 When deploying a container that way, a pod can manage the environment of the pod, such as mounted directories, network capabilities or environment variables.
@@ -48,6 +50,7 @@ An application can be updated seemingly and gradually to a new version, to avoid
 Similar to deployments, \textbf{StatefulSets}~\cite{kubernetes-statefulsets} handle the deployment of pods.
 The difference is, that the name, i.e., the identity, of a pod is guaranteed.
 When a pod is created through a replica set or a deployment, the pod is assigned a semi-random name consisting of the deployment or replicaset name and random string.
+
 A pod created by a stateful set on the other hand is usually named with the name of the stateful set with the index of the pod at the end.
 For example, a pod of a deployment with the name of ``my-app'' results in the pod being named ``my-app-asd123-fgh456''.
 A pod of a stateful set of the same name would result in the name being ``my-app-1''.
@@ -79,6 +82,8 @@ Helm charts also include a way to configure these templates.
 When a Helm chart is applied to a Kubernetes cluster, this configuration can be changed, either manually or dynamically.
 The resources are then generated based on the supplied configuration.
 Helm charts can also be compiled to an archive and distributed as such or as part of a repository.
+
+\pagebreak
 
 \textbf{Operators}~\cite{kubernetes-operator} are custom systems that interact with the Kubernetes API from within a Kubernetes cluster.
 To do so, they often supply their own custom resource with which an administrator can configure an operator.

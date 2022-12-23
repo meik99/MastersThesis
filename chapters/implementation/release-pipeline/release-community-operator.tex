@@ -27,6 +27,8 @@ This script takes the arguments shown in table~\ref{tab:parameters-to-clone-and-
     \end{tabular}
 \end{table}
 
+\pagebreak
+
 After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
 This class implements some REST requests GitHub's API provides.
 First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
@@ -45,6 +47,8 @@ In this forked repository, the following folders are created for the new version
 ${fork_name}/operators/dynatrace-operator/${version}/manifests
 ${fork_name}/operators/dynatrace-operator/${version}/metadata
 \end{verbatim}
+
+\pagebreak
 
 The Dockerfile located at \verb|{repository}/config/olm/kubernetes/bundle-${version}.|\\\verb|Dockerfile| is placed in the version's folder.
 The previously mentioned folders, are then populated with the CSV bundles from \verb|{repository}/config/olm/kubernetes/${version}|\\\verb|/manifests| and \verb|{repository}/config/olm/kubernetes/${version}/metadata| respectively.

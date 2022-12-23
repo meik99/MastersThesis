@@ -8,14 +8,16 @@ Their goal is to build and push the deployer image for GCM, prepare a GKE cluste
 The purpose of this task is to build a deployer image and publish it to GCR.
 This task builds the Dockerfile at \verb|<repository>/config/helm/| and pushes the resulting image to GCR as the deployer image.
 
+\pagebreak
+
 \textit{Preparing a cluster}
 
 The purpose of this task is to prepare a GKE cluster for the deployment of a deployer image.
 This includes cleaning any leftover resources created by a previous DTO deployment and applying the GKE Application CRD.
 This task prepares a GKE cluster to be able to deploy the previously built deployer image.
-First, the kube-config is read from the vault secret, which is set by the task of section~\ref{subsubsec:fetch-kubeconfig}.
+First, the kube-config is read from the vault secret, which is set by the task of fetching the kubeconfig in section~\ref{subsec:gke-infrastructure}.
 Therefore, for this task, and by extension this job, to succeed, a GKE cluster must be running.
-A GKE cluster can be created with the task of section~\ref{subsec:create-release-gke-infrastructure}.
+A GKE cluster can be created with the respective task of section~\ref{subsec:gke-infrastructure}.
 
 After the kube-config is read and written to \verb|\${HOME}/.kube/config|, the GCPs application CRD is applied from \url{https://raw.githubusercontent.com/GoogleCloudPlatform/marketplace-k8s-app-tools/master/crd/app-crd.yaml}.
 This CRD is needed so GCP applications can be deployed.

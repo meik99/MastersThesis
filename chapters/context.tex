@@ -17,6 +17,8 @@ An ActiveGates~\cite{activegates} main purpose is to act as a proxy between OneA
 It can be used to buffer information sent by a OneAgent inside a local network, before uploading it to the main Dynatrace cluster.
 Furthermore, it can be used to monitor cloud centric technologies, such as AWS, Kubernetes, Openshift, or other cloud systems.
 
+\pagebreak
+
 The DTO is released on a number of ways.
 First, the GitHub page itself, in which updated manifests, an updated Helm chart and a new index for these charts are uploaded to.
 In addition to the mentioned artifacts, a changelog is also published.
@@ -93,6 +95,7 @@ In figure~\ref{fig:dtf-workflow} the general workflow of the DTF is shown.
 Test definitions and how similarities are used are explained in section~\ref{subsec:test-definitions} and section~\ref{subsec:similarities}.
 The DTF uses both to generate a pipeline configuration for Concourse.
 This configuration can then be applied to a running Concourse instance and started.
+
 The idea is, that this pipeline then creates a cluster, configures it and deploys the DTO as well as needed applications on it.
 Further tasks of this pipeline can then check for specific states when applying different DTO configurations.
 After all tests succeeded, a second pipeline, the release pipeline, can be triggered.

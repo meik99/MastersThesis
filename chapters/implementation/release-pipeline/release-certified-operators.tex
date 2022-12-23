@@ -35,6 +35,8 @@ To ensure a consistent environment, forked repositories are deleted if they alre
 Therefore, if the \verb|exist| function returns true, the fork is deleted by calling \verb|delete_repository|, which returns \verb|True| if the request succeeds or \verb|False| if it doesn't.
 Additionally, the response from the GitHub API is also returned.
 
+\pagebreak
+
 If the forked repository does not exist or has successfully been deleted, it is recreated.
 This is done by calling the \verb|fork| function and passing \verb|{original-repository}| as a parameters.
 On a success, a check is made, if the forked repository has the expected name \verb|{forked-repository}|.
