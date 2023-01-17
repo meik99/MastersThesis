@@ -4,7 +4,7 @@
 In recent years, a set of practices have emerged with the goal of supporting software development.
 Expanding on agile practices, these have the same goal albeit with other means.
 This set of practices is commonly referred to as ``DevOps'' practices.
-A short summary, which is explored shortly, would be:
+A short summary, which is explored shortly, is:
 
 ``DevOps is IT for software developers.''\footnote{A quote once overheard in passing.}
 
@@ -16,35 +16,33 @@ Automating logging and monitoring;
 
 The first need that arises to achieve this level of automation is the need for tools.
 Again, Ebert et.al., as well as Leite et.al, identify this necessity~\cite{DevOps, ASurveyofDevOpsConceptsandChallenges}.
-First and foremost, build tools are required to automate building software systems.
-Most of which also include some form of dependency management to automatically link required libraries to the resulting system.
+First and foremost, build tools are required to automate integrating software systems, most of which also include some form of dependency management to automatically link required libraries to the resulting system.
 
 Then, testing tools are required to automate testing newly integrated code and therefore streamline automatic integration.
-Since this process is also called continuous integration, these tools are known as continuous integration tools~\cite{DevOps}.
-Closely related are the continuous delivery tools.
+Since this process is also called Continuous Integration (CI), these tools are known as continuous integration tools~\cite{DevOps}.
+Closely related are the Continuous Delivery (CD) tools.
 These satisfy the need of automatically delivering or deploying newly integrated code.
-Usually, a tool that does continuous integration (CI) also does continuous delivery (CD) because of that fact.
-They are then often called CI/CD tools for short.
+Usually, a tool that does continuous integration also does continuous delivery because of that fact.
+They are thus often called CI/CD tools for short.
 
 \pagebreak
 
 Taking back a step, agile methods, as discussed in the beginning, have the goal of increasing the velocity of software development~\cite{ADecadeOfAgileMethodologies}.
-One of the principles these methods use to achieve this goal is the principle of collective code ownership~\cite{CommonAgilePracticesInSoftwareProcesses, ManagingCodeOwnership}.
-Until fairly recently, pipelines to automatically integrate and deliver code were often clicked together~\cite{JenkinsClassicUi}.
+One of the principles these methods follow to achieve this goal is collective code ownership~\cite{CommonAgilePracticesInSoftwareProcesses, ManagingCodeOwnership}.
+Until fairly recently, pipelines to automatically integrate and deliver code were done using a graphical user interface (GUI)~\cite{JenkinsClassicUi}.
 As this practice slowly faded out, infrastructure as code emerged~\cite{ASystematicMappingStudyOfInfrastructureAsCodeResearch}.
-Since the infrastructure is now represented as code, it too can be collectively owned, enabling more DevOps practices and further increase development velocity.
+Since the infrastructure is now represented as code, it too can be collectively owned, enabling more DevOps practices and further increasing development velocity.
 
 Summarizing briefly, it is now established that automated pipelines exist and are used.
-Their configuration is shared as pieces of code amongst members of a software team or other stakeholders.
+Their configuration is shared code amongst the members of a software team or other stakeholders.
 They are used to automatically integrate code into a system and then deliver this system to customers.
-It appears, as if these steps are logical and structured and that is indeed the case.
-However, some details are still missing.
+These steps give a nice overview of the overall process, yet some details are still missing.
 
 First, it must be discussed how to verify that the newly and automatically integrated code works well and as intended.
-Secondly, where to deliver the system and how this can be done in a way, that is automatic as well as correct.
-After all, the system cannot just be put somewhere on the internet with the hopes that the customer will eventually figure out how to use the updated version.
+Secondly, it must be decided where to deliver the system and how to do this automatically and correctly.
+After all, the system cannot just be put somewhere on the internet with the hopes that the customer will eventually figure out how to use it.
 Changelogs, version bumps, installation instructions and more must be carefully considered.
-As this paper will show, automating the maintenance of this secondary information must be done in a thoughtful and precise manner.
+As this thesis shows, automating the maintenance of this secondary information must be done in a thoughtful and precise manner.
 
 For many basic systems, the story ends with basic tests.
 They are unit tested, integration tests cover multiple units and system tests make sure features as a whole work correctly and as intended by simply executing a program.
@@ -59,23 +57,22 @@ And life is not easy for the testers, who garrison the test suits of components,
 
 \pagebreak
 
-These systems are those that run in clusters.
-A collection of servers, varying in size, connected together fulfilling one or many business cases.
+These systems are those that run in clusters, a collection of servers, varying in size, connected together fulfilling one or many business cases.
 They exist and run in sometimes huge environments.
-Lower level testing, such as unit testing, is not much different or not different at all.
-However, higher level testing is more complex and resource intensive than testing on lower levels.
+Lower-level testing, such as unit testing, is not much different or not different at all.
+However, higher-level testing is more complex and resource intensive than testing on lower levels.
 For example, to test such a system on the level of system testing, a cluster is needed for the system to run in.
-Which in turn means setting up servers, connecting them to a cluster and installing management software, even before the first test can run.
+This in turn means setting up servers, connecting them to a cluster and installing management software, even before the first test can be run.
 After a test ran, this environment then needs to be destroyed and recreated, so that the next test can be run uninfluenced by the one that came before.
 
 With great complexity comes a great learning curve.
-Not all developers in a team might have the domain knowledge to create and maintain a pipeline configuration for such a setup.
-Therefore, one of the two objectives of this thesis is to make creating pipeline configurations easier and more accessible by abstracting complicated domain knowledge to a more general interface.
+Not all developers in a team have the domain knowledge to create and maintain a pipeline configuration for such a setup.
+Therefore, one of the objectives of this thesis is to make creating pipeline configurations easier and more accessible by abstracting complicated domain knowledge to a more general interface.
 
 The second problem after testing such highly complex systems is the delivery and distribution.
 Usually, programs are delivered in the form of binaries, distributed often by a website or package management system.
-As is shown later, distribution of cluster systems is highly diverse with many so-called ``marketplaces'' from which that software can be deployed from.
-Targeting many of these systems multiplies the problem touched before, needing more changelogs, setting versions correctly and, additionally, adhering to proprietary configurations for specific marketplaces.
+As is shown later, the distribution of cluster systems is highly diverse with many so-called ``marketplaces'' from which that software can be deployed from.
+Targeting many of these systems multiplies the problem touched before, needing more change-logs, setting versions correctly and, additionally, adhering to proprietary configurations for specific marketplaces.
 The second objective is therefore, to integrate these multiple systems into one, automating as much as possible, while using a common base for the data and metadata that is needed.
 
 In order to tackle the first problem, a system is developed to help abstract the complexity of maintaining higher level tests.
@@ -92,28 +89,28 @@ Using the system to generate a concrete configuration does not necessitate knowl
 
 To address the second problem, another pipeline is created for a specific system.
 This pipeline contains steps to gather information, build necessary files and then deploy those files to different platforms.
-The platforms to be deployed are specific marketplaces for this system and will be discussed in section~\ref{sec:release-pipeline}
+The platforms to be deployed are specific marketplaces for this system and will be discussed in Section~\ref{sec:release-pipeline}
 
 The goal is to find and use data, that is common to each platform and prepare it as much as possible before distributing it.
 Each platform may have special steps that need to be taken into account.
 Combining these steps in small scripts may increase the maintainability of the whole pipeline.
 Since the main purpose of this pipeline is to distribute a system, it is simply called ``Release pipeline''.
 
-In order to solve the problems stated, this thesis first introduces the general area of software engineering in which these problems fall into: The area of ``DevOps''.
-The background described in chapter~\ref{ch:background} also covers testing, virtualization, Kubernetes and similarity based variability-testing, since they are important concepts used in this thesis.
-Architectural design decisions of the implementation and context are discussed in chapter~\ref{ch:context}.
+In order to solve the problems stated, this thesis first introduces the area of DevOps in which these problems fall into.
+The background in Chapter~\ref{ch:background} also covers testing, virtualization, Kubernetes and similarity-based variability testing, since they are important concepts used in this thesis.
+Architectural design decisions of the implementation and context are discussed in Chapter~\ref{ch:context}.
 
-Chapter~\ref{ch:implementation} shows how the problems described are solved.
+Chapter~\ref{ch:implementation} shows how the problems described have been solved.
 One system, called the Dynamic Testing Framework (DTF), is used to generate a pipeline for tests.
-A second system, another pipeline simply called a release pipeline, is used to generate releases.
+The second system, another pipeline simply called a release pipeline, is used to generate releases.
 
 \pagebreak
 
-Both implementations are then evaluated in chapter~\ref{ch:evaluation}.
+Both implementations are then evaluated in Chapter~\ref{ch:evaluation}.
 The DTF is evaluated using a survey to establish if it is easier to use than the previously established process.
 The release pipeline is evaluated by analysing the time needed for a release based on recorded time-tracking.
 It shows that the DTF only abstracts complexity behind a different set of complexity.
 However, the implementation of the release pipeline shows significant improvement in overall productivity.
 Chapter~\ref{ch:conclusion} summarizes and concludes this work.
-The need for more standards in the field of cloud computing is then discussed in chapter~\ref{ch:outlook}.
+The need for more standards in the field of cloud computing is then discussed in Chapter~\ref{ch:outlook}.
 
