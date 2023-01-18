@@ -1,10 +1,10 @@
-\section{Q1: Method}\label{sec:q1:-how-useful-is-the-dtf-in-a-practical-context?}
+\section{RQ1: Method}\label{sec:q1:-how-useful-is-the-dtf-in-a-practical-context?}
 
 The evaluation for this question is done using an exploratory survey.
 This approach is chosen due to the circumstances of the project.
 An environment for higher level tests was needed as it did not exist.
 It was needed to create and run higher level tests, which did also not exist prior, to find faults in the DTO code base.
-As these things were non-existent before, an evaluation of faults found before and after is not possible, because there are no such records.
+As these things did not exist before, an evaluation of faults found before and after is not possible.
 
 It could be argued that bug reports of customers could be used.
 If the amount of those reports decrease after introducing the described system, conclusions about the effectiveness could be drawn.
@@ -25,7 +25,7 @@ Since the DTF abstracts writing pipeline configurations, this part of the projec
 Then, it is important to gain insights into how experienced the interviewee is with the Golang programming language.
 The intention being, that a project written in Golang, such as the DTF, is easier to maintain than a bundle of pipeline configurations, if the maintainer is more experienced in Golang.
 
-Finally, questions about the DTF itself are asked.
+Finally, questions about the DTF itself were asked.
 The first and obvious question is ``Have you used the Dynamic Testing Framework before?''.
 Due to the time frame of this project compared to the planning of the DTO, this question was unanimously answered with ``No''.
 The questions about the DTF are still of value, because the project outcome was presented beforhand.
@@ -36,7 +36,7 @@ Therefore, although none of the interviewees have practical experience with the 
 
 \pagebreak
 
-\section{Q1: Results}\label{sec:q1:-results}
+\section{RQ1: Results}\label{sec:q1:-results}
 
 \textbf{What do you understand by the term E2E-testing?}\\
 This is an open question intended to gauge the familiarity with E2E-testing of the interviewee.
@@ -78,12 +78,12 @@ The average for this question is $5.8$, signifying a high importance of E2E-test
 The purpose of this question is two-fold.
 First, it sets the answers to the following question about the difficulty of pipeline configuration into perspective.
 Secondly, it changes the context for the interviewee from testing and the DTO to Concourse and its pipelines.
-This question is designed as a single choice between six options, the result is shown in table\ \ref{tab:participants-knowledge-of-concourse}.
+This question is designed as a single choice between six options, the result is shown in Table~\ref{tab:participants-knowledge-of-concourse}.
 The results show, that all the participants at least heard of Concourse and that there is some practical experience for some team members.
 
 \begin{table}[H]
     \centering
-    \caption{Participants knowledge of Concourse}
+    \caption{Participants knowledge of Concourse.}
     \label{tab:participants-knowledge-of-concourse}
     \begin{tabular}{l|l}
         Option & Participants identifying with the option \\
@@ -195,7 +195,7 @@ This, in turn, increases the stability of the DTO and the confidence in it.
 After the potential opportunities have been assed, interviewees are now asked what they think the risks are in introducing the DTF.
 According to the answers given, which are shown below, having too much confidence in automated tests is one concern.
 Not only because they are automated, but due to the interconnectedness, a breakage of the underlying system may influence the test outcome.
-Delivering either false-positives or -negatives.
+Delivering either false positives or false negatives.
 
 This, in turn, can lead to increased maintenance cost of not only the DTF, but also the infrastructure.
 Due to the configuration being generated, another fear is that it might break other, unassociated pipelines, because of something going wrong during generation.
@@ -206,7 +206,7 @@ Due to the configuration being generated, another fear is that it might break ot
     \item Trusting the generated configurations too much and inadvertently breaking other pipelines
 \end{itemize}
 
-\section{Q1: Discussion}\label{sec:q1:-discussion}
+\section{RQ1: Discussion}\label{sec:q1:-discussion}
 
 Team members were interviewed about the DTF to find out if it fulfills the potential of being simpler.
 The participants of the survey showed that they understood what E2E testing is and were given a presentation about the DTF.
@@ -225,7 +225,7 @@ This shows a tendency, that the templates used to generate a pipeline and tasks 
 
 \pagebreak
 
-Concluding \textit{Q1}, it appears that introducing the DTF in the general workflow should be carefully considered.
+Concluding \textit{RQ1}, it appears that introducing the DTF in the general workflow should be carefully considered.
 Alternative approaches might exist, which are less complicated than Concourse pipeline configurations while also being easier to maintain.
 One such alternative could be employing a person with the skill-set needed to create and maintain such a testing pipeline.
 Having the intrinsic ability of processing natural language, combined with a practically limitless computing engine, a specialised human might be a better alternative in this case.

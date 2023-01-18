@@ -1,4 +1,4 @@
-\section{Q2: Method}\label{sec:q2:-method}
+\section{RQ2: Method}\label{sec:q2:-method}
 
 The evaluation for this question is done by analyzing the data of time used on releases.
 Data is used from previous DTO releases from version v0.1.0 up to and including v0.6.0.
@@ -7,20 +7,20 @@ Time spent on each ticket is then accumulated, grouped by whether the release pi
 The results show that, on average, $75 \%$ less time was spent on a release when the pipeline was used.
 This shows a significant impact of the implemented automation on overall productivity.
 
-\section{Q2: Dataset}\label{sec:q2:-dataset}
+\section{RQ2: Dataset}\label{sec:q2:-dataset}
 
 For most releases, release tickets exist that track the time spent on it.
 Three of these releases do not have associated tickets, the absence of data is marked accordingly.
 Furthermore, it is annotated, if the release pipeline was used or not.
 
-In table~\ref{tab:logged-time-for-each-release}, the resulting data is shown.
+In Table~\ref{tab:logged-time-for-each-release}, the resulting data is shown.
 The logged time that is shown has been sanitized, to not include testing the release or implementing bug-fixes since those are not in the scope of the release pipeline.
 Note that abbreviations are used to denote certain time units\footnote{w - weeks, d - days, h - hours, m - minutes} and that the time is rounded to quarter hours.
 The latter is a result of the time-tracking used at Dynatrace.
 
 \begin{table}[H]
     \centering
-    \caption{Logged time for each release}
+    \caption{Logged time for each release.}
     \label{tab:logged-time-for-each-release}
     \begin{tabular}{l|l|l}
         DTO version & Logged time for release & Pipeline used \\
@@ -39,16 +39,16 @@ The latter is a result of the time-tracking used at Dynatrace.
     \end{tabular}
 \end{table}
 
-\section{Q2: Results}\label{sec:q2:-results}
+\section{RQ2: Results}\label{sec:q2:-results}
 
-In the following table~\ref{tab:evaluation-of-logged-time}, an evaluation of this data is shown.
-First, the time-spans of table~\ref{tab:logged-time-for-each-release} are summed up as minutes.
+In the following Table~\ref{tab:evaluation-of-logged-time}, an evaluation of this data is shown.
+First, the time-spans of Table~\ref{tab:logged-time-for-each-release} are summed up as minutes.
 Then, the value is averaged across the amount of tickets that have data available.
 Finally, the ratio and percentage of time saved is highlighted.
 
 \begin{table}[H]
     \centering
-    \caption{Evaluation of logged time}
+    \caption{Evaluation of logged time.}
     \label{tab:evaluation-of-logged-time}
     \begin{tabular}{l|l}
         Minutes spent without pipeline & Minutes spent with pipeline \\
@@ -65,7 +65,7 @@ Finally, the ratio and percentage of time saved is highlighted.
     \end{tabular}
 \end{table}
 
-\section{Q2: Discussion}\label{sec:q2:-discussion}
+\section{RQ2: Discussion}\label{sec:q2:-discussion}
 
 Regarding the second research question, the Dynatrace Operator had been released manually to various different marketplaces.
 Due to the varied ways of creating a release for different marketplaces, this task is time-consuming and tedious.

@@ -1,6 +1,6 @@
-\chapter{Conclusion}\label{ch:conclusion}
+\chapter{Conclusions and outlook}\label{ch:conclusions-and-outlook}
 
-In this thesis, two problems were introduced in chapter~\ref{ch:introduction}.
+In this thesis, two problems were introduced in Chapter~\ref{ch:introduction}.
 First, testing systems that need complex environments is difficult and is in need for automation.
 Secondly, releasing a system to multiple different marketplaces must be automated as it decreases productivity significantly if done manually.
 Furthermore, the implemented tools are introduced, namely the DTF and the release pipeline.
@@ -10,17 +10,17 @@ It goes into more detail about DevOps and its history as well as testing.
 The principles of virtualization and the development of containerization and Kubernetes are also discussed.
 The chapter ends with the introduction of similarity-based variability testing.
 
-The architecture and the context of the work is shown in chapter~\ref{ch:context}.
+The architecture and the context of the work is shown in Chapter~\ref{ch:context}.
 It introduces the specific problem Dynatrace faces with the DTO.
 Diagrams are used to show the overall architecture of a DTO deployment as well as the proposed architecture of the solutions to the stated problems.
 This chapter also includes a section of peripheral tools used to support the implementation.
 
-The actual implementation is explained in chapter~\ref{ch:implementation}.
+The actual implementation is explained in Chapter~\ref{ch:implementation}.
 First test definitions and similarities are introduced in the context of the DTF.
 Then, the release pipelines tasks are described in detail.
 Tasks that are used to create necessary infrastructure for certain releases are also shown.
 
-Finally, the evaluation of chapter~\ref{ch:evaluation} shows the impact of both solutions.
+Finally, the evaluation of Chapter~\ref{ch:evaluation} shows the impact of both solutions.
 The DTF itself only replaces on set of complexity with a different one, making it not more or less useful than any established process.
 This result is derived by analyzing the answers of the survey given to the DTO's development team.
 
@@ -29,3 +29,17 @@ This result is derived by analyzing the answers of the survey given to the DTO's
 On the other hand, the release pipeline's evaluation suggests a significant increase in productivity by reducing time spent on a release by about $75 \%$.
 In order to arrive at this conclusion, the time spent on releases was taken from tickets on which the time was booked on.
 An aggregation of the work-time used on releases with the pipeline showed a drop in time spent compared to releases done manually.
+
+\section{Outlook}\label{sec:outlook}
+
+The work in this thesis has shown that there is a lot of potential with automating the distribution of systems.
+This automation, however, is only necessary due to the currently fragmented market and multiple ways of running and maintaining an operator.
+There are clear indications for the need for some kind of standard.
+Since the RHMP is one of the biggest ones and OpenShift already uses OLM by default, CSV files are good candidates for a starting point.
+Although, if made to a standard, their names must be changed to something sensible and less ambiguous.
+
+This work also shows that testing systems that need very complex environments is difficult.
+Not because the system itself is complex, but a lot of resources are needed to adequately test it.
+Further research into the alleviation of this problem is necessary.
+A team of software engineers, DevOps specialists and infrastructure engineers discussing this problem in more depth would be a start.
+Also, a standardized cluster could be defined, so only one environment must be tested on to make sure any given feature works, instead of multiple.
