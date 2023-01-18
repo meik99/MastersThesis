@@ -5,31 +5,29 @@ Kubernetes is a complex software system and care must be taken to establish diff
 This section covers the basic information needed to understand how it works and what certain terminology means in its context.
 
 First, \textbf{Images} and \textbf{Containers}~\cite{docker-image,kubernetes-images,kubernetes-containers} act as the base of Kubernetes.
-An image can be seen as a template to a container.
-It includes instructions to be run to create a container.
+An image can be seen as a template including instructions to create a container.
 These instructions can range from simple commands to complex, multistep build instructions.
 Any image can also serve as the starting point for a new image.
 This allows the creation of complex systems that can be instantiated as containers at any time.
 
 A Kubernetes system is structured as a \textbf{cluster} and therefore called a ``Kubernetes cluster''~\cite{kubernetes-cluster}.
-It is called a cluster because it is made of a cluster of \textbf{node}s.
+It is called a cluster because it is made of a cluster of \textbf{nodes}.
 In the context of Kubernetes, a node is a computer that serves as a part of a cluster.
 
-The smallest clusters typically have three nodes~\cite{kubernetes-cluster}.
-One control node and multiple worker nodes.
-Although it is possible to have clusters with only one or two nodes, but they are mostly only used for development and debugging purposes~\cite{minikube}.
+The smallest clusters typically have three nodes~\cite{kubernetes-cluster}, one control node and multiple worker nodes.
+It is possible to have clusters with only one or two nodes, but they are mostly only used for development and debugging purposes~\cite{minikube}.
 Bigger clusters and clusters that are made for software systems with high availability requirements can also have multiple control nodes for redundancy.
 In such a cluster, worker nodes interact with one control node at a time, with other control nodes taking over if one fails.
 
 \pagebreak
 
 \textbf{Pods}~\cite{kubernetes-pods} are the smallest units of work a Kubernetes cluster uses to handle workloads.
-A pod can consist of multiples containers, grouping them logically.
+A pod can consist of multiples containers and groups them logically.
 When deploying a container that way, a pod can manage the environment of the pod, such as mounted directories, network capabilities or environment variables.
 Furthermore, a pod can have three different kinds of containers, normal containers, \textbf{init-containers} and ephemeral containers.
 Normal containers describe the main workload of the pod.
 Usually the main application is run inside one container, while other tasks, such as logging, is done in another.
-This pattern is called Sidecar pattern and these pods are commonly referred to as \textbf{sidecar containers}~\cite{sidecar-container}.
+This pattern is called Sidecar pattern and such pods are commonly referred to as \textbf{sidecar containers}~\cite{sidecar-container}.
 These containers are only started, however, after all of a pods init-containers have succeeded.
 For example, a pod may have a web server as a container that it runs continuously, but has an init container that executes setup tasks that need to run before the server starts.
 Finally, ephemeral containers are containers added to an already deployed pod to be used for debugging.
@@ -43,7 +41,7 @@ However, sometimes it is not possible for a specific amount of pods to actually 
 \textbf{Deployments}~\cite{kubernetes-deployments} build on top of replica sets.
 They are also defined by a pod specification and the required amount of replicas.
 However, a deployment does not manage the pods, but uses a replica set to do so.
-This enables a deployment to, for example, do rolling updates automagically\footnote{Automatically, but being reminiscent of wizardry}.
+This enables a deployment to, for example, do rolling updates ``automagically''\footnote{Automatically, but being reminiscent of wizardry}.
 When a deployment is changed, it can decrease the desired amount of replicas of the original replicaset, while gradually increasing it for the new one.
 An application can be updated seemingly and gradually to a new version, to avoid service outages in case of bugs or server downtimes.
 
@@ -57,8 +55,7 @@ A pod of a stateful set of the same name would result in the name being ``my-app
 Furthermore, the naming is made consistent.
 If a stateful set controls three pods, ``pod-1'', ``pod-2'', and ``pod-3'', and ``pod-2'' is deleted, it will try to deploy a new pod with the name ``pod-2''.
 
-The \textbf{Kubernetes API}~\cite{kubernetes-api} is the part of Kubernetes that receives resource requests.
-I.e., if an administrator wants to create resource, such as a pod, a HTTP request is sent to the Kubernetes API describing that resource.
+The \textbf{Kubernetes API}~\cite{kubernetes-api} is the part of Kubernetes that receives resource requests, i.e., if an administrator wants to create resource, such as a pod, a HTTP request is sent to the Kubernetes API describing that resource.
 From there, it is then applied to the cluster and other Kubernetes components are notified.
 Interacting with this API is commonly abstracted to the Kubernetes CLI for manual, or client libraries for automatic communication.
 
@@ -71,8 +68,8 @@ This type of webhook does not mutate a resource but is used to either allow or d
 
 \textbf{Manifests}~\cite{kubernetes-manifests} represent the state of a Kubernetes cluster as a configuration file.
 These configuration files are written in YAML.
-When such a configuration is applied to a cluster, Kubernetes tries its best to create the state that is described by this configuration.
-Multiple resource can be defined in a single configuration.
+When such a configuration is applied to a cluster, Kubernetes tries to create the state that is described by this configuration.
+Multiple resources can be defined in a single configuration.
 Multiple configurations can be applied to a single cluster.
 Note well that these files are static, meaning that they do not accept the application of variables when applied to Kubernetes.
 

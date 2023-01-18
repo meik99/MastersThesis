@@ -1,50 +1,45 @@
 \chapter{Background}\label{ch:background}
 
-In this section, the background to this thesis is discussed.
+This chapter discusses the background to this thesis.
 Its aim is to give context to the project that is implemented in addition to specific technical knowledge.
-The context of this work is mostly DevOps as it heavily uses implementations of DevOps practices, such as CI/CD tools which are explained in section~\ref{sec:devops-and-agile-programming}.
-Testing as a concept exists in software engineering since the beginning and deeper insights are given in section~\ref{sec:testing}.
-The DTF, briefly mentioned in section~\ref{ch:introduction} implements theoretical concepts of similarity-based variability testing, which is picked up on in section~\ref{sec:similarities}.
-Finally, virtualization of applications and a technology building on top of it, Kubernetes, are described in section~\ref{sec:virtualization} and section~\ref{sec:kubernetes}.
+The context of this work is mostly DevOps as it heavily uses implementations of DevOps practices, such as CI/CD tools which are explained in Section~\ref{sec:devops-and-agile-programming}.
+Testing as a concept exists in software engineering since the beginning and deeper insights are given in Section~\ref{sec:testing}.
+The DTF, briefly mentioned in Chapter~\ref{ch:introduction} implements theoretical concepts of similarity-based variability testing, which is picked up on in Section~\ref{sec:similarities}.
+Finally, virtualization of applications and a technology building on top of it, Kubernetes, are described in Sections~\ref{sec:virtualization} and~\ref{sec:kubernetes}.
 
 \section{DevOps and agile programming}\label{sec:devops-and-agile-programming}
 
-All things start with Agile programming.
-Different practices have emerged since the writing of the agile manifesto~\cite{AgileManifesto} in 2001.
-Extreme programming, Scrum and Kanban are only a few examples of such practices~\cite{ADecadeOfAgileMethodologies}.
-All of them with the goal of increasing the velocity of software development and the speed at which a project can change into different directions.
+In agile programming, different practices have emerged since the agile manifesto~\cite{AgileManifesto} appeared in 2001.
+Extreme programming, Scrum and Kanban are only a few examples of such practices~\cite{ADecadeOfAgileMethodologies}, all of them aim at increasing the velocity of software development and the speed at which a project can change into different directions.
 These agile practices are more and more adopted in the industry~\cite{BecomingAgileTogether} and taught at universities~\cite{StudienhandbuchProjectManagement}.
 
 As an example of agile programming, Scrum can be dissected.
-The inventors of Scrum, Jeff Sutherland and Ken Schwaber, describe Scrum as the following.
-
-``Scrum is a lightweight framework that helps people, teams and organizations generate value through
-adaptive solutions for complex problems''~\cite{the-scrum-guide}
+The inventors of Scrum, Jeff Sutherland and Ken Schwaber, describe Scrum as follows.
+``Scrum is a lightweight framework that helps people, teams and organizations generate value through adaptive solutions for complex problems''~\cite{the-scrum-guide}
 
 \pagebreak
 
 It is meant to be simple, as well as easy to understand and execute.
-According to the Scrum guide~\cite{the-scrum-guide}, it is supposed to allow changes to a system as early as possible.
-Planning only as much as needed and even if planned, allow space for deviation.
+According to the Scrum guide~\cite{the-scrum-guide}, it is supposed to allow changes to a system as early as possible, planning only as much as needed, and even if planned, allowing space for deviation.
 In short, the goal is to have a system that allows focused planning while also having a high velocity when developing projects.
 
-In that context, DevOps, as a practice, is an extension as well as an evolution of agile practices.
+In that context, DevOps can be seen as an extension as well as an evolution of agile practices.
 Instead of applying it to software development itself, it is applied to things surrounding it.
 Scrum, for example, describes how a feature is supposed to be planned and implemented.
-A DevOps practice describes how this feature is integrated into the code base, tested, or distributed.
+A DevOps practice describes how this feature can be integrated into the code base, tested, or distributed.
 
 In more elaborate terms, DevOps is all about making sure new code works well and as intended~\cite{the-software-architext-and-devops}.
-If code fulfills these criteria, it is supposed to be automatically integrated in to the existing code base.
+If code fulfills these criteria, it is supposed to be automatically integrated into the existing code base.
 After the integration was successful, it should then be distributed, again automatically.
 Some systems depend on certain infrastructure, such as servers.
 Naturally, this infrastructure has the potential to fail.
 To mitigate this, the final DevOps practice is to ensure a stable, possibly self-repairing, infrastructure~\cite{container-and-microservice-driven-design-for-cloud-infrastructure-devops}.
 
 This thesis concerns itself with the first two principles of DevOps.
-Making sure stuff works and making sure said stuff is distributed.
+Making sure stuff works and making sure said stuff is distributed reliably.
 In order to make sure stuff works and is distributed, in an automated manner, Concourse~\cite{concourse} is used.
 
-Concourse~\cite{concourse} is a CI/CD system that can be used to automate certain tasks and group them into a pipeline.
+Concourse~\cite{concourse} is a CI/CD system that can be used to automate certain development tasks and group them into a pipeline.
 Tasks can then be run either concurrently or sequentially in the context of the pipeline they are grouped in.
 In addition, resources to be used can be defined and added to tasks, so they are available to them.
 Such resources can be files, online resources, storage locations or any number of information a task may need.
@@ -75,18 +70,18 @@ This very first model already includes testing as part of its lifecycle.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textheight]{img/introduction/software-testing-v.drawio}
-    \caption{Levels of abstraction and their corresponding tests~\cite{waterfall-vs-v-model-vs-agile}}
+    \caption{Levels of abstraction and their corresponding tests~\cite{waterfall-vs-v-model-vs-agile}.}
     \label{fig:levels-of-abstraction-and-tests}
 \end{figure}
 
 Figure~\ref{fig:levels-of-abstraction-and-tests} describes another model, the V-model~\cite{waterfall-vs-v-model-vs-agile}.
-Although in general it is considered out of date, given that agile practices are used nowadays as described before, it is helpful to visualize the layers of systems and their corresponding tests.
+Although in general it is considered out of date for many development contexts, given that agile practices are used nowadays as described before, it is helpful to visualize the layers of systems and their corresponding tests.
 Single components are unit tested in isolation, while their interaction is tested using integration tests and so on and so forth.
 In order to validate code before an automatic integration occurs, a well-founded set of tests is needed.
 Not only on the lowest levels, but also on the highest level, which is acceptance testing.
-Without strong test suits, faulty code may be integrated into a system and delivered to stakeholders.
+Without strong test suits, faulty code may be integrated into a system and then delivered to stakeholders.
 
-This paper focuses on the second layer of testing, which is integration testing.
+This thesis focuses on the second layer of testing, i.e., integration testing.
 Integration testing commonly take the form of \textbf{End-to-End (E2E) testing}~\cite{end-to-end-integration-testing-design}.
 As the name suggests, this technique tests a software system from one end, i.e., a hypothetical user, across user-system interaction, to the other end, i.e., the results of a feature.
 
@@ -98,34 +93,34 @@ After the purchase is completed, it checks that the correct entries where made i
 
 \section{Virtualization}\label{sec:virtualization}
 
-Some of the implementation part of this thesis is build upon Kubernetes, which is discussed in section~\ref{sec:kubernetes}.
+Some of the implementation part of this thesis is build upon Kubernetes, which is discussed in Section~\ref{sec:kubernetes}.
 However, to effectively explain what Kubernetes is and does, containerization must first be explained.
 Containerization on the other hand is a subcategory of the more general field of virtualization.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{img/background/standalone-vm}
-    \caption{Standalone VM~\cite{a-survey-on-virtualization-technologies}}
+    \caption{Standalone VM~\cite{a-survey-on-virtualization-technologies}.}
     \label{fig:standalone-vm}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{img/background/hosted-vm}
-    \caption{Hosted VM~\cite{a-survey-on-virtualization-technologies}}
+    \caption{Hosted VM~\cite{a-survey-on-virtualization-technologies}.}
     \label{fig:hosted-vm}
 \end{figure}
 
 
 There are three types of virtualization that are commonly used nowadays~\cite{containers-vs-virtual-machines, a-survey-on-virtualization-technologies}.
-First, virtualization using a virtual machine (VM) that utilizes the host's hardware, also called a Standalone Virtual Machine seen in figure~\ref{fig:standalone-vm}.
-Second, virtualization using a VM that runs on top of a host operating system, plainly called Hosted Virtual Machine seen in figure~\ref{fig:hosted-vm}.
+First, virtualization using a virtual machine (VM) that utilizes the host's hardware, also called a Standalone Virtual Machine seen in Figure~\ref{fig:standalone-vm}.
+Second, virtualization using a VM that runs on top of a host operating system, plainly called Hosted Virtual Machine seen in Figure~\ref{fig:hosted-vm}.
 Both utilize techniques to run a full OS, sandboxed as a process, either on a host or shared hardware.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{img/background/container}
-    \caption{Containerization}
+    \caption{Containerization.}
     \label{fig:containerization}
 \end{figure}
 
@@ -137,14 +132,14 @@ On the other hand, due to them not being completely isolated from the host OS, t
 
 \input{chapters/kubernetes}
 
-\section{Similarity based variability testing}\label{sec:similarities}
+\section{Similarity-based variability testing}\label{sec:similarities}
 
 As previously discussed, one of the main difficulties of testing highly scaled and complex systems, is the need of setting up complex environments.
 Later it is shown, that for certain technologies, the setup for a single test may take multiple hours.
-For large test suits, it is therefore unpractical to run all tests everytime, as the time-cost is too high.
+For large test suites, it is therefore unpractical to run all tests every time, as the time-cost would be too high.
 In order to mitigate this issue, a technique called similarity-based variability testing is used.
 
-Al-Hajjaji et.al., describe this technique in the context of product line testing~\cite{SimilarityBasedPrioritizationInSoftwareProductLineTesting}.
+Al-Hajjaji et al.~describe this technique in the context of product line testing~\cite{SimilarityBasedPrioritizationInSoftwareProductLineTesting}.
 A software product line is described as a base software system, which is extended with features that make use of the base system.
 Due to the high variability, not all combinations and features can be practically tested.
 Therefore, an algorithm is proposed, that selects tests based on similarity.
@@ -157,7 +152,7 @@ This selection is added to the result and the next, least similar, configuration
 The algorithm then continues until all configurations are sorted in the result or a limit is reached.
 
 This algorithm, while used in a different context, is also valuable when testing complex system.
-As previous discussed, for sufficiently complex environments and large test suits, not all tests can realistically be run at all times.
+As previous discussed, for sufficiently complex environments and large test suites, not all tests can realistically be run at all times.
 Analogous to configurations, metadata can also be added to define the similarity of tests to each other.
 A similar algorithm as described above can then be used to sort and select tests which are possible to run in a limited timeframe.
-In section~\ref{sec:dynamic-testing-framework}, it is shown that this algorithm helps in implementing a solution for the problem of abstracting pipeline configurations.
+In Section~\ref{sec:dynamic-testing-framework} it is shown that this algorithm helps in implementing a solution for the problem of abstracting pipeline configurations.
