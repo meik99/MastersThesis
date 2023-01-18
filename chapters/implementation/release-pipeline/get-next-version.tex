@@ -63,10 +63,9 @@ This class does not implement specific functions, but is only used to hold the d
 All found releases are then filtered.
 Releases are discarded if:
 \begin{itemize}
-    \item They are a draft
-    \item They do not contain the release branch version
-    \item They are a sub-release of some kind.
-        I.e., if they do not contain the character ``-''
+    \item they are a draft,
+    \item they do not contain the release branch version and
+    \item they are a sub-release of some kind, i.e., if they do not contain the character ``-''
 \end{itemize}
 
 Every release that was not discarded is then compared against the other, not discarded, releases.

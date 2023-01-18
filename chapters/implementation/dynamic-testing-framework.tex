@@ -3,7 +3,7 @@
 The Dynamic Testing Framework (DTF) is a tool created to generate a test suite.
 Its input are test definitions and a defined similarity.
 Its output is a pipeline, that runs a subset of tests as defined by test definitions and similarities.
-As discussed in section~\ref{ch:background}, it uses a similarity based algorithm, to choose a subset of tests to run.
+As discussed in Chapter~\ref{ch:background}, it uses a similarity based algorithm, to choose a subset of tests to run.
 
 The purpose of this tool is to generate a pipeline based on a set of tests.
 Tests are defined and their similarity to each other are set.
@@ -53,8 +53,7 @@ If the object contains this ``kind'' property and its value is \verb|TestDefinit
 \pagebreak
 
 The \textbf{name} property defines how the test definition is referenced in the similarity file and how the name in the test configuration for Concourse will look like.
-This property must be case-insensitive unique.
-I.e., the name \verb|A test| is the same as \verb|a test|.
+This property must be case-insensitive unique, i.e., the name \verb|A test| is the same as \verb|a test|.
 Therefore, there must not be two tests which, in their name, differ only in case.
 This is because the name in the Concourse configuration will be in a normalized form.
 In this form, spaces are replaced with dashes and all text will be in lowercase.
@@ -69,8 +68,7 @@ In the \textbf{test} property, the paths to test scripts can be defined.
 The scripts are executed in the same order as they are supplied.
 
 The \textbf{environment} and \textbf{resource} properties can be used to specify environment variables or Concourse resources that should be passed to the test task.
-The value will be passed to the Concourse configuration exactly as stated in the test definition.
-I.e., if \verb|((something))| is passed, \verb|((something))| will be passed to Concourse, which in turn will make a Vault lookup.
+The value will be passed to the Concourse configuration exactly as stated in the test definition, i.e., if \verb|((something))| is passed, \verb|((something))| will be passed to Concourse, which in turn will make a Vault lookup.
 With \verb|{{something}}| a parameter from a params-file can be referenced.
 Simply passing \verb|something| will pass the value \verb|something|.
 
@@ -98,7 +96,7 @@ Each file found, be it a file directly supplied or found in a directory, is pars
 \subsection{Similarities}\label{subsec:similarities}
 
 A similarity defines how similar a test is to other tests.
-This is the implementation of the concept introduced in section~\ref{sec:similarities}.
+This is the implementation of the concept introduced in Section~\ref{sec:similarities}.
 It is used to select tests for a pipeline with a greater amount of variety than pure randomness.
 First, a random test is picked and added to the list of tests.
 Then, the list of all other possible tests is sorted by descending similarity, such that the most dissimilar test is at the beginning of the list.

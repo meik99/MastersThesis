@@ -9,7 +9,7 @@ Furthermore, it uses a Docker in Docker image to try and pull the images.
 Finally, it parses the digests of the images and adds them to the release information.
 
 First \verb|jq| is installed to read the release data, because \verb|jq| is not installed by default on the Docker in Docker image.
-Then, the Docker config provided is written to \verb|~/.docker/config.json| to make it available to Docker.
+Then, the Docker config provided is written to \verb|~/.docker/config| \verb|.json| to make it available to Docker.
 The command \verb|source /docker-lib.sh| imports all functions made available by the Docker in Docker image.
 One of the functions is \verb|start_docker|, which is then called to start the Docker daemon.
 
@@ -20,8 +20,7 @@ Then the availability of the following images is checked.
     \item \verb|docker.io/dynatrace/dynatrace-operator:v${version}|
 \end{itemize}
 
-Where \verb|version| is read from the release data using jq.
-\verb|${GCE_MARKETPLACE}| is defined by the \verb|gcp_marketplace| parameter.
+The value for \verb|version| is read from the release data using jq while \verb|${GCE_MARKETPLACE}| is defined by the \verb|gcp_marketplace| parameter.
 If any of those image cannot be pulled, the task fails.
 
 The digest is then parsed for each image.

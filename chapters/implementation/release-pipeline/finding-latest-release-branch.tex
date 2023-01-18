@@ -30,8 +30,8 @@ Afterwards a python script, which takes parameters shown in table~\ref{tab:py-fi
     \end{tabular}
 \end{table}
 
-This python script, using the parameters shown in table~\ref{tab:py-finding-the-release-branch}, reads through the list of branches, tries to find a version for each one and then compares the versions found.
-It does so, by first removing the strings \verb| {release-prefix}-v | and \verb| {release-prefix}- | from the name.
+This python script, using the parameters shown in Table~\ref{tab:py-finding-the-release-branch}, reads through the list of branches, tries to find a version for each one and then compares the versions found.
+It does so, by first removing the strings \verb|{release-prefix}-v| and \verb|{release-prefix}-| from the name.
 The resulting name is then split by a dot, i.e., \verb|.|, because it assumes the usage of a semantic versioning scheme.
 Since the branches usually contain two version numbers, the major and minor version, the resulting array is extended with \verb|.0| until is length is two.
 These steps are necessary to obtain a normalized array for further processing.
@@ -44,12 +44,12 @@ If one element is larger than the element with the same index in the other array
 
 Examples:
 \begin{itemize}
-    \item The branch \verb| release-v0.2 | is considered lower than \verb| release-v0.3 |
-    \item The branch \verb| release-0.2 |  is considered lower than \verb| release-v0.2.1 |
-    \item The branch \verb| release-1.3 | is considered later than \verb| release-0.5 |
-    \item The branch \verb| release-2.0.0 | is considered invalid since is has too many version numbers. \\ Therefore any other branch ``wins'' the comparison.
-    \item The branch \verb| release-vA.B | is considered invalid since \verb| A | cannot be parsed as an integer. \\ Therefore any other branch ``wins'' the comparison.
-    \item The branch \verb| release-1 | is considered later than \verb| release-0.9 |. \\ The former version is appended with zeros. \\ The actual comparison would be \verb| 1.0 | against \verb| 0.9 |.
+    \item The branch \verb|release-v0.2| is considered lower than \verb|release-v0.3|
+    \item The branch \verb|release-0.2|  is considered lower than \verb|release-v0.2.1|
+    \item The branch \verb|release-1.3| is considered later than \verb|release-0.5|
+    \item The branch \verb|release-2.0.0| is considered invalid since is has too many version numbers. \\ Therefore any other branch ``wins'' the comparison.
+    \item The branch \verb|release-vA.B| is considered invalid since \verb|A| cannot be parsed as an integer. \\ Therefore any other branch ``wins'' the comparison.
+    \item The branch \verb|release-1| is considered later than \verb|release-0.9|. \\ The former version is appended with zeros. \\ The actual comparison would be \verb|1.0| against \verb|0.9|.
 \end{itemize}
 
 After the latest release branch is found, the version derived from it is also used to generate the CSV and Helm chart branches.
