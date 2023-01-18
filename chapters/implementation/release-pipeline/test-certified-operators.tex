@@ -28,7 +28,7 @@ The \verb|tekton| command uses the following parameters.
 \verb|--param git_username="${GITHUB_USERNAME}"|: Defines the username with which to push the changes from the digest pinning step.
     The user must have the SSH key, applied in the previous step, configured on their GitHub account.
 
-\verb|--param git_email="${GITHUB_EMAIL}"|: Defines the email of the user used in \verb|{git_username}|.
+\verb|--param git_email="${GITHUB_EMAIL}"|: Defines the email of the user.
 
 \verb|--workspace name=pipeline,volumeClaimTemplateFile=templates/workspace-template.yml|: This parameter is necessary according to the CI pipelines documentation and is not explained further in that documentation.
 

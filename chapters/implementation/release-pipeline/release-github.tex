@@ -85,18 +85,18 @@ A pull request is then created.
 
 A python script then creates a draft release and uploads the artifacts to it.
 For the script to work, a GitHub token and the target repository have to be supplied as well as the generated release data.
-Therefore, the script takes the arguments shown in table~\ref{tab:parameters-for-release-generation}.
+Therefore, the script takes the arguments shown in Table~\ref{tab:parameters-for-release-generation}.
 
 \begin{table}[H]
     \centering
-    \caption{Parameters for release generation}
+    \caption{Parameters for release generation.}
     \label{tab:parameters-for-release-generation}
     \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--release-data| & Expects the version found by parsing the release branches form the previous task. \\
         \verb|--token| & A personal access token for GitHub.
-            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+            It should have the following scopes \verb|admin:org|, \verb|delete_repo|, \verb|repo|, \verb|workflow|.
             The same token can be used by multiple tasks if these scopes are set. \\
         \verb|--operator-repository| & The target repository from which the releases are queried \\
     \end{tabular}
@@ -112,11 +112,11 @@ The \verb|create_release| function then uses the release data to send a post req
 The URL used for the request is built by a static prefix \url{https://api.github.com/repos/}, followed by the target repository name.
 A \verb|/releases| postfix is then added as well to specifically target releases.
 E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \url{https://api.github.com/repos/Dynatrace/dynatrace-operator/releases}.
-The header for this request contains the fields described in table~\ref{tab:header-fields-to-create-a-release-request}.
+The header for this request contains the fields described in Table~\ref{tab:header-fields-to-create-a-release-request}.
 
 \begin{table}[H]
     \centering
-    \caption{Header fields to create a release request}
+    \caption{Header fields to create a release request.}
     \label{tab:header-fields-to-create-a-release-request}
     \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Header field name & Value \\

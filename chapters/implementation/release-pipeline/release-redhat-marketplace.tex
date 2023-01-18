@@ -7,17 +7,17 @@ This includes forking the repository and following the RedHat Marketplace guidel
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the RedHat marketplace repository.
-Forking is done by a python script which takes the arguments shown in table~\ref{tab:parameters-to-fork-the-redhat-marketplace-repository}.
+Forking is done by a python script which takes the arguments shown in Table~\ref{tab:parameters-to-fork-the-redhat-marketplace-repository}.
 
 \begin{table}[H]
     \centering
-    \caption{Parameters to fork the RedHat marketplace repository}
+    \caption{Parameters to fork the RedHat marketplace repository.}
     \label{tab:parameters-to-fork-the-redhat-marketplace-repository}
     \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--token| & A personal access token for GitHub.
-            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+            It should have the following scopes \verb|admin:org|, \verb|delete_repo|, \verb|repo|, \verb|workflow|.
             The same token can be used by multiple tasks if these scopes are set. \\
         \verb|--original-repository| & The original repository which should be fork. \\
         \verb|--forked-repository| & The name the forked repository should have. \\
@@ -27,7 +27,7 @@ Forking is done by a python script which takes the arguments shown in table~\ref
     \end{tabular}
 \end{table}
 
-After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
+After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{token}| and \verb|{forked-repository}|.
 This class implements some REST requests GitHub's API provides.
 First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
 

@@ -18,16 +18,16 @@ Force deleting the branch will close open pull requests that are based on this b
 Afterwards, the following changes are made. \\
 In \verb|<repository>/config/helm/chart/default/Chart.yaml|:
 \begin{itemize}
-    \item The \verb| version | property is set to the version which is going to be released
-    \item The \verb| appVersion | property is set to the version which is going to be released
+    \item The \verb|version| property is set to the version which is going to be released
+    \item The \verb|appVersion| property is set to the version which is going to be released
     \item Setting this property is done using a library, which does not preserve comments.
     Therefore, the license text is re-added to the top afterwards
 \end{itemize}
 
 In \verb|<repository>/config/helm/schema.yaml|
 \begin{itemize}
-    \item The \verb| x-google-marketplace.publishedVersion | property is set to the version which is going to be released
-    \item The \verb| x-google-marketplace.publishedVersionMetadata.releaseNote | property is set to the generated changelog
+    \item The \verb|x-google-marketplace.publishedVersion| property is set to the version which is going to be released
+    \item The \verb|x-google-marketplace.publishedVersionMetadata.releaseNote| property is set to the generated changelog
     \item Again, the license text is re-added afterwards
 \end{itemize}
 
@@ -39,8 +39,7 @@ In \verb|dynatrace-operator/config/helm/chart/default/templates/application.yaml
     \item In order to mitigate this problem, the replacement is done using \verb|sed| and the license text does not need to be re-added.
 \end{itemize}
 
-Then, the CSV bundles are generated.
-Once for Kubernetes, another time for Openshift.
+Then, the CSV bundles are generated once for Kubernetes and another time for Openshift.
 A target of the Makefile included in the dynatrace-operator repository is used to generate these files.
 The following parameters are set to make sure the image is correctly replaced for each platform.
 

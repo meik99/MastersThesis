@@ -7,11 +7,11 @@ In general these tasks do not have to run for every release, but can be used to 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/implementation/openshift}
-    \caption{Pipeline to maintain OpenShift infrastructure}
+    \caption{Pipeline to maintain OpenShift infrastructure.}
     \label{fig:pipeline-to-maintain-openshift-infrastructure}
 \end{figure}
 
-In figure~\ref{fig:pipeline-to-maintain-openshift-infrastructure} the structure of these tasks is displayed.
+In Figure~\ref{fig:pipeline-to-maintain-openshift-infrastructure} the structure of these tasks is displayed.
 Since they can run independently of the main release tasks, they are detached from them.
 At the start of the pipeline, the OpenShift cluster is created.
 Then the releases for the marketplaces using CSVs can be tested.

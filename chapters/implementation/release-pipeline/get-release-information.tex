@@ -16,23 +16,23 @@ It can be configured by changing the \verb|gcp_marketplace| parameter.
 Usually, these steps result in the prefix \verb|gcr.io/{gcp_marketplace}|.
 
 After the project name and the branch hash are determined, a python script is called.
-This script takes the parameters shown in table~\ref{tab:params-to-generate-release-information}.
+This script takes the parameters shown in Table~\ref{tab:params-to-generate-release-information}.
 
 \begin{table}[h]
     \centering
-    \caption{Parameters to generate release information}
+    \caption{Parameters to generate release information.}
     \label{tab:params-to-generate-release-information}
     \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
-        \verb| --release-data | & The path to the release data currently compiled by previous tasks.  \\
-        \verb| --branch-sha | & The release branches hash value as determined before. \\
-        \verb| --github-token | & A personal access token for GitHub.
-            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+        \verb|--release-data| & The path to the release data currently compiled by previous tasks.  \\
+        \verb|--branch-sha| & The release branches hash value as determined before. \\
+        \verb|--github-token| & A personal access token for GitHub.
+            It should have the following scopes \verb|admin:org|, \verb|delete_repo|, \verb|repo|, \verb|workflow|.
             The same token can be used by multiple tasks if these scopes are set \\
-        \verb| --operator-repository | & The target repository from which the releases are queried \\
-        \verb| --gke-registry | & The name of the GCR registry for the GKE release step later on. \\
-        \verb| --gke-app-name | & The name under which the DTO is released. \\
+        \verb|--operator-repository| & The target repository from which the releases are queried \\
+        \verb|--gke-registry| & The name of the GCR registry for the GKE release step later on. \\
+        \verb|--gke-app-name| & The name under which the DTO is released. \\
     \end{tabular}
 \end{table}
 

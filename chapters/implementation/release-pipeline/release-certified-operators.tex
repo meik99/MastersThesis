@@ -8,17 +8,17 @@ This includes forking the repository and following the RedHat Catalog guidelines
 A pull request or draft pull request is not done to avoid operating on a foreign repository with automatic tasks.
 
 It first clones the DTO repository and then creates a fork of the RedHat certified operators repository.
-Forking is done by a python script that takes the arguments seen table~\ref{tab:parameters-to-fork-the-certified-operators-repository}.
+Forking is done by a python script that takes the arguments seen Table~\ref{tab:parameters-to-fork-the-certified-operators-repository}.
 
 \begin{table}[H]
     \centering
-    \caption{Parameters to fork the certified operators repository}
+    \caption{Parameters to fork the certified operators repository.}
     \label{tab:parameters-to-fork-the-certified-operators-repository}
     \begin{tabular}{|p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
         \hline
         \verb|--token| & A personal access token for GitHub.
-            It should have the following scopes \verb|admin:org, delete_repo, repo, workflow|.
+            It should have the following scopes \verb|admin:org|, \verb|delete_repo|, \verb|repo|, \verb|workflow|.
             The same token can be used by multiple tasks if these scopes are set. \\
         \verb|--original-repository| & The original repository which should be forked. \\
         \verb|--forked-repository| & The name the forked repository should have. \\
@@ -28,7 +28,7 @@ Forking is done by a python script that takes the arguments seen table~\ref{tab:
     \end{tabular}
 \end{table}
 
-After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{forked-repository}| and \verb|{token}|.
+After parsing the arguments, an instance of \verb|GitHubApi| is created using \verb|{token}| and \verb|{forked-repository}|.
 This class implements some REST requests GitHub's API provides.
 First, the \verb|exists| function is called, which returns \verb|True| if the forked repository already exists.
 To ensure a consistent environment, forked repositories are deleted if they already exist.

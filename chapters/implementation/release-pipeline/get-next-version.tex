@@ -14,11 +14,11 @@ Otherwise, the patch version is \verb|0|.
 
 The querying, filtering and comparison of releases is done again using a python script.
 For the script to work, a GitHub token and the target repository have to be supplied as well as the branch version.
-Therefore, the script takes the arguments shown in table~\ref{tab:py-finding-the-next-version}.
+Therefore, the script takes the arguments shown in Table~\ref{tab:py-finding-the-next-version}.
 
 \begin{table}[H]
     \centering
-    \caption{Parameters for the python script finding the next version}
+    \caption{Parameters for the python script finding the next version.}
     \label{tab:py-finding-the-next-version}
     \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Parameter & Expected value \\
@@ -40,11 +40,11 @@ From this instance, the \verb|find_releases| function is called.
 The URL used for the request is built by a static prefix \verb|https://api.github.com/repos/|, followed by the target repository name.
 A \verb|/releases| prefix is then added as well to specifically target releases.
 E.g., if the repository's name is \verb|Dynatrace/dynatrace-operator| the resulting URL is \verb|https://api.github.com/repos/Dynatrace/dynatrace-operator/releases|.
-The header for this request contains the fields shown in table~\ref{tab:http-header}.
+The header for this request contains the fields shown in Table~\ref{tab:http-header}.
 
 \begin{table}[H]
     \centering
-    \caption{HTTP Header}
+    \caption{HTTP Header.}
     \label{tab:http-header}
     \begin{tabular}{p{0.3\linewidth}|p{0.6\linewidth}}
         Header field name & Value \\
