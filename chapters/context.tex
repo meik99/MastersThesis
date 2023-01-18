@@ -7,7 +7,7 @@ Furthermore, it uses webhooks to add an init-container, containing an OneAgent i
 
 \textbf{OneAgents and ActiveGates}~\cite{oneagents,activegates} are Dynatrace proprietary software systems.
 The Dynatrace OneAgent~\cite{oneagents} is a software system to monitor other systems and collect metrics of them.
-These metrics can range from memory or cpu usage to more complex ones such as network connections or amount of specific function calls.
+These metrics can range from memory or CPU usage to more complex ones such as network connections or amount of specific function calls.
 Two different kinds of OneAgents exist, a host agent and a special agents.
 The host agents purpose is to monitor the host of any given system, for example, a server on which a web application is deployed on.
 Then, for different technologies, different special agents exist.
@@ -19,33 +19,29 @@ Furthermore, it can be used to monitor cloud centric technologies, such as AWS, 
 
 \pagebreak
 
-The DTO is released on a number of ways.
-First, the GitHub page itself, in which updated manifests, an updated Helm chart and a new index for these charts are uploaded to.
-In addition to the mentioned artifacts, a changelog is also published.
-Then, it is released to six different marketplace.
-Four of which use one proprietary format to create a marketplace listing, one uses a second proprietary format, while the final one uses a third proprietary format.
-Two of the four marketplaces have different rules how this marketplace listing has to look like, although they use the same file format.
+The DTO is released on a number of ways:
+first, the GitHub page itself, to which updated manifests, an updated Helm chart, and a new index for these charts are uploaded.
+In addition to the mentioned artifacts, a changelog is published and then released to six different marketplaces.
+Four of them use one specific proprietary format to create a marketplace listing, one uses a second proprietary format, while the final one uses a yet another proprietary format.
+Two of the four marketplaces have different rules on how this marketplace listing has to look like, although they use the same file format.
 
-The four marketplaces using the ClusterServiceVersion (CSV) format are called RedHat Marketplace (RHMP), certified-operators, community-operators, and community-operators-prod.
-All of which operated, or to some degree maintained, by RedHat.
-RHMP, certified-operators, and community-operators-prod all create listing which be found in OpenShift.
+The four marketplaces using the ClusterServiceVersion (CSV) format are called RedHat Marketplace (RHMP), certified-operators, community-operators, and community-operators-prod, all of which operated, or to some degree maintained, by RedHat.
+RHMP, certified-operators, and community-operators-prod all create listings, which can be found in OpenShift.
 The remaining community-operator release creates a listing for the Kubernetes OLM deployment.
 Finally, RHMP and certified-operators use one set of validation rules for the listing, while the other two use a similar, but different one.
 
 It could be argued that the name ClusterServiceVersion was specifically chosen to annoy developers working with it.
-As everytime a problem is searched for in a search engine, the results are usually about the much more common CommaSeperatedValues (CSV) format.
+As every time a problem is searched for in a search engine, the results are usually about the much more common CommaSeperatedValues (CSV) format.
 How this issue was not noticed by RedHat developers when naming this format is a question out of scope of this thesis and further research is required.
 
 The fifth marketplace mentioned earlier is the Google Cloud Marketplace (GCM).
-It is used to automatically deploy an operator on a Google Kubernetes Engine (GKE) Kubernetes cluster, analogous to RedHat's marketplaces, which deploy an operator on an OpenShift cluster.
-Google's marketplace also uses a proprietary format for its listing, which is conveniently completely different to the CSVs Redhat uses.
-In the same manner, the sixth and last marketplace, Rancher, use a proprietary format as well.
-Similar to the format used by the GCM listing, it is also completely different.
+It is used to automatically deploy an operator on a Google Kubernetes Engine (GKE) Kubernetes cluster, analogous to RedHat's marketplaces, which deploys an operator on an OpenShift cluster.
+Google's marketplace also uses a proprietary format for its listing, which is completely different to the CSVs Redhat uses.
+In the same manner, the sixth and last marketplace, Rancher, use a proprietary and completely different format as well.
 
-Finally, all the mentioned marketplaces have different release mechanisms.
-Some of them similar, some of them entirely distinct.
-As is shown in a later section, RHMP and certified, as well as community-operators and community-operators-prod, there are enough similarities so that basically only the upload target has to change.
-For the others, the release process is so dissimilar, that there is no common denominator.
+Finally, all the mentioned marketplaces apply different release mechanisms, some of them similar, some of them entirely distinct.
+As is shown in a later section, RHMP, certified-operators, community-operators and community-operators-prod, have enough similarities that only the repository to upload to has to change.
+For the others, the release process is highly dissimilar and there is no common denominator.
 
 Before the DTO is released, however, it must be tested.
 At the time of conducting this research, the project has only been tested using unit tests, with some attempts of using integration tests.
@@ -53,105 +49,12 @@ A lot of E2E testing is also done by teams specialized in writing E2E tests, in 
 
 Integration tests are still an issue.
 First, integration tests can make sure that different parts of the DTO are working well together.
-Unit-tests can be used to find faults in the code, but they do not test different routines working together, whereas integration tests do.
+Unittests can be used to find faults in the code, but they do not test different routines working together, whereas integration tests do.
 On the other hand, they give confidence to the development team, which is responsible for releasing the DTO in a functioning state.
 In order to test the DTO appropriately, a tool is implemented as part of this thesis to organize and execute integration tests.
-Due to the nature of an operator, running in big clusters, it uses the techniques of similarity testing mentioned in chapter~\ref{ch:introduction} to select a manageable amount of tests to run.
+Due to the nature of an operator, running in big clusters, it uses the techniques of similarity testing mentioned in Chapter~\ref{ch:introduction} to select a manageable amount of tests to run.
 The system to select and manage tests has been called Dynamic Testing Framework (DTF).
 
 Both systems are using the Concourse CI/CD system in one way or the other.
 The release pipeline is built to run entirely in it, as a pipeline that can be executed either manually or automatically to create a functioning release.
 The (DTF) generates a pipeline configuration for Concourse, with the selected tests that are to be run.
-
-\section{Architecture}\label{sec:architecture}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth]{img/context/kubernetes}
-    \caption{Kubernetes architecture}
-    \label{fig:kubernetes-architecture}
-\end{figure}
-
-In figure~\ref{fig:kubernetes-architecture}, an exemplary setup of all the previously discussed technologies can be seen.
-The Kubernetes controller is aware of all its resources.
-In this example, the relevant resources are deamonsets, deployments and the replicasets they control, and stateful sets.
-If the DTO is configured as such, it deploys OneAgents monitoring the host, using a daemonset, so they are deployed once on every node.
-Then it creates a statfulset which deploys an instance of an ActiveGate.
-Finally, the webhook of the DTO injects scheduled customer pods with application specific OneAgents.
-
-This setup is one of the simplest setups that is possible while still being representative of real world example.
-It becomes apparent why a complex test setup is needed, since the environment the DTO runs in is equally complex.
-A Kubernetes cluster must be created and setup for it to run in.
-Example applications must be deployed and configured for correct injection.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{img/context/dtf}
-    \caption{Dynamic Testing Framework workflow}
-    \label{fig:dtf-workflow}
-\end{figure}
-
-In figure~\ref{fig:dtf-workflow} the general workflow of the DTF is shown.
-Test definitions and how similarities are used are explained in section~\ref{subsec:test-definitions} and section~\ref{subsec:similarities}.
-The DTF uses both to generate a pipeline configuration for Concourse.
-This configuration can then be applied to a running Concourse instance and started.
-
-The idea is, that this pipeline then creates a cluster, configures it and deploys the DTO as well as needed applications on it.
-Further tasks of this pipeline can then check for specific states when applying different DTO configurations.
-After all tests succeeded, a second pipeline, the release pipeline, can be triggered.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{img/context/release pipeline}
-    \caption{Release pipeline}
-    \label{fig:release-pipeline}
-\end{figure}
-
-The general principle behind the release pipeline is depicted in figure~\ref{fig:release-pipeline}.
-First, it is assumed that there is a single source of truth.
-This source is the repository in which the DTO's code and other development files reside.
-From this repository, the next release that is supposed to happen is determined.
-Using the files or information in this release branch the next version can be inferred.
-The contents of the repository can then be combined with the version information and release information can be generated.
-Afterwards, all necessary artifacts, such as binaries, images and Helm charts, can be compiled, built and generated.
-Finally, the releases to the specific marketplaces are triggered.
-These tasks can run in parallel and execute the steps that are specific to each marketplace.
-
-\section{Other technologies and concepts}\label{sec:technologies-used}
-
-There are also a handful of other technologies and concepts used in this work not previously mentioned.
-They are simple enough to not warrant whole sections dedicated to them.
-Therefore, they are listed here and shortly summarized.
-The name and, if applicable, the acronym of a technology is stated followed by a short description of it.
-
-\textbf{BitBucket}~\cite{bitbucket} is a system that utilizes \textbf{Git}~\cite{git} to store project files.
-Git is used to version a project and make it easier for a team of people to simultaneously work on a project.
-A project that is worked on in this manner is commonly called a repository.
-BitBucket itself then stores the repository online to ease access to it.
-
-\textbf{Vault}~\cite{vault} is a system created by HashiCorp to manage credentials.
-It offers a user interface as well as a backend to store secrets, en- and decrypt them as wells as user management.
-The backend is accessible either through the provided client or the provided API.
-This API is used by Concourse to retrieve secrets during pipeline runs.
-
-\textbf{Permission bits}~\cite{unix-file-permissions} are used by unix file systems to control access to files.
-Each file has three groups with three bits each.
-Every bit signifies if a certain action, reading, writing, or executing, can be taken for a file.
-The groups determine what the file owner, a group member or any other user, can do.
-For example:
-
-A file's permission bits are set to $7$, $4$, and $2$, or $742$ as a shorthand notation.
-Note here that $742$ does not represent the number sevenhundredfortytwo, but the decimal value of each group as a shortened form.
-That means, the file owner can do everything with the file, because the number $7$ in binary is represented as $111$.
-Therefore, all permission bits are set.
-Next, the number $4$ represents what the group of users that owns the file can do.
-A $4$ in binary is represented as $100$.
-That means, members of the group may read the file, but may neither write nor execute it.
-Finally, the $2$ represents what every user in the system can do.
-Since $2$ is represented as $010$, the permission bit for writing a file is set.
-So every user, that is neither the file owner nor a member of the aforementioned group, may write a file, but neither read nor execute it.
-
-\textbf{Representational State Transfer}~\cite{extending-representation-state-transfer} is a way to build decentralized systems which depend on sharing resources.
-A REST based system commonly builds on top of HTTP to request, process and transmit resources.
-Commonly, a REST server is stateless, i.e., the server is not aware of any state when a request is processed.
-
